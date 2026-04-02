@@ -887,6 +887,7 @@
     ];
 
     let state = createEmptyState();
+    let unlocked = false;
     let currentView = 'roster';
     let selectedStudentId = null;
     let pendingDeleteId = null;
@@ -1204,8 +1205,35 @@
       render();
     }
 
+    function renderLogin() {
+      return `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 100%)">
+          <div style="background:#fff;border-radius:12px;padding:40px 36px;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center">
+            <div style="font-size:22px;font-weight:800;color:#1e3a8a;margin-bottom:4px">K.NBT.1 Assessment Tool</div>
+            <div style="font-size:13px;color:#64748b;margin-bottom:28px">Enter your access token to continue</div>
+            <input type="password" id="tokenInput" placeholder="Access token…" style="width:100%;box-sizing:border-box;border:1.5px solid #cbd5e1;border-radius:6px;padding:12px 14px;font-size:15px;font-family:inherit;outline:none;margin-bottom:12px;text-align:center;letter-spacing:2px" onkeydown="if(event.key==='Enter')checkToken()" onfocus="this.style.borderColor='#1e3a8a';this.style.boxShadow='0 0 0 3px rgba(30,58,138,0.1)'" onblur="this.style.borderColor='#cbd5e1';this.style.boxShadow='none'">
+            <div id="tokenError" style="color:#ef4444;font-size:13px;font-weight:600;margin-bottom:12px;min-height:20px"></div>
+            <button onclick="checkToken()" style="width:100%;background:#1e3a8a;color:#fff;border:none;border-radius:6px;padding:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:background 0.2s" onmouseover="this.style.background='#1e40af'" onmouseout="this.style.background='#1e3a8a'">Unlock</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function checkToken() {
+      const input = document.getElementById('tokenInput');
+      if (input.value === 'Gr8M!nds') {
+        unlocked = true;
+        init();
+      } else {
+        document.getElementById('tokenError').textContent = 'Invalid access token. Please try again.';
+        input.value = '';
+        input.focus();
+      }
+    }
+
     function render() {
       const app = document.getElementById('app');
+      if (!unlocked) { app.innerHTML = renderLogin(); return; }
       if (currentView === 'roster') app.innerHTML = renderRoster();
       else if (currentView === 'assess') app.innerHTML = renderAssess();
       else if (currentView === 'report') app.innerHTML = renderReport();
@@ -1792,6 +1820,10 @@
     }
 
     async function init() {
+      if (!unlocked) {
+        render();
+        return;
+      }
       // Show loading screen
       document.getElementById('app').innerHTML = `
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:80vh;gap:16px">
