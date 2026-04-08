@@ -3,44 +3,145 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K.NBT.1 Assessment Tool</title>
+  <title>Counting Collections Assessment - Kindergarten</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #1d4ed8;
+      --primary-dark: #1e40af;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --info: #3b82f6;
+      --neutral-50: #f9fafb;
+      --neutral-100: #f3f4f6;
+      --neutral-200: #e5e7eb;
+      --neutral-300: #d1d5db;
+      --neutral-600: #4b5563;
+      --neutral-700: #1e293b;
+      --text-primary: #1e293b;
+      --text-secondary: #6b7280;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    html, body {
-      width: 100%;
-      height: 100%;
-    }
-
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f8fafc;
-      color: #1e293b;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
+      font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, var(--neutral-50) 0%, #f5f7ff 100%);
+      min-height: 100vh;
+      color: var(--text-primary);
     }
 
     #app {
       max-width: 900px;
       margin: 0 auto;
-      padding-bottom: 100px;
+      padding-bottom: 80px;
     }
 
-    .header {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    /* Login */
+    .login-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    }
+
+    .login-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 40px 36px;
+      max-width: 380px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    .login-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .login-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+
+    .login-input {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1.5px solid var(--neutral-300);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      margin-bottom: 12px;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+
+    .login-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+    }
+
+    .login-error {
+      color: var(--error);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      min-height: 20px;
+    }
+
+    .login-btn {
+      width: 100%;
+      background: var(--primary);
       color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+
+    .login-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--info) 100%);
+      color: white;
       padding: 16px 20px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
       position: sticky;
       top: 0;
-      z-index: 10;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      z-index: 20;
+      box-shadow: var(--shadow-md);
+    }
+
+    .header-content {
+      flex: 1;
     }
 
     .header-title {
@@ -49,1181 +150,728 @@
       letter-spacing: -0.5px;
     }
 
-    .header-subtitle {
+    .header-sub {
       font-size: 12px;
-      opacity: 0.8;
-      margin-top: 3px;
-      font-weight: 500;
-    }
-
-    .flex1 {
-      flex: 1;
-    }
-
-    button {
-      font-family: inherit;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0.85;
+      margin-top: 2px;
     }
 
     .header-btn {
       background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
-      border-radius: 6px;
-      padding: 7px 13px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: white;
+      border-radius: var(--radius-md);
+      padding: 8px 14px;
       cursor: pointer;
       font-size: 13px;
-      white-space: nowrap;
       font-weight: 600;
+      transition: all 0.2s ease;
+      font-family: inherit;
     }
 
     .header-btn:hover {
       background: rgba(255, 255, 255, 0.25);
-      border-color: rgba(255, 255, 255, 0.3);
     }
 
-    .sync-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(34, 197, 94, 0.2);
-      color: #22c55e;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 600;
-      animation: pulse 2s infinite;
-    }
-
-    .sync-badge.error {
-      background: rgba(239, 68, 68, 0.2);
-      color: #ef4444;
-      animation: none;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
-    }
-
-    .stats-banner {
-      background: #fff;
-      border-bottom: 1px solid #e2e8f0;
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 16px;
-    }
-
-    .stat-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .stat-value {
-      font-size: 24px;
-      font-weight: 700;
-      color: #1e3a8a;
-      line-height: 1;
-    }
-
-    .stat-label {
-      font-size: 11px;
-      color: #64748b;
-      font-weight: 600;
-      margin-top: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .stat-divider {
-      width: 1px;
-      height: 32px;
-      background: #e2e8f0;
-    }
-
-    .export-toolbar {
-      background: #f0f9ff;
-      border-bottom: 1px solid #bfdbfe;
-      padding: 12px 20px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .export-btn {
-      background: #0ea5e9;
-      color: #fff;
+    /* Buttons */
+    .btn {
       border: none;
-      border-radius: 6px;
-      padding: 9px 16px;
+      border-radius: var(--radius-md);
+      padding: 10px 16px;
       cursor: pointer;
-      font-size: 13px;
       font-weight: 600;
-      transition: all 0.2s;
-    }
-
-    .export-btn:hover {
-      background: #0284c7;
-      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25);
-    }
-
-    .export-btn:active {
-      transform: scale(0.98);
-    }
-
-    .primary-btn {
-      background: #1e3a8a;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 9px 18px;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 14px;
-      white-space: nowrap;
-    }
-
-    .primary-btn:hover {
-      background: #1e40af;
-      box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
-    }
-
-    .primary-btn:active {
-      transform: scale(0.98);
-    }
-
-    .secondary-btn {
-      background: #f1f5f9;
-      color: #1e3a8a;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      padding: 7px 13px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .secondary-btn:hover {
-      background: #e2e8f0;
-      border-color: #94a3b8;
-    }
-
-    .danger-btn {
-      background: #fee2e2;
-      color: #991b1b;
-      border: none;
-      border-radius: 6px;
-      padding: 7px 12px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .danger-btn:hover {
-      background: #fecaca;
-    }
-
-    input[type="text"],
-    textarea {
+      font-size: 15px;
+      transition: all 0.2s ease;
       font-family: inherit;
-      font-size: 14px;
-      outline: none;
-    }
-
-    input[type="text"] {
-      flex: 1;
-      border: 1.5px solid #cbd5e1;
-      border-radius: 6px;
-      padding: 9px 13px;
-      width: 100%;
-    }
-
-    input[type="text"]:focus {
-      border-color: #1e3a8a;
-      box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 70px;
-      border: 1.5px solid #cbd5e1;
-      border-radius: 6px;
-      padding: 10px 13px;
-      resize: vertical;
-      font-size: 14px;
-    }
-
-    textarea:focus {
-      border-color: #1e3a8a;
-      box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
-    }
-
-    .add-row {
-      display: flex;
-      gap: 12px;
-      padding: 16px 20px;
-      background: #fff;
-      border-bottom: 1px solid #e2e8f0;
-    }
-
-    .roster-list {
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .roster-card {
-      background: #fff;
-      border-radius: 8px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      border: 1px solid #e2e8f0;
-      transition: all 0.2s;
-    }
-
-    .roster-card:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-      border-color: #cbd5e1;
-    }
-
-    .avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-      color: #0c4a6e;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 16px;
-      flex-shrink: 0;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
-    }
-
-    .roster-name {
-      font-weight: 700;
-      font-size: 14px;
-      color: #0f172a;
-    }
-
-    .roster-meta {
-      font-size: 12px;
-      color: #64748b;
-      margin-top: 2px;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 80px 20px;
-      color: #94a3b8;
-      font-size: 15px;
-    }
-
-    .group-label {
-      font-weight: 700;
-      font-size: 11px;
-      border-left: 3px solid;
-      padding-left: 10px;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 12px;
-      margin-bottom: 8px;
-    }
-
-    .behavior-card {
-      border: 2px solid #e2e8f0;
-      border-radius: 8px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: all 0.2s;
-      background: #fff;
-    }
-
-    .behavior-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-      border-color: #cbd5e1;
-    }
-
-    .tally-button {
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 14px 12px 8px;
-      text-align: center;
-      width: 100%;
-      transition: background 0.2s;
-    }
-
-    .tally-button:hover {
-      background: #f8fafc;
-    }
-
-    .card-label {
-      font-weight: 700;
-      font-size: 13px;
-      color: #0f172a;
-      margin-bottom: 4px;
-    }
-
-    .card-description {
-      font-size: 11px;
-      color: #64748b;
-      line-height: 1.4;
-    }
-
-    .tally-badge {
-      display: inline-block;
-      color: #fff;
-      border-radius: 12px;
-      padding: 3px 10px;
-      font-size: 12px;
-      font-weight: 700;
-      margin-top: 6px;
-    }
-
-    .level-row {
-      display: flex;
-      gap: 6px;
-      padding: 8px 10px;
-      justify-content: center;
-      background: #f8fafc;
-      border-top: 1px solid #e2e8f0;
-    }
-
-    .level-instructions {
-      font-size: 11px;
-      font-weight: 700;
-      color: #64748b;
-      padding: 8px 10px 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .level-btn {
-      flex: 1;
-      border: none;
-      border-radius: 4px;
-      padding: 6px 4px;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 700;
-      background: #e2e8f0;
-      color: #475569;
-      transition: all 0.2s;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .level-btn:hover {
-      opacity: 0.85;
-    }
-
-    .level-btn.active {
-      color: #fff;
-    }
-
-    .level-tag {
-      text-align: center;
-      font-size: 9px;
-      font-weight: 700;
-      color: #fff;
-      padding: 4px 0;
-    }
-
-    .footer {
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #fff;
-      border-top: 1px solid #e2e8f0;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      max-width: 900px;
-      margin: 0 auto;
-      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .footer-help {
-      color: #64748b;
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    .section-box {
-      margin: 16px 20px 0;
-      background: #fff;
-      border-radius: 8px;
-      border: 1px solid #e2e8f0;
-      overflow: hidden;
-    }
-
-    .report-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 12px 16px;
-    }
-
-    .pill {
-      color: #fff;
-      border-radius: 12px;
-      padding: 3px 12px;
-      font-size: 11px;
-      font-weight: 700;
-      display: inline-block;
-    }
-
-    .pill-neutral {
-      background: #cbd5e1;
-      color: #64748b;
-      border-radius: 12px;
-      padding: 3px 12px;
-      font-size: 11px;
-      font-weight: 700;
-      display: inline-block;
-    }
-
-    .notes-section {
-      background: #fff;
-      border-radius: 8px;
-      border: 1px solid #e2e8f0;
-      padding: 16px;
-      margin: 16px 20px 0;
-    }
-
-    .notes-title {
-      font-weight: 700;
-      font-size: 14px;
-      margin-bottom: 12px;
-      color: #0f172a;
-    }
-
-    .notes-input-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .note-item {
-      background: #fef9e7;
-      border: 1px solid #fce8b2;
-      border-radius: 6px;
-      padding: 10px 12px;
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      margin-bottom: 8px;
-    }
-
-    .note-text {
-      flex: 1;
-      font-size: 13px;
-      color: #1e293b;
-      line-height: 1.5;
-    }
-
-    .note-date {
-      font-size: 11px;
-      color: #b8860b;
-      margin-top: 3px;
-    }
-
-    .note-delete-btn {
-      background: none;
-      border: none;
-      color: #d97706;
-      cursor: pointer;
-      font-size: 14px;
-      line-height: 1;
-      padding: 2px;
-      font-weight: 600;
-    }
-
-    .tab-bar {
-      display: flex;
-      background: #fff;
-      border-bottom: 2px solid #e2e8f0;
-      position: sticky;
-      top: 60px;
-      z-index: 9;
-    }
-
-    .tab {
-      flex: 1;
-      background: none;
-      border: none;
-      border-bottom: 3px solid transparent;
-      padding: 14px 0;
-      cursor: pointer;
-      font-size: 14px;
-      color: #64748b;
-      font-weight: 600;
-      transition: all 0.2s;
-      position: relative;
-    }
-
-    .tab.active {
-      border-bottom-color: #1e3a8a;
-      color: #1e3a8a;
-    }
-
-    .tab:hover {
-      color: #475569;
-    }
-
-    .bucket-row {
-      display: flex;
-    }
-
-    .bucket {
-      flex: 1;
-      border-right: 1px solid #f1f5f9;
-      min-width: 0;
-    }
-
-    .bucket:last-child {
-      border-right: none;
-    }
-
-    .bucket-header {
-      color: #fff;
-      font-weight: 700;
-      font-size: 11px;
-      padding: 6px 10px;
-      text-align: center;
-    }
-
-    .bucket-body {
-      padding: 10px 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-height: 42px;
-    }
-
-    .student-chip {
-      background: #dbeafe;
-      color: #0c4a6e;
-      border-radius: 4px;
-      padding: 4px 8px;
-      font-size: 12px;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    .student-chip-gray {
-      background: #f1f5f9;
-      color: #64748b;
-      border-radius: 4px;
-      padding: 4px 8px;
-      font-size: 12px;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    .behavior-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-    }
-
-    .error-chip {
-      background: #fee2e2;
-      border: 1px solid #fca5a5;
-      border-radius: 6px;
-      padding: 5px 12px;
-      font-size: 12px;
-      color: #991b1b;
-      font-weight: 600;
-      display: inline-block;
-      margin: 4px;
-    }
-
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 50;
-    }
-
-    .modal {
-      background: #fff;
-      border-radius: 12px;
-      padding: 28px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-    }
-
-    .modal-title {
-      font-weight: 700;
-      font-size: 15px;
-      margin-bottom: 10px;
-    }
-
-    .modal-body {
-      color: #64748b;
-      margin-bottom: 20px;
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .modal-buttons {
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 90px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #fff;
-      border-radius: 6px;
-      padding: 10px 20px;
-      font-weight: 600;
-      font-size: 13px;
-      z-index: 100;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      white-space: nowrap;
-      pointer-events: none;
-      animation: slideUp 0.3s ease-out;
-    }
-
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .spacer {
-      height: 30px;
-    }
-
-    .data-status {
-      background: #f0fdf4;
-      border: 1px solid #dcfce7;
-      border-radius: 6px;
-      padding: 12px 14px;
-      margin: 12px 20px;
-      font-size: 13px;
-      color: #166534;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 8px;
     }
 
-    .data-status.warning {
-      background: #fef3c7;
-      border-color: #fde68a;
-      color: #92400e;
+    .btn-primary {
+      background: var(--primary);
+      color: white;
     }
 
-    .data-status.error {
-      background: #fee2e2;
-      border-color: #fecaca;
-      color: #991b1b;
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      box-shadow: var(--shadow-md);
     }
 
-    .settings-panel {
-      background: #fff;
-      border-radius: 8px;
-      border: 1px solid #e2e8f0;
+    .btn-secondary {
+      background: var(--neutral-100);
+      color: var(--text-primary);
+    }
+
+    .btn-secondary:hover {
+      background: var(--neutral-200);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+
+    /* Forms */
+    input[type="text"],
+    textarea {
+      font-family: inherit;
+      border: 1.5px solid var(--neutral-300);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      font-size: 15px;
+      width: 100%;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+      font-size: 14px;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    /* Cards */
+    .card {
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--neutral-200);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .card-header {
       padding: 16px;
-      margin: 16px 20px 0;
-    }
-
-    .settings-title {
+      border-bottom: 1px solid var(--neutral-200);
       font-weight: 700;
-      font-size: 13px;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      color: #64748b;
-      letter-spacing: 0.05em;
+      font-size: 14px;
+      background: linear-gradient(135deg, var(--neutral-50) 0%, var(--neutral-100) 100%);
     }
 
-    .settings-row {
+    .card-body {
+      padding: 16px;
+    }
+
+    .section {
+      margin: 14px 14px 0;
+    }
+
+    /* Checkboxes */
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 14px 16px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .checkbox-label {
+      flex: 1;
+      font-size: 15px;
+      cursor: pointer;
+      line-height: 1.5;
+    }
+
+    .inline-input {
+      display: inline-block;
+      width: 180px;
+      margin-left: 8px;
+      padding: 6px 10px;
+      font-size: 13px;
+      border: 1px solid var(--neutral-300);
+      border-radius: 4px;
+      font-family: inherit;
+    }
+
+    /* Roster */
+    .roster-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid var(--neutral-200);
+      cursor: pointer;
+      margin: 10px 14px;
+      transition: all 0.25s ease;
+    }
+
+    .roster-card:hover {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
+      transform: translateX(4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .roster-info {
+      flex: 1;
+    }
+
+    .roster-name {
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 2px;
+    }
+
+    .roster-meta {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* Trajectory */
+    .trajectory-container {
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--neutral-200);
+      padding: 20px;
+      margin: 14px 14px 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .trajectory-title {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    .trajectory-description {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .trajectory-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    .trajectory-level {
+      background: linear-gradient(135deg, var(--neutral-50) 0%, var(--neutral-100) 100%);
+      border: 2px solid var(--neutral-200);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .trajectory-level:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    .trajectory-level.current {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+    }
+
+    .trajectory-level.achieved {
+      background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+      border-color: var(--success);
+    }
+
+    .level-name {
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      line-height: 1.3;
+    }
+
+    /* Utilities */
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-secondary);
+    }
+
+    .button-group {
       display: flex;
       gap: 10px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
+      margin: 14px;
     }
 
-    .settings-row:last-child {
-      margin-bottom: 0;
+    .button-group .btn {
+      flex: 1;
     }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      padding: 14px;
+      background: white;
+      border-bottom: 1px solid var(--neutral-200);
+    }
+
+    .input-row input {
+      flex: 1;
+    }
+
+    .input-row button {
+      flex: 0.25;
+    }
+
+    .spacer {
+      height: 20px;
+    }
+
+    .guide-box {
+      background: #eff6ff;
+      border-left: 3px solid var(--info);
+      padding: 12px 14px;
+      margin: 0 14px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .guide-box strong {
+      color: var(--primary);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .dropdown-section {
+      border-bottom: 1px solid var(--neutral-200);
+      padding: 16px;
+    }
+
+    .dropdown-section:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .dropdown-header:hover {
+      color: var(--primary);
+    }
+
+    .dropdown-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    .dropdown-toggle {
+      color: var(--text-secondary);
+      font-weight: 600;
+      transition: transform 0.2s ease;
+    }
+
+    .dropdown-toggle.open {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-content {
+      display: none;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--neutral-200);
+    }
+
+    .dropdown-content.open {
+      display: block;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 8px 0;
+    }
+
+    .dropdown-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: var(--primary);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .dropdown-label {
+      font-size: 13px;
+      color: var(--text-primary);
+      cursor: pointer;
+      line-height: 1.5;
+    }
+
+    .hidden { display: none; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
-  <div id="app"></div>
-
-  <!-- DELETE CONFIRMATION MODAL -->
-  <div id="deleteOverlay" class="overlay hidden">
-    <div class="modal">
-      <div class="modal-title">Remove Student?</div>
-      <div class="modal-body">All assessment data and observations will be permanently deleted. This action cannot be undone.</div>
-      <div class="modal-buttons">
-        <button onclick="closeConfirm()" class="secondary-btn">Cancel</button>
-        <button onclick="confirmDelete()" class="danger-btn">Remove</button>
-      </div>
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen" class="login-screen">
+    <div class="login-box">
+      <div class="login-title">Counting Collections</div>
+      <div class="login-subtitle">Enter your access token to continue</div>
+      <input type="password" id="tokenInput" class="login-input" placeholder="Access token..." onkeydown="if(event.key==='Enter')checkToken()">
+      <div id="tokenError" class="login-error"></div>
+      <button onclick="checkToken()" class="login-btn">Unlock</button>
     </div>
   </div>
 
-  <!-- BACKUP/RESTORE MODAL -->
-  <div id="backupOverlay" class="overlay hidden">
-    <div class="modal">
-      <div class="modal-title">Backup & Restore Data</div>
-      <div class="modal-body">
-        <div style="margin-bottom: 12px;">
-          <strong>Download Backup:</strong> Save all student data to a file on your device.
+  <!-- MAIN APP (hidden until unlocked) -->
+  <div id="app" class="hidden">
+    <!-- ROSTER VIEW -->
+    <div id="rosterView" class="view active">
+      <div class="header">
+        <div class="header-content">
+          <div class="header-title">Counting Collections</div>
+          <div class="header-sub">Kindergarten Assessment</div>
         </div>
-        <div style="margin-bottom: 12px;">
-          <strong>Restore from Backup:</strong> Load previously saved data back into the app.
-        </div>
-        <div style="margin-bottom: 12px; padding: 10px; background: #f8fafc; border-radius: 4px; font-size: 12px; color: #64748b;">
-          Last sync: <span id="lastSyncTime">—</span>
-        </div>
+        <button class="header-btn" onclick="showView('groupsView')">Groups</button>
+        <button class="header-btn" onclick="showView('trajectoriesView')">Trajectories</button>
+        <button class="header-btn" onclick="exportData()">Export</button>
       </div>
-      <div class="modal-buttons">
-        <button onclick="downloadBackup()" class="export-btn">Download Backup</button>
-        <button onclick="triggerRestore()" class="export-btn">Restore Backup</button>
-        <button onclick="closeBackupModal()" class="secondary-btn">Close</button>
+
+      <div class="input-row">
+        <input type="text" id="newStudentInput" placeholder="Add student name..." onkeydown="if(event.key==='Enter')addStudent()" />
+        <button class="btn btn-primary" onclick="addStudent()">Add</button>
       </div>
+
+      <div id="rosterList"></div>
     </div>
-    <input type="file" id="restoreFile" accept=".json" style="display: none;" onchange="restoreFromFile()">
+
+    <!-- TRAJECTORIES VIEW -->
+    <div id="trajectoriesView" class="view">
+      <div class="header">
+        <button class="header-btn" onclick="showView('rosterView')">← Roster</button>
+        <div class="header-content" style="margin-left: 12px">
+          <div class="header-title">The Counting Journey</div>
+          <div class="header-sub">Click any level to learn more</div>
+        </div>
+      </div>
+
+      <!-- Important Info Box -->
+      <div style="padding: 20px 20px 0;">
+        <div class="card">
+          <div class="card-body">
+            <div style="font-size: 14px; color: var(--text-primary); line-height: 1.7;">
+              <div style="font-weight: 700; margin-bottom: 8px;">Development is Not Linear</div>
+              <div style="color: var(--text-secondary); font-size: 13px;">
+                <p style="margin-bottom: 8px;">Research shows that children develop counting skills in varied ways:</p>
+                <ul style="margin: 0; padding-left: 20px;">
+                  <li style="margin-bottom: 6px;"><strong>Concurrent skills:</strong> Students often work on multiple levels simultaneously (e.g., counting to 20 while learning to count backward)</li>
+                  <li style="margin-bottom: 6px;"><strong>Variable pacing:</strong> Different rates of progress are expected and developmentally normal</li>
+                  <li><strong>Context-dependent:</strong> Success in one setting (organized objects) may precede success in another (mixed piles)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 20px 20px 0;">
+        <div style="font-weight: 700; font-size: 14px; color: var(--text-primary); margin-bottom: 16px;">The Counting Levels</div>
+        <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+          <div id="trajectoriesTimeline" style="display: flex; gap: 16px; min-width: min-content; padding-bottom: 10px;"></div>
+        </div>
+      </div>
+
+      <!-- Detail Panel -->
+      <div id="trajDetailsPanel" style="padding: 0 20px 20px; display: none;">
+        <div class="card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div id="trajDetailTitle"></div>
+            <button class="header-btn" onclick="closeTrajDetail()" style="margin: 0; font-size: 14px;">Close</button>
+          </div>
+          <div class="card-body">
+            <div id="trajDetailContent"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 0 20px 30px;">
+        <div class="card">
+          <div class="card-header">Research Source</div>
+          <div class="card-body" style="font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+            <strong style="color: var(--text-primary);">Clements, D. H., & Sarama, J.</strong> (2017/2019). Learning and teaching with learning trajectories [LT]. Marsico Institute, Morgridge College of Education, University of Denver.
+          </div>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+    </div>
+
+    <!-- GROUPS VIEW -->
+    <div id="groupsView" class="view">
+      <div class="header">
+        <button class="header-btn" onclick="showView('rosterView')">← Roster</button>
+        <div class="header-content" style="margin-left: 12px">
+          <div class="header-title">Small Group Organization</div>
+          <div class="header-sub">By observed proficiency</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; padding: 14px;">
+        <div class="card">
+          <div class="card-header" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-bottom: 2px solid var(--warning);">Early Stage</div>
+          <div style="padding: 12px 16px; background: #fffbf0; border-bottom: 1px solid #fef3c7;">
+            <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">
+              Emerging understanding of counting principles. Limited accuracy with small collections.
+            </div>
+          </div>
+          <div class="card-body" id="groupEarly"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-bottom: 2px solid var(--info);">Developing</div>
+          <div style="padding: 12px 16px; background: #f0f9ff; border-bottom: 1px solid #dbeafe;">
+            <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">
+              Demonstrates some counting principles, but inconsistently. Accurate with some collection sizes or contexts.
+            </div>
+          </div>
+          <div class="card-body" id="groupDeveloping"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border-bottom: 2px solid var(--success);">Consistent</div>
+          <div style="padding: 12px 16px; background: #f0fdf4; border-bottom: 1px solid #dcfce7;">
+            <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">
+              Demonstrates all three counting principles across multiple observations and collection sizes.
+            </div>
+          </div>
+          <div class="card-body" id="groupProficient"></div>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+    </div>
+
+    <!-- ASSESSMENT VIEW -->
+    <div id="assessmentView" class="view">
+      <div class="header">
+        <button class="header-btn" onclick="showView('rosterView')">← Roster</button>
+        <div class="header-content" style="margin-left: 12px">
+          <div class="header-title" id="studentTitle"></div>
+          <div class="header-sub">Observation</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="card">
+          <div class="card-header">Collection Size</div>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="radio" name="collectionSize" value="1-10" />
+              <div class="checkbox-label">1-10 objects</div>
+            </label>
+            <label class="checkbox-item">
+              <input type="radio" name="collectionSize" value="10-20" />
+              <div class="checkbox-label">10-20 objects</div>
+            </label>
+            <label class="checkbox-item">
+              <input type="radio" name="collectionSize" value="20-50" />
+              <div class="checkbox-label">20-50 objects</div>
+            </label>
+            <label class="checkbox-item">
+              <input type="radio" name="collectionSize" value="50+" />
+              <div class="checkbox-label">50+ objects</div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="card">
+          <div class="card-header">Core Counting Principles</div>
+
+          <div style="padding: 16px;">
+            <label class="checkbox-item" style="margin-bottom: 16px;">
+              <input type="checkbox" data-principle="sequence" onchange="updateErrorStates()" />
+              <div style="flex: 1;">
+                <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Number Word Sequence</div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Child accurately says number words in order (1, 2, 3, 4...)</div>
+              </div>
+            </label>
+
+            <label class="checkbox-item" style="margin-bottom: 16px;">
+              <input type="checkbox" data-principle="correspondence" onchange="updateErrorStates()" />
+              <div style="flex: 1;">
+                <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">One-to-One Correspondence</div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Child matches exactly one number word to each object (one number per object, nothing skipped or double-counted)</div>
+              </div>
+            </label>
+
+            <label class="checkbox-item">
+              <input type="checkbox" data-principle="cardinality" onchange="updateErrorStates()" />
+              <div style="flex: 1;">
+                <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Cardinality</div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Child understands last number said = the total amount (when asked "how many?" they know the answer is the last number they said)</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="card">
+          <div class="card-header">Organizing Strategy</div>
+          <div class="dropdown-section">
+            <div class="dropdown-header" onclick="toggleDropdown('strategy')">
+              <div class="dropdown-title">Select organizing strategy observed</div>
+              <div class="dropdown-toggle" id="toggle-strategy">▼</div>
+            </div>
+            <div class="dropdown-content" id="content-strategy">
+              <div class="dropdown-item">
+                <input type="checkbox" data-strategy="line" />
+                <label class="dropdown-label">Organized in a line</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-strategy="groups" />
+                <label class="dropdown-label">Grouped objects (by color, size, etc.)</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-strategy="containers" />
+                <label class="dropdown-label">Used containers (moved in/out)</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-strategy="counting_on" />
+                <label class="dropdown-label">Counted on (started from number other than 1)</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-strategy="other" onchange="toggleStrategyInput()" />
+                <label class="dropdown-label">Other:
+                  <input type="text" class="inline-input" id="strategyOther" placeholder="Describe..." disabled style="margin-left: 8px;" />
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="errorPatternGroup">
+        <div class="card">
+          <div class="card-header">Error Patterns Noted</div>
+          <div class="dropdown-section">
+            <div class="dropdown-header" onclick="toggleDropdown('errors')">
+              <div class="dropdown-title">Select error patterns observed</div>
+              <div class="dropdown-toggle" id="toggle-errors">▼</div>
+            </div>
+            <div class="dropdown-content" id="content-errors">
+              <div class="dropdown-item">
+                <input type="checkbox" data-error="skips_numbers" onchange="updateErrorCheckStates()" />
+                <label class="dropdown-label">Skipped numbers in sequence</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-error="repeats_numbers" onchange="updateErrorCheckStates()" />
+                <label class="dropdown-label">Repeated numbers</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-error="loses_track" onchange="updateErrorCheckStates()" />
+                <label class="dropdown-label">Lost track/abandoned count</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-error="double_counts" onchange="updateErrorCheckStates()" />
+                <label class="dropdown-label">Double counted objects</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-error="counts_again" onchange="updateErrorCheckStates()" />
+                <label class="dropdown-label">Counted again when asked "how many?"</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-error="other" onchange="toggleErrorInput(); updateErrorCheckStates()" />
+                <label class="dropdown-label">Other:
+                  <input type="text" class="inline-input" id="errorOther" placeholder="Describe..." disabled style="margin-left: 8px;" />
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="card">
+          <div class="card-header">Quick Note</div>
+          <div class="card-body">
+            <textarea id="observationNote" placeholder="E.g., organized by color, counted slowly, lost track after 5..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button class="btn btn-primary" onclick="saveObservation()">Save Observation</button>
+      </div>
+
+      <div class="section">
+        <div class="card">
+          <div class="card-header">Observation History</div>
+          <div id="observationHistory"></div>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+    </div>
   </div>
 
   <script>
-    const CONFIG = {
-      API_URL: '/api/data',
-      AUTO_SAVE_INTERVAL: 30000,
-      DATA_RETENTION_DAYS: 30,
-    };
+    // ========== API CONFIG ==========
+    const API_URL = '/api/data';
 
-    let _saveQueued = false;
-    let _saving = false;
-
-    const BEHAVIOR_GROUPS = [
-      {
-        id: 'counting',
-        label: 'Counting Strategies',
-        color: '#0ea5e9',
-        bgColor: '#f0f9ff',
-        behaviors: [
-          { id: 'counts_all', label: 'Counts All', icon: '№', desc: 'Counts every object from 1 each time' },
-          { id: 'counts_on', label: 'Counts On', icon: '+', desc: 'Starts counting from a known quantity' },
-          { id: 'groups_ten', label: 'Groups a Ten', icon: '⊕', desc: 'Makes a group of ten to count remainder' },
-          { id: 'subitizes', label: 'Subitizes', icon: '●', desc: 'Instantly recognizes small quantities without counting' },
-        ],
-      },
-      {
-        id: 'representation',
-        label: 'Representation & Explanation',
-        color: '#7c3aed',
-        bgColor: '#faf5ff',
-        behaviors: [
-          { id: 'records', label: 'Records', icon: '▭', desc: 'Records quantities or work on paper' },
-          { id: 'explains_tens_ones', label: 'Explains Tens and Ones', icon: '⇄', desc: 'Verbally explains the relationship between tens and ones' },
-          { id: 'writes_numeral', label: 'Writes Numeral', icon: '∀', desc: 'Correctly records the numeral for the quantity' },
-          { id: 'self_corrects', label: 'Self Corrects', icon: '✓', desc: 'Catches and fixes own counting errors' },
-        ],
-      },
-      {
-        id: 'errors',
-        label: 'Error Patterns',
-        color: '#ef4444',
-        bgColor: '#fef2f2',
-        behaviors: [
-          { id: 'loses_track', label: 'Loses Track', icon: '⋯', desc: 'Loses count mid-task, needs to restart' },
-          { id: 'teen_confusion', label: 'Teen Number Confusion', icon: '?', desc: 'Confuses teen numbers (e.g., 13 versus 30)' },
-          { id: 'skips_nums', label: 'Skips Numbers', icon: '⊜', desc: 'Skips numbers in sequence while counting' },
-        ],
-      },
-    ];
-
-    const ALL_BEHAVIORS = BEHAVIOR_GROUPS.flatMap(g =>
-      g.behaviors.map(b => ({ ...b, groupId: g.id }))
-    );
-
-    const LEVELS = [
-      { id: 'not_yet', label: 'Not Yet', color: '#ef4444' },
-      { id: 'emerging', label: 'Emerging', color: '#f97316' },
-      { id: 'proficient', label: 'Proficient', color: '#22c55e' },
-    ];
-
-    let state = createEmptyState();
-    let unlocked = false;
-    let currentView = 'roster';
-    let selectedStudentId = null;
-    let pendingDeleteId = null;
-    let groupTab = 'roster';
-    let toastTimer = null;
-    let autoSaveTimer = null;
-    let syncCheckTimer = null;
-
-    async function loadStateFromServer() {
-      try {
-        const res = await fetch(CONFIG.API_URL);
-        if (!res.ok) throw new Error('Server error');
-        const data = await res.json();
-        if (!data || !data.students || !Array.isArray(data.students) || !data.observations || typeof data.observations !== 'object') {
-          return createEmptyState();
-        }
-        if (!data.metadata) {
-          data.metadata = {
-            createdAt: new Date().toISOString(),
-            lastModified: new Date().toISOString(),
-            version: 3,
-          };
-        }
-        return data;
-      } catch (error) {
-        console.error('Error loading state:', error);
-        showToast('Error loading data from server. Starting fresh.', '#ef4444');
-        return createEmptyState();
-      }
-    }
-
-    function createEmptyState() {
-      return {
-        students: [],
-        observations: {},
-        metadata: {
-          createdAt: new Date().toISOString(),
-          lastModified: new Date().toISOString(),
-          version: 3,
-        },
-      };
-    }
-
-    function saveState() {
-      state.metadata.lastModified = new Date().toISOString();
-      if (_saving) {
-        _saveQueued = true;
-        return true;
-      }
-      _saving = true;
-      const serialized = JSON.stringify(state);
-      fetch(CONFIG.API_URL, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: serialized,
-      })
-        .then(res => {
-          if (!res.ok) throw new Error('Save failed');
-          updateSyncBadge(true);
-        })
-        .catch(error => {
-          console.error('Error saving state:', error);
-          showToast('Error saving data to server', '#ef4444');
-          updateSyncBadge(false);
-        })
-        .finally(() => {
-          _saving = false;
-          if (_saveQueued) {
-            _saveQueued = false;
-            saveState();
-          }
-        });
-      return true;
-    }
-
-    function startAutoSave() {
-      if (autoSaveTimer) clearInterval(autoSaveTimer);
-      autoSaveTimer = setInterval(() => {
-        saveState();
-      }, CONFIG.AUTO_SAVE_INTERVAL);
-    }
-
-    function getObservations(studentId) {
-      return state.observations[studentId] || {};
-    }
-
-    function getSortedStudents() {
-      return [...state.students].sort((a, b) => a.name.localeCompare(b.name));
-    }
-
-    function escapeHtml(str) {
-      const div = document.createElement('div');
-      div.textContent = str;
-      return div.innerHTML;
-    }
-
-    function downloadBackup() {
-      try {
-        const backup = {
-          data: state,
-          exportDate: new Date().toISOString(),
-          version: CONFIG.STORAGE_KEY,
-        };
-        const fileName = `K.NBT.1_Backup_${new Date().toISOString().split('T')[0]}.json`;
-        downloadFile(JSON.stringify(backup, null, 2), fileName, 'application/json');
-        showToast('Backup downloaded successfully', '#22c55e');
-      } catch (error) {
-        console.error('Backup error:', error);
-        showToast('Error creating backup', '#ef4444');
-      }
-    }
-
-    function triggerRestore() {
-      document.getElementById('restoreFile').click();
-    }
-
-    function restoreFromFile() {
-      const fileInput = document.getElementById('restoreFile');
-      const file = fileInput.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const backup = JSON.parse(e.target.result);
-          if (!backup.data || !backup.data.students || !backup.data.observations) {
-            throw new Error('Invalid backup file format');
-          }
-          if (confirm(`Restore backup from ${backup.exportDate.split('T')[0]}? Current data will be overwritten.`)) {
-            state = backup.data;
-            state.metadata.lastModified = new Date().toISOString();
-            saveState();
-            render();
-            showToast('Data restored successfully', '#22c55e');
-          }
-        } catch (error) {
-          console.error('Restore error:', error);
-          showToast('Error restoring backup: ' + error.message, '#ef4444');
-        }
-      };
-      reader.readAsText(file);
-      fileInput.value = '';
-    }
-
-    function showToast(message, backgroundColor = '#22c55e') {
-      const existing = document.getElementById('toast');
-      if (existing) existing.remove();
-      const toast = document.createElement('div');
-      toast.id = 'toast';
-      toast.className = 'toast';
-      toast.style.background = backgroundColor;
-      toast.textContent = message;
-      document.body.appendChild(toast);
-      if (toastTimer) clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.remove(), 2200);
-    }
-
-    function updateSyncBadge(isSuccess) {
-      const badge = document.getElementById('syncBadge');
-      if (!badge) return;
-      if (isSuccess) {
-        badge.className = 'sync-badge';
-        badge.innerHTML = '● Saved';
-      } else {
-        badge.className = 'sync-badge error';
-        badge.innerHTML = '⚠ Error';
-      }
-    }
-
-    function downloadFile(content, filename, mimeType) {
-      const blob = new Blob([content], { type: mimeType });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-    }
-
-    function exportToPDF(studentId) {
-      const student = state.students.find(s => s.id === studentId);
-      if (!student) return;
-      const obs = getObservations(studentId);
-      const stats = getWeekStats(studentId);
-      let content = `K.NBT.1 Assessment Report\n`;
-      content += `Student: ${student.name}\n`;
-      content += `Date Generated: ${new Date().toLocaleDateString()}\n`;
-      content += `\n—————————————————————————\n\n`;
-      content += `Summary Statistics\n`;
-      content += `Observations This Week: ${stats.weekCount}\n`;
-      content += `Total Observations: ${stats.monthCount}\n`;
-      content += `\n—————————————————————————\n\n`;
-      BEHAVIOR_GROUPS.forEach(group => {
-        content += `${group.label}\n`;
-        group.behaviors.forEach(behavior => {
-          const behaviorObs = obs[behavior.id] || { count: 0, level: null };
-          const level = LEVELS.find(l => l.id === behaviorObs.level);
-          const levelText = group.id !== 'errors' ? (level ? level.label : 'Not Rated') : '';
-          content += `  • ${behavior.label}: ×${behaviorObs.count} ${levelText}\n`;
-          content += `    ${behavior.desc}\n`;
-        });
-        content += `\n`;
-      });
-      const notes = obs._notesList || [];
-      if (notes.length > 0) {
-        content += `\nAnecdotal Notes\n`;
-        notes.forEach(note => {
-          content += `  [${note.date}] ${note.text}\n`;
-        });
-      }
-      downloadFile(content, `${student.name}_K.NBT.1_Report.txt`, 'text/plain');
-      showToast('Report exported', '#0ea5e9');
-    }
-
-    function exportToCSV(studentId) {
-      const student = state.students.find(s => s.id === studentId);
-      if (!student) return;
-      const obs = getObservations(studentId);
-      let csv = 'Behavior,Group,Observation Count,Proficiency Level,Description\n';
-      BEHAVIOR_GROUPS.forEach(group => {
-        group.behaviors.forEach(behavior => {
-          const behaviorObs = obs[behavior.id] || { count: 0, level: null };
-          const level = LEVELS.find(l => l.id === behaviorObs.level);
-          const levelText = group.id !== 'errors' ? (level ? level.label : 'Not Rated') : '';
-          csv += `"${behavior.label}","${group.label}",${behaviorObs.count},"${levelText}","${behavior.desc}"\n`;
-        });
-      });
-      downloadFile(csv, `${student.name}_K.NBT.1_Data.csv`, 'text/csv');
-      showToast('Data exported to CSV', '#0ea5e9');
-    }
-
-    function exportSpreadsheet() {
-      const students = getSortedStudents();
-      let csv = 'Student Name,Behavior,Count,Proficiency Level,Last Observed\n';
-      students.forEach(student => {
-        const obs = getObservations(student.id);
-        let studentAdded = false;
-        ALL_BEHAVIORS.forEach(behavior => {
-          const behaviorObs = obs[behavior.id] || { count: 0, level: null };
-          const level = LEVELS.find(l => l.id === behaviorObs.level);
-          const levelText = level ? level.label : 'Not Rated';
-          const lastDate = behaviorObs.lastDate || '—';
-          csv += `${studentAdded ? '' : student.name},${behavior.label},${behaviorObs.count},${levelText},${lastDate}\n`;
-          studentAdded = true;
-        });
-      });
-      downloadFile(csv, `K.NBT.1_Class_Data.csv`, 'text/csv');
-    }
-
-    function generateParentReport(studentId) {
-      const student = state.students.find(s => s.id === studentId);
-      if (!student) return;
-      const obs = getObservations(studentId);
-      const stats = getWeekStats(studentId);
-      let report = `Dear Family,\n\n`;
-      report += `This week, I have been assessing ${student.name}'s number sense and place value skills (K.NBT.1).\n\n`;
-      report += `Summary of Observations:\n`;
-      report += `• Total observations this week: ${stats.weekCount}\n`;
-      report += `• Total observations recorded: ${stats.monthCount}\n\n`;
-      const proficientBehaviors = [];
-      const emergingBehaviors = [];
-      const notYetBehaviors = [];
-      BEHAVIOR_GROUPS.forEach(group => {
-        if (group.id === 'errors') return;
-        group.behaviors.forEach(behavior => {
-          const behaviorObs = obs[behavior.id] || { count: 0, level: null };
-          if (!behaviorObs.level) return;
-          if (behaviorObs.level === 'proficient') {
-            proficientBehaviors.push(behavior.label);
-          } else if (behaviorObs.level === 'emerging') {
-            emergingBehaviors.push(behavior.label);
-          } else if (behaviorObs.level === 'not_yet') {
-            notYetBehaviors.push(behavior.label);
-          }
-        });
-      });
-      if (proficientBehaviors.length > 0) {
-        report += `Proficient Skills:\n`;
-        proficientBehaviors.forEach(b => report += `• ${b}\n`);
-        report += `\n`;
-      }
-      if (emergingBehaviors.length > 0) {
-        report += `Skills in Development:\n`;
-        emergingBehaviors.forEach(b => report += `• ${b}\n`);
-        report += `\n`;
-      }
-      if (notYetBehaviors.length > 0) {
-        report += `Areas for Growth:\n`;
-        notYetBehaviors.forEach(b => report += `• ${b}\n`);
-        report += `\n`;
-      }
-      const notes = obs._notesList || [];
-      if (notes.length > 0) {
-        report += `Classroom Observations:\n`;
-        notes.slice(0, 3).forEach(note => {
-          report += `• ${note.text}\n`;
-        });
-        report += `\n`;
-      }
-      report += `How You Can Help at Home:\n`;
-      report += `• Practice counting objects (buttons, toys, snacks)\n`;
-      report += `• Play games with numbers 1-20\n`;
-      report += `• Ask your child to show groups of 10\n`;
-      report += `• Count together during daily activities\n\n`;
-      report += `Please contact me if you have questions.\n\n`;
-      report += `Sincerely,\nYour Child's Teacher`;
-      downloadFile(report, `${student.name}_Parent_Letter_K.NBT.1.txt`, 'text/plain');
-      showToast('Parent letter generated', '#0ea5e9');
-    }
-
-    function navigate(view, studentId) {
-      currentView = view;
-      if (studentId !== undefined) selectedStudentId = studentId;
-      render();
-    }
-
-    function renderLogin() {
-      return `
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 100%)">
-          <div style="background:#fff;border-radius:12px;padding:40px 36px;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center">
-            <div style="font-size:22px;font-weight:800;color:#1e3a8a;margin-bottom:4px">K.NBT.1 Assessment Tool</div>
-            <div style="font-size:13px;color:#64748b;margin-bottom:28px">Enter your access token to continue</div>
-            <input type="password" id="tokenInput" placeholder="Access token…" style="width:100%;box-sizing:border-box;border:1.5px solid #cbd5e1;border-radius:6px;padding:12px 14px;font-size:15px;font-family:inherit;outline:none;margin-bottom:12px;text-align:center;letter-spacing:2px" onkeydown="if(event.key==='Enter')checkToken()" onfocus="this.style.borderColor='#1e3a8a';this.style.boxShadow='0 0 0 3px rgba(30,58,138,0.1)'" onblur="this.style.borderColor='#cbd5e1';this.style.boxShadow='none'">
-            <div id="tokenError" style="color:#ef4444;font-size:13px;font-weight:600;margin-bottom:12px;min-height:20px"></div>
-            <button onclick="checkToken()" style="width:100%;background:#1e3a8a;color:#fff;border:none;border-radius:6px;padding:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:background 0.2s" onmouseover="this.style.background='#1e40af'" onmouseout="this.style.background='#1e3a8a'">Unlock</button>
-          </div>
-        </div>
-      `;
-    }
-
+    // ========== LOGIN ==========
     function checkToken() {
       const input = document.getElementById('tokenInput');
       if (input.value === 'Gr8M!nds') {
-        unlocked = true;
-        init();
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('app').classList.remove('hidden');
+        document.getElementById('app').innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:80vh;gap:16px"><div style="font-size:18px;font-weight:700;color:var(--primary)">Loading assessment data...</div><div style="width:40px;height:40px;border:4px solid var(--neutral-200);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite"></div></div>';
+        initApp();
       } else {
         document.getElementById('tokenError').textContent = 'Invalid access token. Please try again.';
         input.value = '';
@@ -1231,621 +879,896 @@
       }
     }
 
-    function render() {
-      const app = document.getElementById('app');
-      if (!unlocked) { app.innerHTML = renderLogin(); return; }
-      if (currentView === 'roster') app.innerHTML = renderRoster();
-      else if (currentView === 'assess') app.innerHTML = renderAssess();
-      else if (currentView === 'report') app.innerHTML = renderReport();
-      else if (currentView === 'groupReport') app.innerHTML = renderGroupReport();
-      else if (currentView === 'settings') app.innerHTML = renderSettings();
+    // ========== KINDERGARTEN TRAJECTORIES ==========
+    const TRAJECTORIES = [
+      {
+        level: 1,
+        name: "Reciter",
+        shortName: "Reciter",
+        description: "Says number words in sequence (with some support), but cannot yet reliably match to objects when counting",
+        indicators: [
+          "Chants or recites number words in order",
+          "May not start at 1, or may skip numbers",
+          "Does not coordinate number words with pointing/touching objects"
+        ],
+        teachingFocus: "Help child point to and touch each object while saying numbers in order",
+        context: "This is typically the foundation. All children benefit from repeated chanting and singing of number sequences. Some children skip this level and move directly to matching numbers with objects.",
+        source: "Clements & Sarama (2017/2019). Learning & Teaching with Learning Trajectories [LT]²"
+      },
+      {
+        level: 2,
+        name: "Corresponder",
+        shortName: "Corresponder",
+        description: "Matches number words to objects (one-to-one correspondence) but may not understand that the last number means 'how many'",
+        indicators: [
+          "Touches or points to each object as they count",
+          "Says one number word for each object",
+          "May recount to answer 'how many?' instead of knowing the last number"
+        ],
+        teachingFocus: "Ask 'how many?' immediately after counting—emphasize that the last number tells the amount",
+        context: "Children often spend significant time here, building the coordination between words and objects. Some children work on Corresponder and Counter Small skills in parallel.",
+        source: "Clements & Sarama (2017/2019). Learning & Teaching with Learning Trajectories [LT]²"
+      },
+      {
+        level: 3,
+        name: "Counter (Small)",
+        shortName: "Counter (1-10)",
+        description: "Counts small collections accurately with one-to-one correspondence and understands cardinality",
+        indicators: [
+          "Counts 5-10 objects with accuracy and one-to-one match",
+          "Knows the last number said tells 'how many'",
+          "Can count again to verify the total"
+        ],
+        teachingFocus: "Organize objects in different ways; introduce larger collections; practice counting backward",
+        context: "This is a significant milestone. Children often develop Counter Small skills with familiar contexts (counting toys, snacks) before managing less familiar situations (mixed piles). Success in either context represents progress.",
+        source: "Clements & Sarama (2017/2019). Learning & Teaching with Learning Trajectories [LT]²"
+      },
+      {
+        level: 4,
+        name: "Counter (To 20)",
+        shortName: "Counter (To 20)",
+        description: "Counts larger collections accurately, often using organization strategies to keep track",
+        indicators: [
+          "Counts 10-20+ objects accurately",
+          "Organizes objects (line, groups) to avoid losing track",
+          "Demonstrates full understanding of cardinality with larger sets"
+        ],
+        teachingFocus: "Introduce tens and ones language; explore skip counting patterns; practice flexible counting",
+        context: "While developing Counter (To 20), children may simultaneously begin working on Counter Backward. The skills support each other. Organization strategies (lining up, grouping) are key to success at this level.",
+        source: "Clements & Sarama (2017/2019). Learning & Teaching with Learning Trajectories [LT]²"
+      },
+      {
+        level: 5,
+        name: "Counter Backward from 10",
+        shortName: "Counter Backward",
+        description: "Counts backward from 10 to 1, verbally or when removing objects from a group",
+        indicators: [
+          "Counts backward from 10: '10, 9, 8, 7, 6, 5, 4, 3, 2, 1'",
+          "Can count backward when removing objects one at a time",
+          "Demonstrates understanding of reverse order of number sequence"
+        ],
+        teachingFocus: "Use countdown games and 'blast off' activities; practice removal counting with manipulatives; connect to subtraction concepts",
+        context: "Often develops alongside Counter (To 20) skills. A child might be counting forward to 20 while practicing backward counting from 10. Both show growth in number sequence flexibility.",
+        source: "Clements & Sarama (2017/2019). Counter Backward from 10. Learning & Teaching with Learning Trajectories [LT]²"
+      },
+      {
+        level: 6,
+        name: "Counter from N",
+        shortName: "Counter from N",
+        description: "Counts from numbers other than 1 (e.g., starting at 6: '6, 7, 8...') and immediately determines numbers just before or after",
+        indicators: [
+          "When asked to count from 6 to 8, counts '6, 7, 8'",
+          "Answers 'what comes just before 7?' with 'six'",
+          "Can count on or count backward from any given number"
+        ],
+        teachingFocus: "Use counting wand activities where children pick up where another person left off; practice 'what comes next' and 'what comes before' games; builds foundation for addition and subtraction",
+        context: "This level often develops in parallel with Skip Counter skills. A child might be able to count from 6-10 while also beginning to count by 10s. Individual children take different paths here.",
+        source: "Clements & Sarama (2017/2019). Counter from N (N + 1, N - 1). Learning & Teaching with Learning Trajectories [LT]²"
+      },
+      {
+        level: 7,
+        name: "Skip Counter (by 10s)",
+        shortName: "Skip Counter (10s)",
+        description: "Skip counts by tens up to 100 or beyond with understanding, recognizing that groups of 10 can be counted efficiently",
+        indicators: [
+          "Counts '10, 20, 30... 100' when counting 10 rods with 10 units",
+          "Understands 'thirty means 3 tens' and 'fifty means 5 tens'",
+          "Can count groups efficiently using skip counting pattern"
+        ],
+        teachingFocus: "Use activities with groups of 10 (rods, dimes, groups of objects); emphasize place value understanding (tens and ones); connect to multiplication thinking",
+        context: "This advanced level opens doors to multiplication and place value. Some children show early signs of skip counting while still solidifying other skills. This is a natural part of development.",
+        source: "Clements & Sarama (2017/2019). Skip Counter by 10s to 100. Learning & Teaching with Learning Trajectories [LT]²"
+      }
+    ];
+
+    // ========== STATE MANAGEMENT ==========
+    let state = {
+      students: [],
+      selectedStudentId: null,
+      studentLevels: {},
+      observations: {}
+    };
+
+    let _saveQueued = false;
+    let _saving = false;
+
+    async function loadStateFromServer() {
+      try {
+        const res = await fetch(API_URL);
+        if (!res.ok) throw new Error('Server error');
+        const data = await res.json();
+        if (data && data.students) {
+          state = data;
+          state.students.forEach(student => {
+            if (!state.studentLevels[student.id]) state.studentLevels[student.id] = 1;
+            if (!state.observations[student.id]) state.observations[student.id] = { history: [] };
+          });
+        }
+      } catch (e) {
+        console.error('Load error:', e);
+      }
+    }
+
+    async function saveState() {
+      if (_saving) {
+        _saveQueued = true;
+        return;
+      }
+      _saving = true;
+      try {
+        const res = await fetch(API_URL, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(state)
+        });
+        if (!res.ok) throw new Error('Save failed');
+      } catch (e) {
+        console.error('Save error:', e);
+        alert('Error saving data. Please try again.');
+      } finally {
+        _saving = false;
+        if (_saveQueued) {
+          _saveQueued = false;
+          saveState();
+        }
+      }
+    }
+
+    // ========== ROSTER MANAGEMENT ==========
+    function addStudent() {
+      const input = document.getElementById('newStudentInput');
+      const name = input.value.trim();
+      if (!name) return;
+
+      const student = { id: Date.now().toString(), name };
+      state.students.push(student);
+      state.studentLevels[student.id] = 1;
+      state.observations[student.id] = { history: [] };
+
+      input.value = '';
+      saveState();
+      renderRoster();
+    }
+
+    function deleteStudent(studentId) {
+      if (!confirm('Delete this student?')) return;
+      state.students = state.students.filter(s => s.id !== studentId);
+      delete state.studentLevels[studentId];
+      delete state.observations[studentId];
+      saveState();
+      renderRoster();
     }
 
     function renderRoster() {
-      const students = getSortedStudents();
-      const cards = students.map(student => {
-        const obs = getObservations(student.id);
-        const tallyCount = ALL_BEHAVIORS.filter(b => (obs[b.id]?.count || 0) > 0).length;
-        const levelCount = ALL_BEHAVIORS.filter(b => b.groupId !== 'errors' && obs[b.id]?.level).length;
-        return `
-          <div class="roster-card">
-            <div class="avatar">${student.name[0].toUpperCase()}</div>
-            <div class="flex1">
-              <div class="roster-name">${escapeHtml(student.name)}</div>
-              <div class="roster-meta">${tallyCount} behavior${tallyCount !== 1 ? 's' : ''} · ${levelCount} level${levelCount !== 1 ? 's' : ''}</div>
-            </div>
-            <button class="secondary-btn" onclick="navigate('assess','${student.id}')">Assess</button>
-            <button class="secondary-btn" onclick="navigate('report','${student.id}')">Report</button>
-            <button class="danger-btn" onclick="askDelete('${student.id}')" title="Remove student">−</button>
-          </div>
-        `;
-      }).join('');
-
-      const emptyState = students.length === 0
-        ? `<div class="empty-state"><div>No students yet. Add a student to begin assessment.</div></div>`
-        : '';
-
-      const groupReportButton = students.length > 0
-        ? `<button class="header-btn" onclick="navigate('groupReport')">Group Reports</button>`
-        : '';
-
-      const settingsButton = `<button class="header-btn" onclick="navigate('settings')">⚙</button>`;
-
-      return `
-        <div class="header">
-          <div class="flex1">
-            <div class="header-title">K.NBT.1 Assessment Tool</div>
-            <div class="header-subtitle">${state.students.length} student${state.students.length !== 1 ? 's' : ''}</div>
-          </div>
-          <div id="syncBadge" class="sync-badge">● Saved</div>
-          ${groupReportButton}
-          ${settingsButton}
-        </div>
-        <div class="data-status">
-          ✓ Data saves automatically to the cloud. Access from any device.
-        </div>
-        <div class="add-row">
-          <input type="text" id="nameInput" placeholder="Student name…" onkeydown="if(event.key==='Enter')addStudent()">
-          <button class="primary-btn" onclick="addStudent()">Add Student</button>
-        </div>
-        ${students.length > 0 ? `<div style="padding:12px 20px;background:#f0f9ff;border-bottom:1px solid #cffafe"><button class="export-btn" onclick="exportSpreadsheet()" title="Export all student data">Export to Spreadsheet</button></div>` : ''}
-        ${emptyState}
-        <div class="roster-list">${cards}</div>
-      `;
-    }
-
-    function addStudent() {
-      const input = document.getElementById('nameInput');
-      const name = input.value.trim();
-      if (!name) {
-        showToast('Please enter a student name', '#f97316');
+      const list = document.getElementById('rosterList');
+      if (state.students.length === 0) {
+        list.innerHTML = '<div class="empty-state">No students yet. Add one to begin.</div>';
         return;
       }
-      if (name.length > 100) {
-        showToast('Student name too long (max 100 characters)', '#ef4444');
-        return;
-      }
-      if (state.students.find(s => s.name.toLowerCase() === name.toLowerCase())) {
-        showToast('Student already exists', '#ef4444');
-        return;
-      }
-      state.students.push({
-        id: Date.now().toString(),
-        name,
-        addedDate: new Date().toISOString(),
-      });
-      saveState();
-      input.value = '';
-      render();
-      showToast(`${name} added to roster`);
-    }
 
-    function renderAssess() {
-      const student = state.students.find(s => s.id === selectedStudentId);
-      if (!student) return '';
-      const obs = getObservations(student.id);
-      if (!window.assessmentTab) window.assessmentTab = 'counting';
-      const group = BEHAVIOR_GROUPS.find(g => g.id === window.assessmentTab);
-      if (!group) return '';
-
-      const cards = group.behaviors.map(behavior => {
-        const behaviorObs = obs[behavior.id] || { count: 0, level: null };
-        const level = LEVELS.find(l => l.id === behaviorObs.level);
-        const borderColor = group.id !== 'errors' && level ? level.color : '#e2e8f0';
-        const badge = behaviorObs.count > 0 ? `<div class="tally-badge" style="background:${group.color}">×${behaviorObs.count}</div>` : '';
-
-        let levelHtml = '';
-        if (group.id !== 'errors') {
-          const buttons = LEVELS.map(l =>
-            `<button class="level-btn ${behaviorObs.level === l.id ? 'active' : ''}" style="background:${behaviorObs.level === l.id ? l.color : '#e2e8f0'};color:${behaviorObs.level === l.id ? '#fff' : '#475569'}" onclick="setLevel('${student.id}','${behavior.id}','${l.id}')">${l.label}</button>`
-          ).join('');
-          const tag = level ? `<div class="level-tag" style="background:${level.color}">${level.label}</div>` : '';
-          levelHtml = `<div class="level-instructions">Rate Proficiency Level:</div><div class="level-row">${buttons}</div>${tag}`;
-        }
-
-        return `
-          <div class="behavior-card" style="border-color:${borderColor};background:${group.bgColor}">
-            <button class="tally-button" onclick="recordTally('${student.id}','${behavior.id}')">
-              <div style="font-size:12px;color:#64748b;font-weight:600;margin-bottom:6px">Tap to Record Observation</div>
-              <div class="card-label">${behavior.label}</div>
-              <div class="card-description">${behavior.desc}</div>
-              ${badge}
-            </button>
-            ${levelHtml}
-          </div>
-        `;
-      }).join('');
-
-      const groupTabs = BEHAVIOR_GROUPS.map(g => `
-        <button class="tab ${window.assessmentTab === g.id ? 'active' : ''}" onclick="switchAssessmentTab('${g.id}')" style="color:${window.assessmentTab === g.id ? g.color : '#64748b'};border-bottom-color:${window.assessmentTab === g.id ? g.color : 'transparent'}">${g.label}</button>
-      `).join('');
-
-      const stats = getWeekStats(student.id);
-
-      return `
-        <div class="header">
-          <button class="header-btn" onclick="navigate('roster')">← Back to Roster</button>
-          <div class="flex1" style="margin-left:12px">
-            <div class="header-title">${escapeHtml(student.name)}</div>
-            <div class="header-subtitle">Record observations and rate proficiency</div>
-          </div>
-          <button class="header-btn" onclick="navigate('report','${student.id}')">Report</button>
-        </div>
-        <div class="stats-banner">
-          <div class="stat-item">
-            <div class="stat-value">${stats.weekCount}</div>
-            <div class="stat-label">This Week</div>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <div class="stat-value">${stats.monthCount}</div>
-            <div class="stat-label">Total</div>
-          </div>
-        </div>
-        <div class="tab-bar">${groupTabs}</div>
-        <div style="margin:16px 20px 0">
-          <div class="group-label" style="color:${group.color};border-color:${group.color}">${group.label}</div>
-          <div class="card-grid">${cards}</div>
-        </div>
-        <div style="margin:16px 20px 0">${renderNotesSection(student.id, obs)}</div>
-        <div class="footer">
-          <button class="danger-btn" onclick="clearObservations('${student.id}')">Clear All</button>
-          <span class="footer-help">Data saves automatically</span>
-        </div>
-      `;
-    }
-
-    function switchAssessmentTab(tabId) {
-      window.assessmentTab = tabId;
-      render();
-    }
-
-    function recordTally(studentId, behaviorId) {
-      if (!state.observations[studentId]) state.observations[studentId] = {};
-      const behavior = state.observations[studentId][behaviorId] || { count: 0, level: null, dates: [] };
-      const today = new Date().toLocaleDateString();
-      const dates = behavior.dates || [];
-      if (!dates.includes(today)) {
-        dates.push(today);
-      }
-      state.observations[studentId][behaviorId] = {
-        ...behavior,
-        count: behavior.count + 1,
-        dates: dates,
-        lastDate: today,
-      };
-      saveState();
-      render();
-      const behaviorName = ALL_BEHAVIORS.find(x => x.id === behaviorId)?.label || behaviorId;
-      showToast(`+1 ${behaviorName}`);
-    }
-
-    function getWeekStats(studentId) {
-      const obs = getObservations(studentId);
-      const today = new Date();
-      const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
-      let weekCount = 0;
-      let monthCount = 0;
-      Object.values(obs).forEach(behavior => {
-        if (behavior.dates && Array.isArray(behavior.dates)) {
-          behavior.dates.forEach(dateStr => {
-            try {
-              const [m, d, y] = dateStr.split('/').map(Number);
-              const obsDate = new Date(y, m - 1, d);
-              if (obsDate >= weekAgo && obsDate <= today) {
-                weekCount++;
-              }
-              monthCount++;
-            } catch (e) {}
-          });
-        }
-      });
-      return { weekCount, monthCount };
-    }
-
-    function setLevel(studentId, behaviorId, levelId) {
-      if (!state.observations[studentId]) state.observations[studentId] = {};
-      const behavior = state.observations[studentId][behaviorId] || { count: 0, level: null };
-      state.observations[studentId][behaviorId] = { ...behavior, level: levelId };
-      saveState();
-      render();
-      const level = LEVELS.find(l => l.id === levelId);
-      showToast(`${ALL_BEHAVIORS.find(x => x.id === behaviorId)?.label} · ${level?.label}`, level?.color);
-    }
-
-    function clearObservations(studentId) {
-      if (!confirm('Clear all observations for this student? This cannot be undone.')) return;
-      state.observations[studentId] = {};
-      saveState();
-      render();
-      showToast('All observations cleared');
-    }
-
-    function renderNotesSection(studentId, obs) {
-      const notes = obs._notesList || [];
-      const items = notes.map(note => `
-        <div class="note-item">
-          <div class="flex1">
-            <div class="note-text">${escapeHtml(note.text)}</div>
-            <div class="note-date">${note.date}</div>
-          </div>
-          <button class="note-delete-btn" onclick="deleteNote('${studentId}','${note.id}')">×</button>
-        </div>
-      `).join('');
-      const empty = notes.length === 0 ? `<div style="color:#94a3b8;font-size:13px">No notes yet.</div>` : '';
-      return `
-        <div class="notes-section">
-          <div class="notes-title">Anecdotal Notes</div>
-          <div class="notes-input-row">
-            <textarea id="noteInput_${studentId}" placeholder="Document observation…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();addNote('${studentId}')}"></textarea>
-            <button class="primary-btn" style="align-self:stretch;padding:0 16px;font-size:13px;height:70px" onclick="addNote('${studentId}')">Add</button>
-          </div>
-          ${empty}${items}
-        </div>
-      `;
-    }
-
-    function addNote(studentId) {
-      const element = document.getElementById(`noteInput_${studentId}`);
-      const text = element.value.trim();
-      if (!text) {
-        showToast('Please enter a note', '#f97316');
-        return;
-      }
-      if (text.length > 500) {
-        showToast('Note too long (max 500 characters)', '#ef4444');
-        return;
-      }
-      if (!state.observations[studentId]) state.observations[studentId] = {};
-      const notes = state.observations[studentId]._notesList || [];
-      state.observations[studentId]._notesList = [
-        { id: Date.now().toString(), text, date: new Date().toLocaleDateString() },
-        ...notes,
-      ];
-      saveState();
-      render();
-      showToast('Note added');
-    }
-
-    function deleteNote(studentId, noteId) {
-      if (!state.observations[studentId]) return;
-      state.observations[studentId]._notesList = (state.observations[studentId]._notesList || []).filter(n => n.id !== noteId);
-      saveState();
-      render();
-      showToast('Note deleted', '#ef4444');
-    }
-
-    function renderReport() {
-      const student = state.students.find(s => s.id === selectedStudentId);
-      if (!student) return '';
-      const obs = getObservations(student.id);
-      const stats = getWeekStats(student.id);
-
-      const groups = BEHAVIOR_GROUPS.map(group => {
-        const rows = group.behaviors.map((behavior, index) => {
-          const behaviorObs = obs[behavior.id] || { count: 0, level: null };
-          const level = LEVELS.find(l => l.id === behaviorObs.level);
-          const countDisplay = behaviorObs.count > 0
-            ? `<span style="font-weight:700;color:${group.color};font-size:14px">×${behaviorObs.count}</span>`
-            : `<span style="color:#94a3b8">—</span>`;
-          let levelDisplay = '';
-          if (group.id !== 'errors') {
-            levelDisplay = level
-              ? `<span class="pill" style="background:${level.color}">${level.label}</span>`
-              : `<span class="pill-neutral">Not Rated</span>`;
-          }
-          return `
-            <div class="report-row" style="${index > 0 ? 'border-top:1px solid #f1f5f9' : ''}">
-              <div style="font-size:20px;width:24px;flex-shrink:0">–</div>
-              <div class="flex1">
-                <div style="font-weight:700;font-size:13px;color:#0f172a">${behavior.label}</div>
-                <div style="font-size:12px;color:#64748b;margin-top:2px">${behavior.desc}</div>
-              </div>
-              <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-weight:600">${countDisplay}${levelDisplay}</div>
-            </div>
-          `;
-        }).join('');
-
-        return `
-          <div style="margin:16px 20px 0">
-            <div class="group-label" style="color:${group.color};border-color:${group.color}">${group.label}</div>
-            <div class="section-box">${rows}</div>
-          </div>
-        `;
-      }).join('');
-
-      return `
-        <div class="header">
-          <button class="header-btn" onclick="navigate('assess','${student.id}')">← Back to Assessment</button>
-          <div class="flex1" style="margin-left:12px">
-            <div class="header-title">Report: ${escapeHtml(student.name)}</div>
-            <div class="header-subtitle">K.NBT.1</div>
-          </div>
-          <button class="header-btn" onclick="navigate('roster')">Roster</button>
-        </div>
-        <div class="export-toolbar">
-          <button class="export-btn" onclick="exportToPDF('${student.id}')" title="Export as text report">
-            <span style="font-weight:700">⬇</span> Report
-          </button>
-          <button class="export-btn" onclick="exportToCSV('${student.id}')" title="Export data to spreadsheet">
-            <span style="font-weight:700">⬇</span> Data
-          </button>
-          <button class="export-btn" onclick="generateParentReport('${student.id}')" title="Generate family communication letter">
-            <span style="font-weight:700">✉</span> Parent Letter
-          </button>
-        </div>
-        <div class="stats-banner">
-          <div class="stat-item">
-            <div class="stat-value">${stats.weekCount}</div>
-            <div class="stat-label">This Week</div>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <div class="stat-value">${stats.monthCount}</div>
-            <div class="stat-label">Total</div>
-          </div>
-        </div>
-        ${groups}
-        <div style="margin:16px 20px 0">${renderNotesSection(student.id, obs)}</div>
-        <div class="spacer"></div>
-      `;
-    }
-
-    function renderGroupReport() {
-      const students = getSortedStudents();
-      const isRosterTab = groupTab === 'roster';
-      let content = '';
-
-      if (isRosterTab) {
-        content = students.map(student => {
-          const obs = getObservations(student.id);
-          const notes = obs._notesList || [];
-          const groupRows = BEHAVIOR_GROUPS.map(group => {
-            const rows = group.behaviors.map((behavior, index) => {
-              const behaviorObs = obs[behavior.id] || { count: 0, level: null };
-              const level = LEVELS.find(l => l.id === behaviorObs.level);
-              const hasData = behaviorObs.count > 0 || (group.id !== 'errors' && behaviorObs.level);
-              const countDisplay = behaviorObs.count > 0
-                ? `<span style="font-weight:700;color:${group.color};font-size:13px;min-width:32px;text-align:right">×${behaviorObs.count}</span>`
-                : `<span style="color:#94a3b8;min-width:32px;text-align:right">—</span>`;
-              let levelDisplay = '';
-              if (group.id !== 'errors') {
-                levelDisplay = level
-                  ? `<span class="pill" style="background:${level.color};font-size:10px;padding:2px 8px;margin-left:6px">${level.label}</span>`
-                  : `<span class="pill-neutral" style="font-size:10px;padding:2px 8px;margin-left:6px">Not Rated</span>`;
-              }
-              return `
-                <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;${index > 0 ? 'border-top:1px solid #f8fafc' : ''}opacity:${hasData ? 1 : 0.5}">
-                  <div class="flex1" style="font-size:13px;font-weight:600;color:#0f172a">${behavior.label}</div>
-                  ${countDisplay}${levelDisplay}
-                </div>
-              `;
-            }).join('');
-            return `
-              <div>
-                <div style="padding:8px 16px;background:${group.bgColor};border-top:1px solid #e2e8f0;font-size:11px;font-weight:700;color:${group.color};text-transform:uppercase;letter-spacing:.1em">${group.label}</div>
-                ${rows}
-              </div>
-            `;
-          }).join('');
-
-          const notesDisplay = notes.length > 0
-            ? `
-              <div style="padding:12px 16px;border-top:1px solid #e2e8f0;background:#fef9e7">
-                <div style="font-weight:700;font-size:12px;color:#8b6600;margin-bottom:8px">Anecdotal Notes</div>
-                ${notes.map(note => `<div style="font-size:12px;color:#1e293b;margin-bottom:6px"><span style="color:#b8860b;font-size:11px;margin-right:6px">${note.date}</span>${escapeHtml(note.text)}</div>`).join('')}
-              </div>
-            `
-            : '';
+      list.innerHTML = state.students
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map(student => {
+          const obsCount = state.observations[student.id]?.history?.length || 0;
+          const obs = state.observations[student.id]?.history || [];
+          const lastObs = obs.length > 0 ? new Date(obs[obs.length - 1].timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Never';
 
           return `
-            <div style="margin:16px 20px 0;background:#fff;border-radius:8px;border:1px solid #e2e8f0;overflow:hidden;box-shadow:0 2px 4px rgba(0,0,0,0.04)">
-              <div style="background:linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);padding:12px 16px;display:flex;align-items:center;gap:12px">
-                <div class="avatar" style="background:rgba(255,255,255,.2);color:#fff;width:36px;height:36px;font-size:14px">${student.name[0].toUpperCase()}</div>
-                <div style="font-weight:700;color:#fff;font-size:14px">${escapeHtml(student.name)}</div>
+            <div class="roster-card" onclick="selectStudent('${student.id}')">
+              <div class="avatar">${student.name[0].toUpperCase()}</div>
+              <div class="roster-info">
+                <div class="roster-name">${student.name}</div>
+                <div class="roster-meta">${obsCount} observation${obsCount !== 1 ? 's' : ''} &bull; Last: ${lastObs}</div>
               </div>
-              ${groupRows}${notesDisplay}
+              <button class="btn btn-sm btn-secondary" onclick="event.stopPropagation(); deleteStudent('${student.id}')">Delete</button>
             </div>
           `;
-        }).join('');
+        })
+        .join('');
+    }
+
+    function selectStudent(studentId) {
+      state.selectedStudentId = studentId;
+      renderAssessment();
+      showView('assessmentView');
+    }
+
+    // ========== ASSESSMENT VIEW ==========
+    function renderAssessment() {
+      const student = state.students.find(s => s.id === state.selectedStudentId);
+      if (!student) return;
+
+      document.getElementById('studentTitle').textContent = student.name;
+
+      renderObservationHistory();
+    }
+
+    function renderObservationHistory() {
+      const obs = state.observations[state.selectedStudentId]?.history || [];
+      const historyDiv = document.getElementById('observationHistory');
+
+      if (obs.length === 0) {
+        historyDiv.innerHTML = '<div class="card-body"><div style="text-align: center; color: var(--text-secondary); padding: 20px;">No observations yet</div></div>';
+        return;
+      }
+
+      historyDiv.innerHTML = '<div class="card-body">' + obs
+        .slice()
+        .reverse()
+        .map((record, idx) => {
+          const date = new Date(record.timestamp);
+          const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+          const principles = [
+            record.principles.sequence ? '✓ Sequence' : '',
+            record.principles.correspondence ? '✓ 1-to-1' : '',
+            record.principles.cardinality ? '✓ Cardinality' : ''
+          ].filter(Boolean).join(' &bull; ');
+
+          const strategies = Object.entries(record.strategies)
+            .filter(([k, v]) => v && k !== 'other')
+            .map(([k]) => k.replace(/_/g, ' '))
+            .join(', ');
+          const strategyText = record.strategies.other && record.strategyOtherText ?
+            (strategies ? strategies + ', ' + record.strategyOtherText : record.strategyOtherText) : strategies;
+
+          const errors = Object.entries(record.errors)
+            .filter(([k, v]) => v && k !== 'other')
+            .map(([k]) => k.replace(/_/g, ' '))
+            .join(', ');
+          const errorText = record.errors.other && record.errorOtherText ?
+            (errors ? errors + ', ' + record.errorOtherText : record.errorOtherText) : errors;
+
+          return `
+            <div style="padding: 12px 0; border-bottom: 1px solid var(--neutral-200);">
+              <div style="font-weight: 600; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px;">${dateStr} &bull; ${record.collectionSize} objects</div>
+              ${principles ? `<div style="font-size: 12px; color: var(--text-primary); margin-bottom: 4px;">${principles}</div>` : ''}
+              ${strategyText ? `<div style="font-size: 12px; color: var(--text-secondary);">Strategy: ${strategyText}</div>` : ''}
+              ${errorText ? `<div style="font-size: 12px; color: var(--text-secondary);">Errors: ${errorText}</div>` : ''}
+              ${record.note ? `<div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px; font-style: italic;">${record.note}</div>` : ''}
+            </div>
+          `;
+        })
+        .join('') + '</div>';
+    }
+
+    // ========== FORM HELPERS ==========
+    function toggleDropdown(section) {
+      const toggle = document.getElementById(`toggle-${section}`);
+      const content = document.getElementById(`content-${section}`);
+      toggle.classList.toggle('open');
+      content.classList.toggle('open');
+    }
+
+    function toggleStrategyInput() {
+      const input = document.getElementById('strategyOther');
+      const checkbox = document.querySelector('[data-strategy="other"]');
+      input.disabled = !checkbox.checked;
+      if (!checkbox.checked) input.value = '';
+    }
+
+    function toggleErrorInput() {
+      const input = document.getElementById('errorOther');
+      const checkbox = document.querySelector('[data-error="other"]');
+      input.disabled = !checkbox.checked;
+      if (!checkbox.checked) input.value = '';
+    }
+
+    function updateErrorStates() {
+      const seq = document.querySelector('[data-principle="sequence"]').checked;
+      const corr = document.querySelector('[data-principle="correspondence"]').checked;
+      const card = document.querySelector('[data-principle="cardinality"]').checked;
+
+      const allChecked = seq && corr && card;
+      const errorCbs = document.querySelectorAll('[data-error]');
+      const errorGroup = document.getElementById('errorPatternGroup');
+
+      errorCbs.forEach(cb => {
+        if (cb.dataset.error !== 'other') {
+          cb.disabled = allChecked;
+          if (allChecked) cb.checked = false;
+        }
+      });
+
+      errorGroup.style.opacity = allChecked ? '0.5' : '1';
+      errorGroup.style.pointerEvents = allChecked ? 'none' : 'auto';
+
+      updatePrincipleStates();
+    }
+
+    function updatePrincipleStates() {
+      const skips = document.querySelector('[data-error="skips_numbers"]').checked;
+      const repeats = document.querySelector('[data-error="repeats_numbers"]').checked;
+      const losesTrack = document.querySelector('[data-error="loses_track"]').checked;
+      const doubleCount = document.querySelector('[data-error="double_counts"]').checked;
+      const countsAgain = document.querySelector('[data-error="counts_again"]').checked;
+
+      const seq = document.querySelector('[data-principle="sequence"]');
+      const corr = document.querySelector('[data-principle="correspondence"]');
+      const card = document.querySelector('[data-principle="cardinality"]');
+
+      if (skips || repeats) {
+        seq.disabled = true;
+        if (seq.checked) seq.checked = false;
       } else {
-        content = BEHAVIOR_GROUPS.map(group => {
-          const items = group.behaviors.map(behavior => {
-            if (group.id === 'errors') {
-              const exhibitors = students
-                .filter(student => (getObservations(student.id)[behavior.id]?.count || 0) > 0)
-                .map(student => ({ name: student.name, count: getObservations(student.id)[behavior.id].count }))
-                .sort((a, z) => z.count - a.count);
-              const chips = exhibitors.length === 0
-                ? `<span style="color:#94a3b8;font-size:13px">No students observed with this error pattern</span>`
-                : exhibitors.map(e => `<span class="error-chip">${escapeHtml(e.name)} – ×${e.count}</span>`).join('');
-              return `
-                <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:10px;overflow:hidden">
-                  <div class="behavior-header" style="background:${group.bgColor};border-bottom:2px solid ${group.color}">
-                    <div><div style="font-weight:700;font-size:13px;color:${group.color}">${behavior.label}</div><div style="font-size:12px;color:#64748b">${behavior.desc}</div></div>
-                  </div>
-                  <div style="padding:12px 16px">${chips}</div>
-                </div>
-              `;
-            }
-
-            const buckets = { not_yet: [], emerging: [], proficient: [], unrated: [] };
-            students.forEach(student => {
-              const level = getObservations(student.id)[behavior.id]?.level;
-              if (level) buckets[level].push(student.name);
-              else buckets.unrated.push(student.name);
-            });
-
-            const bucketDisplay = [
-              ...LEVELS.map(level => `
-                <div class="bucket">
-                  <div class="bucket-header" style="background:${level.color}">${level.label} (${buckets[level.id].length})</div>
-                  <div class="bucket-body">${buckets[level.id].length === 0 ? '<span style="color:#cbd5e1;font-size:12px">—</span>' : buckets[level.id].map(name => `<div class="student-chip">${escapeHtml(name)}</div>`).join('')}</div>
-                </div>
-              `),
-              `
-                <div class="bucket">
-                  <div class="bucket-header" style="background:#64748b">Not Rated (${buckets.unrated.length})</div>
-                  <div class="bucket-body">${buckets.unrated.length === 0 ? '<span style="color:#cbd5e1;font-size:12px">—</span>' : buckets.unrated.map(name => `<div class="student-chip-gray">${escapeHtml(name)}</div>`).join('')}</div>
-                </div>
-              `,
-            ].join('');
-
-            return `
-              <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:10px;overflow:hidden">
-                <div class="behavior-header" style="background:${group.bgColor};border-bottom:2px solid ${group.color}">
-                  <div><div style="font-weight:700;font-size:13px;color:${group.color}">${behavior.label}</div><div style="font-size:12px;color:#64748b">${behavior.desc}</div></div>
-                </div>
-                <div class="bucket-row">${bucketDisplay}</div>
-              </div>
-            `;
-          }).join('');
-
-          return `
-            <div style="margin:16px 20px 0">
-              <div class="group-label" style="color:${group.color};border-color:${group.color}">${group.label}</div>
-              ${items}
-            </div>
-          `;
-        }).join('') + '<div class="spacer"></div>';
+        seq.disabled = false;
       }
 
-      return `
-        <div class="header">
-          <button class="header-btn" onclick="navigate('roster')">← Back to Roster</button>
-          <div class="flex1" style="margin-left:12px">
-            <div class="header-title">Group Reports</div>
-            <div class="header-subtitle">${students.length} student${students.length !== 1 ? 's' : ''}</div>
-          </div>
-        </div>
-        <div class="tab-bar">
-          <button class="tab ${groupTab === 'roster' ? 'active' : ''}" onclick="switchTab('roster')">Full Roster</button>
-          <button class="tab ${groupTab === 'diff' ? 'active' : ''}" onclick="switchTab('diff')">Differentiation</button>
-        </div>
-        ${content}
-      `;
-    }
+      if (losesTrack || doubleCount) {
+        corr.disabled = true;
+        if (corr.checked) corr.checked = false;
+      } else {
+        corr.disabled = false;
+      }
 
-    function switchTab(tabName) {
-      groupTab = tabName;
-      render();
-    }
-
-    function renderSettings() {
-      const lastModified = state.metadata?.lastModified
-        ? new Date(state.metadata.lastModified).toLocaleString()
-        : 'Never';
-
-      return `
-        <div class="header">
-          <button class="header-btn" onclick="navigate('roster')">← Back to Roster</button>
-          <div class="flex1" style="margin-left:12px">
-            <div class="header-title">Settings</div>
-            <div class="header-subtitle">Backup & data management</div>
-          </div>
-        </div>
-
-        <div style="margin:16px 20px 0">
-          <div class="settings-panel">
-            <div class="settings-title">Data Backup</div>
-            <p style="color:#64748b;font-size:13px;margin-bottom:12px">
-              Save your student assessment data to a file. This backup can be restored on any device or after clearing the app.
-            </p>
-            <div class="settings-row">
-              <button class="export-btn" onclick="downloadBackup()" style="flex:1">⬇ Download Backup</button>
-              <button class="export-btn" onclick="triggerRestore()" style="flex:1">⬆ Restore Backup</button>
-            </div>
-            <div style="font-size:12px;color:#94a3b8;margin-top:8px">Last saved: ${lastModified}</div>
-          </div>
-        </div>
-
-        <div style="margin:16px 20px 0">
-          <div class="settings-panel">
-            <div class="settings-title">Data Status</div>
-            <div style="color:#64748b;font-size:13px;margin-bottom:12px">
-              <div style="margin-bottom:8px">Students: <strong>${state.students.length}</strong></div>
-              <div style="margin-bottom:8px">Total observations: <strong>${Object.values(state.observations).reduce((sum, obs) => sum + (obs._notesList?.length || 0), 0)}</strong></div>
-              <div>Storage usage: <strong>${calculateStorageSize()}</strong></div>
-            </div>
-          </div>
-        </div>
-
-        <div style="margin:16px 20px 0">
-          <div class="settings-panel" style="border-color:#fee2e2;background:#fef2f2">
-            <div class="settings-title" style="color:#991b1b">Danger Zone</div>
-            <p style="color:#991b1b;font-size:13px;margin-bottom:12px">
-              Permanently delete all data. Make sure to back up first!
-            </p>
-            <button class="danger-btn" onclick="if(confirm('Delete ALL data permanently? This cannot be undone. Make sure you have a backup!')) { state = createEmptyState(); saveState(); navigate('roster'); showToast('All data deleted', '#ef4444'); }">Delete All Data</button>
-          </div>
-        </div>
-
-        <div class="spacer"></div>
-      `;
-    }
-
-    function calculateStorageSize() {
-      try {
-        const size = new Blob([JSON.stringify(state)]).size;
-        if (size < 1024) return size + ' B';
-        if (size < 1024 * 1024) return (size / 1024).toFixed(2) + ' KB';
-        return (size / (1024 * 1024)).toFixed(2) + ' MB';
-      } catch {
-        return '—';
+      if (countsAgain) {
+        card.disabled = true;
+        if (card.checked) card.checked = false;
+      } else {
+        card.disabled = false;
       }
     }
 
-    function askDelete(id) {
-      pendingDeleteId = id;
-      document.getElementById('deleteOverlay').classList.remove('hidden');
+    function updateErrorCheckStates() {
+      updatePrincipleStates();
     }
 
-    function closeConfirm() {
-      pendingDeleteId = null;
-      document.getElementById('deleteOverlay').classList.add('hidden');
-    }
-
-    function confirmDelete() {
-      if (!pendingDeleteId) return;
-      delete state.observations[pendingDeleteId];
-      state.students = state.students.filter(s => s.id !== pendingDeleteId);
-      saveState();
-      closeConfirm();
-      render();
-      showToast('Student removed', '#ef4444');
-    }
-
-    function closeBackupModal() {
-      document.getElementById('backupOverlay').classList.add('hidden');
-    }
-
-    async function init() {
-      if (!unlocked) {
-        render();
+    // ========== SAVE OBSERVATION ==========
+    function saveObservation() {
+      if (!state.selectedStudentId) {
+        alert('Please select a student first');
         return;
       }
-      // Show loading screen
-      document.getElementById('app').innerHTML = `
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:80vh;gap:16px">
-          <div style="font-size:18px;font-weight:700;color:#1e3a8a">Loading assessment data...</div>
-          <div style="width:40px;height:40px;border:4px solid #e2e8f0;border-top-color:#1e3a8a;border-radius:50%;animation:spin 0.8s linear infinite"></div>
-          <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
-        </div>
-      `;
-      state = await loadStateFromServer();
-      render();
-      startAutoSave();
-      updateSyncBadge(true);
-      window.addEventListener('beforeunload', () => {
-        if (state.metadata) {
-          state.metadata.lastModified = new Date().toISOString();
-          const body = JSON.stringify(state);
-          navigator.sendBeacon(CONFIG.API_URL + '?beacon=1', body);
-        }
+
+      const sizeRadio = document.querySelector('input[name="collectionSize"]:checked');
+      if (!sizeRadio) {
+        alert('Please select a collection size');
+        return;
+      }
+
+      const principles = {
+        sequence: document.querySelector('[data-principle="sequence"]').checked,
+        correspondence: document.querySelector('[data-principle="correspondence"]').checked,
+        cardinality: document.querySelector('[data-principle="cardinality"]').checked
+      };
+
+      const strategies = {};
+      document.querySelectorAll('[data-strategy]').forEach(cb => {
+        strategies[cb.dataset.strategy] = cb.checked;
       });
+
+      const errors = {};
+      document.querySelectorAll('[data-error]').forEach(cb => {
+        errors[cb.dataset.error] = cb.checked;
+      });
+
+      const note = document.getElementById('observationNote').value.trim();
+      const strategyOtherText = document.getElementById('strategyOther').value.trim();
+      const errorOtherText = document.getElementById('errorOther').value.trim();
+
+      if (!state.observations[state.selectedStudentId]) {
+        state.observations[state.selectedStudentId] = { history: [] };
+      }
+
+      state.observations[state.selectedStudentId].history.push({
+        timestamp: new Date().toISOString(),
+        collectionSize: sizeRadio.value,
+        principles,
+        strategies,
+        strategyOtherText,
+        errors,
+        errorOtherText,
+        note
+      });
+
+      // Clear form
+      document.querySelectorAll('input[name="collectionSize"]').forEach(r => r.checked = false);
+      document.querySelectorAll('[data-principle]').forEach(cb => { cb.checked = false; cb.disabled = false; });
+      document.querySelectorAll('[data-strategy]').forEach(cb => cb.checked = false);
+      document.querySelectorAll('[data-error]').forEach(cb => { cb.checked = false; cb.disabled = false; });
+      document.getElementById('strategyOther').value = '';
+      document.getElementById('errorOther').value = '';
+      document.getElementById('observationNote').value = '';
+      document.getElementById('errorPatternGroup').style.opacity = '1';
+      document.getElementById('errorPatternGroup').style.pointerEvents = 'auto';
+      toggleStrategyInput();
+      toggleErrorInput();
+
+      saveState();
+      renderAssessment();
+      renderRoster();
+      renderGroups();
+      alert('Observation saved!');
     }
 
-    init();
+    // ========== TRAJECTORIES VIEW ==========
+    function renderTrajectories() {
+      const container = document.getElementById('trajectoriesTimeline');
+
+      const colors = ['#fbbf24', '#60a5fa', '#34d399', '#818cf8', '#f87171', '#d946ef', '#10b981'];
+
+      let html = '';
+
+      TRAJECTORIES.forEach((traj, index) => {
+        html += `
+          <div style="flex-shrink: 0; width: 140px; cursor: pointer;" onclick="showTrajDetail(${index})">
+            <div style="background: white; border: 2px solid ${colors[index]}; border-radius: 12px; padding: 16px; text-align: center; transition: all 0.3s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.1);" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.1)'; this.style.transform='translateY(0)'">
+              <div style="width: 48px; height: 48px; background: ${colors[index]}; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; color: white; margin: 0 auto 10px;">
+                ${index + 1}
+              </div>
+              <div style="font-weight: 700; font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+                ${traj.name}
+              </div>
+              <div style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">
+                Click to learn more
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function showTrajDetail(index) {
+      const traj = TRAJECTORIES[index];
+      const colors = ['#fbbf24', '#60a5fa', '#34d399', '#818cf8', '#f87171', '#d946ef', '#10b981'];
+
+      document.getElementById('trajDetailTitle').innerHTML = `<span style="color: ${colors[index]};">&#9679;</span> Level ${traj.level}: ${traj.name}`;
+
+      let content = `
+        <div style="margin-bottom: 20px;">
+          <div style="font-weight: 600; color: var(--text-secondary); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; margin-bottom: 8px;">Description</div>
+          <div style="font-size: 14px; color: var(--text-primary); line-height: 1.6;">
+            ${traj.description}
+          </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <div style="font-weight: 600; color: var(--text-secondary); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; margin-bottom: 8px;">What to Look For</div>
+          <ul style="margin: 0; padding-left: 18px; color: var(--text-primary); font-size: 13px; line-height: 1.8;">
+            ${traj.indicators.map(ind => `<li>${ind}</li>`).join('')}
+          </ul>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <div style="font-weight: 600; color: var(--text-secondary); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; margin-bottom: 8px;">Teaching Focus</div>
+          <div style="font-size: 13px; color: var(--text-primary); line-height: 1.6; padding: 12px; background: linear-gradient(135deg, ${colors[index]}20, transparent); border-left: 3px solid ${colors[index]}; border-radius: 4px;">
+            ${traj.teachingFocus}
+          </div>
+        </div>
+
+        <div style="background: #f9fafb; padding: 12px; border-radius: 6px; border-left: 3px solid var(--info);">
+          <div style="font-weight: 600; color: var(--text-secondary); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; margin-bottom: 8px;">About This Level</div>
+          <div style="font-size: 13px; color: var(--text-primary); line-height: 1.6;">
+            ${traj.context}
+          </div>
+        </div>
+      `;
+
+      document.getElementById('trajDetailContent').innerHTML = content;
+      document.getElementById('trajDetailsPanel').style.display = 'block';
+
+      setTimeout(() => {
+        document.getElementById('trajDetailsPanel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
+    }
+
+    function closeTrajDetail() {
+      document.getElementById('trajDetailsPanel').style.display = 'none';
+    }
+
+    // ========== GROUPS VIEW ==========
+    function calculateProficiency(studentId) {
+      const obs = state.observations[studentId]?.history || [];
+      if (obs.length === 0) return 'early';
+
+      let sequenceCount = 0;
+      let correspondenceCount = 0;
+      let cardinalityCount = 0;
+      let errorCount = 0;
+
+      obs.forEach(o => {
+        if (o.principles.sequence) sequenceCount++;
+        if (o.principles.correspondence) correspondenceCount++;
+        if (o.principles.cardinality) cardinalityCount++;
+        Object.values(o.errors).forEach(e => {
+          if (e) errorCount++;
+        });
+      });
+
+      const obsLength = obs.length;
+
+      if (sequenceCount === obsLength && correspondenceCount === obsLength && cardinalityCount === obsLength && errorCount === 0) {
+        return 'proficient';
+      }
+
+      if (sequenceCount >= Math.ceil(obsLength * 0.7) && correspondenceCount >= Math.ceil(obsLength * 0.7) && cardinalityCount >= Math.ceil(obsLength * 0.7) && errorCount <= 2) {
+        return 'proficient';
+      }
+
+      if ((sequenceCount + correspondenceCount + cardinalityCount) >= (obsLength * 1.5) || (sequenceCount >= obsLength * 0.5 && correspondenceCount >= obsLength * 0.5)) {
+        return 'developing';
+      }
+
+      return 'early';
+    }
+
+    function renderGroups() {
+      const groups = { early: [], developing: [], proficient: [] };
+
+      state.students.forEach(student => {
+        const proficiency = calculateProficiency(student.id);
+        groups[proficiency].push(student);
+      });
+
+      const renderGroup = (proficiency) => {
+        const students = groups[proficiency].sort((a, b) => a.name.localeCompare(b.name));
+        if (students.length === 0) {
+          return '<div style="text-align: center; color: var(--text-secondary); padding: 20px; font-size: 13px;">No students at this level yet</div>';
+        }
+        return students.map(student => {
+          const obs = state.observations[student.id]?.history || [];
+          const lastObs = obs.length > 0 ? new Date(obs[obs.length - 1].timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Never';
+          return `
+            <div style="padding: 10px 0; border-bottom: 1px solid var(--neutral-200); cursor: pointer;" onclick="selectStudent('${student.id}')">
+              <div style="font-weight: 600; font-size: 14px;">${student.name}</div>
+              <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">${obs.length} observation${obs.length !== 1 ? 's' : ''} &bull; Last: ${lastObs}</div>
+            </div>
+          `;
+        }).join('');
+      };
+
+      document.getElementById('groupEarly').innerHTML = renderGroup('early');
+      document.getElementById('groupDeveloping').innerHTML = renderGroup('developing');
+      document.getElementById('groupProficient').innerHTML = renderGroup('proficient');
+    }
+
+    // ========== VIEW MANAGEMENT ==========
+    function showView(viewName) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById(viewName).classList.add('active');
+
+      if (viewName === 'trajectoriesView') {
+        renderTrajectories();
+      } else if (viewName === 'groupsView') {
+        renderGroups();
+      }
+    }
+
+    // ========== EXPORT ==========
+    function exportData() {
+      let csv = 'Student,Current Level,Total Observations\n';
+      state.students.forEach(student => {
+        const level = state.studentLevels[student.id] || 1;
+        const obsCount = state.observations[student.id]?.history?.length || 0;
+        csv += `"${student.name}",${level},${obsCount}\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `counting-assessment-${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    }
+
+    // ========== INITIALIZATION ==========
+    async function initApp() {
+      await loadStateFromServer();
+      // Restore the full app HTML
+      document.getElementById('app').innerHTML = '';
+      // Re-insert all views
+      document.getElementById('app').innerHTML = document.getElementById('appTemplate').innerHTML;
+      renderRoster();
+      renderGroups();
+    }
   </script>
+
+  <!-- Template: stored off-screen so we can restore after loading -->
+  <template id="appTemplate">
+    <!-- ROSTER VIEW -->
+    <div id="rosterView" class="view active">
+      <div class="header">
+        <div class="header-content">
+          <div class="header-title">Counting Collections</div>
+          <div class="header-sub">Kindergarten Assessment</div>
+        </div>
+        <button class="header-btn" onclick="showView('groupsView')">Groups</button>
+        <button class="header-btn" onclick="showView('trajectoriesView')">Trajectories</button>
+        <button class="header-btn" onclick="exportData()">Export</button>
+      </div>
+
+      <div class="input-row">
+        <input type="text" id="newStudentInput" placeholder="Add student name..." onkeydown="if(event.key==='Enter')addStudent()" />
+        <button class="btn btn-primary" onclick="addStudent()">Add</button>
+      </div>
+
+      <div id="rosterList"></div>
+    </div>
+
+    <!-- TRAJECTORIES VIEW -->
+    <div id="trajectoriesView" class="view">
+      <div class="header">
+        <button class="header-btn" onclick="showView('rosterView')">← Roster</button>
+        <div class="header-content" style="margin-left: 12px">
+          <div class="header-title">The Counting Journey</div>
+          <div class="header-sub">Click any level to learn more</div>
+        </div>
+      </div>
+
+      <div style="padding: 20px 20px 0;">
+        <div class="card">
+          <div class="card-body">
+            <div style="font-size: 14px; color: var(--text-primary); line-height: 1.7;">
+              <div style="font-weight: 700; margin-bottom: 8px;">Development is Not Linear</div>
+              <div style="color: var(--text-secondary); font-size: 13px;">
+                <p style="margin-bottom: 8px;">Research shows that children develop counting skills in varied ways:</p>
+                <ul style="margin: 0; padding-left: 20px;">
+                  <li style="margin-bottom: 6px;"><strong>Concurrent skills:</strong> Students often work on multiple levels simultaneously</li>
+                  <li style="margin-bottom: 6px;"><strong>Variable pacing:</strong> Different rates of progress are expected and developmentally normal</li>
+                  <li><strong>Context-dependent:</strong> Success in one setting may precede success in another</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 20px 20px 0;">
+        <div style="font-weight: 700; font-size: 14px; color: var(--text-primary); margin-bottom: 16px;">The Counting Levels</div>
+        <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+          <div id="trajectoriesTimeline" style="display: flex; gap: 16px; min-width: min-content; padding-bottom: 10px;"></div>
+        </div>
+      </div>
+
+      <div id="trajDetailsPanel" style="padding: 0 20px 20px; display: none;">
+        <div class="card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div id="trajDetailTitle"></div>
+            <button class="header-btn" onclick="closeTrajDetail()" style="margin: 0; font-size: 14px;">Close</button>
+          </div>
+          <div class="card-body">
+            <div id="trajDetailContent"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 0 20px 30px;">
+        <div class="card">
+          <div class="card-header">Research Source</div>
+          <div class="card-body" style="font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+            <strong style="color: var(--text-primary);">Clements, D. H., & Sarama, J.</strong> (2017/2019). Learning and teaching with learning trajectories [LT]. Marsico Institute, Morgridge College of Education, University of Denver.
+          </div>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+    </div>
+
+    <!-- GROUPS VIEW -->
+    <div id="groupsView" class="view">
+      <div class="header">
+        <button class="header-btn" onclick="showView('rosterView')">← Roster</button>
+        <div class="header-content" style="margin-left: 12px">
+          <div class="header-title">Small Group Organization</div>
+          <div class="header-sub">By observed proficiency</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; padding: 14px;">
+        <div class="card">
+          <div class="card-header" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-bottom: 2px solid var(--warning);">Early Stage</div>
+          <div style="padding: 12px 16px; background: #fffbf0; border-bottom: 1px solid #fef3c7;">
+            <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">Emerging understanding of counting principles.</div>
+          </div>
+          <div class="card-body" id="groupEarly"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-bottom: 2px solid var(--info);">Developing</div>
+          <div style="padding: 12px 16px; background: #f0f9ff; border-bottom: 1px solid #dbeafe;">
+            <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">Demonstrates some counting principles, but inconsistently.</div>
+          </div>
+          <div class="card-body" id="groupDeveloping"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border-bottom: 2px solid var(--success);">Consistent</div>
+          <div style="padding: 12px 16px; background: #f0fdf4; border-bottom: 1px solid #dcfce7;">
+            <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">Demonstrates all three counting principles consistently.</div>
+          </div>
+          <div class="card-body" id="groupProficient"></div>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+    </div>
+
+    <!-- ASSESSMENT VIEW -->
+    <div id="assessmentView" class="view">
+      <div class="header">
+        <button class="header-btn" onclick="showView('rosterView')">← Roster</button>
+        <div class="header-content" style="margin-left: 12px">
+          <div class="header-title" id="studentTitle"></div>
+          <div class="header-sub">Observation</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="card">
+          <div class="card-header">Collection Size</div>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="radio" name="collectionSize" value="1-10" />
+              <div class="checkbox-label">1-10 objects</div>
+            </label>
+            <label class="checkbox-item">
+              <input type="radio" name="collectionSize" value="10-20" />
+              <div class="checkbox-label">10-20 objects</div>
+            </label>
+            <label class="checkbox-item">
+              <input type="radio" name="collectionSize" value="20-50" />
+              <div class="checkbox-label">20-50 objects</div>
+            </label>
+            <label class="checkbox-item">
+              <input type="radio" name="collectionSize" value="50+" />
+              <div class="checkbox-label">50+ objects</div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="card">
+          <div class="card-header">Core Counting Principles</div>
+          <div style="padding: 16px;">
+            <label class="checkbox-item" style="margin-bottom: 16px;">
+              <input type="checkbox" data-principle="sequence" onchange="updateErrorStates()" />
+              <div style="flex: 1;">
+                <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Number Word Sequence</div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Child accurately says number words in order (1, 2, 3, 4...)</div>
+              </div>
+            </label>
+            <label class="checkbox-item" style="margin-bottom: 16px;">
+              <input type="checkbox" data-principle="correspondence" onchange="updateErrorStates()" />
+              <div style="flex: 1;">
+                <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">One-to-One Correspondence</div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Child matches exactly one number word to each object</div>
+              </div>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" data-principle="cardinality" onchange="updateErrorStates()" />
+              <div style="flex: 1;">
+                <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Cardinality</div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Child understands last number said = the total amount</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="card">
+          <div class="card-header">Organizing Strategy</div>
+          <div class="dropdown-section">
+            <div class="dropdown-header" onclick="toggleDropdown('strategy')">
+              <div class="dropdown-title">Select organizing strategy observed</div>
+              <div class="dropdown-toggle" id="toggle-strategy">▼</div>
+            </div>
+            <div class="dropdown-content" id="content-strategy">
+              <div class="dropdown-item">
+                <input type="checkbox" data-strategy="line" />
+                <label class="dropdown-label">Organized in a line</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-strategy="groups" />
+                <label class="dropdown-label">Grouped objects (by color, size, etc.)</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-strategy="containers" />
+                <label class="dropdown-label">Used containers (moved in/out)</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-strategy="counting_on" />
+                <label class="dropdown-label">Counted on (started from number other than 1)</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-strategy="other" onchange="toggleStrategyInput()" />
+                <label class="dropdown-label">Other:
+                  <input type="text" class="inline-input" id="strategyOther" placeholder="Describe..." disabled style="margin-left: 8px;" />
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="errorPatternGroup">
+        <div class="card">
+          <div class="card-header">Error Patterns Noted</div>
+          <div class="dropdown-section">
+            <div class="dropdown-header" onclick="toggleDropdown('errors')">
+              <div class="dropdown-title">Select error patterns observed</div>
+              <div class="dropdown-toggle" id="toggle-errors">▼</div>
+            </div>
+            <div class="dropdown-content" id="content-errors">
+              <div class="dropdown-item">
+                <input type="checkbox" data-error="skips_numbers" onchange="updateErrorCheckStates()" />
+                <label class="dropdown-label">Skipped numbers in sequence</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-error="repeats_numbers" onchange="updateErrorCheckStates()" />
+                <label class="dropdown-label">Repeated numbers</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-error="loses_track" onchange="updateErrorCheckStates()" />
+                <label class="dropdown-label">Lost track/abandoned count</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-error="double_counts" onchange="updateErrorCheckStates()" />
+                <label class="dropdown-label">Double counted objects</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-error="counts_again" onchange="updateErrorCheckStates()" />
+                <label class="dropdown-label">Counted again when asked "how many?"</label>
+              </div>
+              <div class="dropdown-item">
+                <input type="checkbox" data-error="other" onchange="toggleErrorInput(); updateErrorCheckStates()" />
+                <label class="dropdown-label">Other:
+                  <input type="text" class="inline-input" id="errorOther" placeholder="Describe..." disabled style="margin-left: 8px;" />
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="card">
+          <div class="card-header">Quick Note</div>
+          <div class="card-body">
+            <textarea id="observationNote" placeholder="E.g., organized by color, counted slowly, lost track after 5..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button class="btn btn-primary" onclick="saveObservation()">Save Observation</button>
+      </div>
+
+      <div class="section">
+        <div class="card">
+          <div class="card-header">Observation History</div>
+          <div id="observationHistory"></div>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+    </div>
+  </template>
 </body>
 </html>
