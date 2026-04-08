@@ -1141,7 +1141,13 @@
 
           return `
             <div style="padding: 12px 0; border-bottom: 1px solid var(--neutral-200);">
-              <div style="font-weight: 600; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px;">${dateStr} &bull; ${record.collectionSize} objects</div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                <div style="font-weight: 600; font-size: 12px; color: var(--text-secondary);">${dateStr} &bull; ${record.collectionSize} objects</div>
+                <div style="display: flex; gap: 6px;">
+                  <button class="btn btn-sm btn-secondary" onclick="editObservation(${idx})" style="font-size: 11px; padding: 4px 8px;">Edit</button>
+                  <button class="btn btn-sm btn-secondary" onclick="deleteObservation(${idx})" style="font-size: 11px; padding: 4px 8px;">Delete</button>
+                </div>
+              </div>
               ${principles ? `<div style="font-size: 12px; color: var(--text-primary); margin-bottom: 4px;">${principles}</div>` : ''}
               ${strategyText ? `<div style="font-size: 12px; color: var(--text-secondary);">Strategy: ${strategyText}</div>` : ''}
               ${errorText ? `<div style="font-size: 12px; color: var(--text-secondary);">Errors: ${errorText}</div>` : ''}
@@ -1299,6 +1305,64 @@
       renderRoster();
       renderGroups();
       alert('Observation saved!');
+    }
+
+    // ========== EDIT/DELETE OBSERVATIONS ==========
+    function deleteObservation(index) {
+      if (!confirm('Are you sure you want to delete this observation?')) {
+        return;
+      }
+
+      const obs = state.observations[state.selectedStudentId]?.history || [];
+      obs.reverse(); // reverse to match display order
+      obs.splice(index, 1);
+      obs.reverse(); // reverse back
+
+      saveState();
+      renderObservationHistory();
+      renderGroups();
+      renderRoster();
+      alert('Observation deleted.');
+    }
+
+    function editObservation(index) {
+      const obs = state.observations[state.selectedStudentId]?.history || [];
+      const reversedObs = [...obs].reverse();
+      const record = reversedObs[index];
+      const originalIndex = obs.length - 1 - index;
+
+      // Populate form with observation data
+      document.querySelector(`input[value="${record.collectionSize}"]`).checked = true;
+
+      document.querySelector('[data-principle="sequence"]').checked = record.principles.sequence;
+      document.querySelector('[data-principle="correspondence"]').checked = record.principles.correspondence;
+      document.querySelector('[data-principle="cardinality"]').checked = record.principles.cardinality;
+
+      Object.entries(record.strategies).forEach(([key, value]) => {
+        const cb = document.querySelector(`[data-strategy="${key}"]`);
+        if (cb) cb.checked = value;
+      });
+
+      Object.entries(record.errors).forEach(([key, value]) => {
+        const cb = document.querySelector(`[data-error="${key}"]`);
+        if (cb) cb.checked = value;
+      });
+
+      document.getElementById('strategyOther').value = record.strategyOtherText || '';
+      document.getElementById('errorOther').value = record.errorOtherText || '';
+      document.getElementById('observationNote').value = record.note || '';
+
+      toggleStrategyInput();
+      toggleErrorInput();
+      updateErrorStates();
+
+      // Delete the old observation
+      obs.splice(originalIndex, 1);
+      saveState();
+
+      // Scroll to top of form
+      document.querySelector('.section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      alert('Edit your observation and save to update.');
     }
 
     // ========== TRAJECTORIES VIEW ==========
