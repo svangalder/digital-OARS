@@ -1,14 +1,52 @@
 import { getStore } from "@netlify/blobs";
 
 const STORE_NAME = "knbt1-data";
-const DATA_KEY = "assessment-state";
 
 export default async (req, context) => {
   const store = getStore(STORE_NAME);
+  const url = new URL(req.url);
+  const user = url.searchParams.get("user");
+  const listAll = url.searchParams.get("list") === "all";
+
+  // Admin: list all teacher keys
+  if (req.method === "GET" && listAll) {
+    try {
+      const { blobs } = await store.list();
+      const results = {};
+      for (const blob of blobs) {
+        const data = await store.get(blob.key);
+        if (data) {
+          try {
+            results[blob.key] = JSON.parse(data);
+          } catch {
+            // skip invalid entries
+          }
+        }
+      }
+      return new Response(JSON.stringify(results), {
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.error("Error listing data:", error);
+      return new Response(JSON.stringify({ error: "Failed to list data" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+  }
+
+  if (!user) {
+    return new Response(JSON.stringify({ error: "Missing user parameter" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  const dataKey = `teacher-${user}`;
 
   if (req.method === "GET") {
     try {
-      const data = await store.get(DATA_KEY);
+      const data = await store.get(dataKey);
       if (!data) {
         return new Response(JSON.stringify(null), {
           headers: { "Content-Type": "application/json" },
@@ -30,7 +68,7 @@ export default async (req, context) => {
     try {
       const body = await req.text();
       JSON.parse(body); // validate it's valid JSON
-      await store.set(DATA_KEY, body);
+      await store.set(dataKey, body);
       return new Response(JSON.stringify({ ok: true }), {
         headers: { "Content-Type": "application/json" },
       });

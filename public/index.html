@@ -559,10 +559,26 @@
   <div id="loginScreen" class="login-screen">
     <div class="login-box">
       <div class="login-title">Counting Collections</div>
-      <div class="login-subtitle">Enter your access token to continue</div>
-      <input type="password" id="tokenInput" class="login-input" placeholder="Access token..." onkeydown="if(event.key==='Enter')checkToken()">
-      <div id="tokenError" class="login-error"></div>
-      <button onclick="checkToken()" class="login-btn">Unlock</button>
+      <div class="login-subtitle">Sign in to continue</div>
+      <input type="text" id="usernameInput" class="login-input" placeholder="Username" style="letter-spacing:normal;margin-bottom:8px" onkeydown="if(event.key==='Enter')document.getElementById('passwordInput').focus()">
+      <input type="password" id="passwordInput" class="login-input" placeholder="Password" onkeydown="if(event.key==='Enter')checkLogin()">
+      <div id="loginError" class="login-error"></div>
+      <button onclick="checkLogin()" class="login-btn">Sign In</button>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL (hidden until admin logs in) -->
+  <div id="adminPanel" class="hidden">
+    <div class="header">
+      <div class="header-content">
+        <div class="header-title">Admin Dashboard</div>
+        <div class="header-sub">View all teacher data (read-only)</div>
+      </div>
+      <button class="header-btn" onclick="adminLogout()">Sign Out</button>
+    </div>
+    <div style="padding:14px">
+      <div id="adminLoading" style="text-align:center;padding:40px;color:var(--text-secondary)">Loading teacher data...</div>
+      <div id="adminTeacherList"></div>
     </div>
   </div>
 
@@ -578,6 +594,7 @@
         <button class="header-btn" onclick="showView('groupsView')">Groups</button>
         <button class="header-btn" onclick="showView('trajectoriesView')">Trajectories</button>
         <button class="header-btn" onclick="exportData()">Export</button>
+        <button class="header-btn" onclick="teacherLogout()">Sign Out</button>
       </div>
 
       <div class="input-row">
@@ -864,19 +881,153 @@
     // ========== API CONFIG ==========
     const API_URL = '/api/data';
 
+    // ========== USER ACCOUNTS ==========
+    const TEACHERS = [
+      { username: 'teacher1', password: 'Count2026!', displayName: 'Teacher 1' },
+      { username: 'teacher2', password: 'Count2026!', displayName: 'Teacher 2' },
+      { username: 'teacher3', password: 'Count2026!', displayName: 'Teacher 3' },
+    ];
+
+    const ADMIN = { username: 'Strawman', password: 'GK2026' };
+
+    let currentUser = null; // { username, displayName, isAdmin }
+
     // ========== LOGIN ==========
-    function checkToken() {
-      const input = document.getElementById('tokenInput');
-      if (input.value === 'Gr8M!nds') {
+    function checkLogin() {
+      const username = document.getElementById('usernameInput').value.trim();
+      const password = document.getElementById('passwordInput').value;
+
+      // Check admin
+      if (username === ADMIN.username && password === ADMIN.password) {
+        currentUser = { username: ADMIN.username, displayName: 'Admin', isAdmin: true };
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('adminPanel').classList.remove('hidden');
+        loadAdminDashboard();
+        return;
+      }
+
+      // Check teachers
+      const teacher = TEACHERS.find(t => t.username === username && t.password === password);
+      if (teacher) {
+        currentUser = { username: teacher.username, displayName: teacher.displayName, isAdmin: false };
         document.getElementById('loginScreen').classList.add('hidden');
         document.getElementById('app').classList.remove('hidden');
         document.getElementById('app').innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:80vh;gap:16px"><div style="font-size:18px;font-weight:700;color:var(--primary)">Loading assessment data...</div><div style="width:40px;height:40px;border:4px solid var(--neutral-200);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite"></div></div>';
         initApp();
-      } else {
-        document.getElementById('tokenError').textContent = 'Invalid access token. Please try again.';
-        input.value = '';
-        input.focus();
+        return;
       }
+
+      document.getElementById('loginError').textContent = 'Invalid username or password.';
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('passwordInput').focus();
+    }
+
+    // ========== ADMIN DASHBOARD ==========
+    async function loadAdminDashboard() {
+      try {
+        const res = await fetch(API_URL + '?list=all');
+        if (!res.ok) throw new Error('Server error');
+        const allData = await res.json();
+
+        const container = document.getElementById('adminTeacherList');
+        document.getElementById('adminLoading').classList.add('hidden');
+
+        const teacherKeys = Object.keys(allData).filter(k => k.startsWith('teacher-'));
+        if (teacherKeys.length === 0) {
+          container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary)">No teacher data found yet.</div>';
+          return;
+        }
+
+        container.innerHTML = teacherKeys.map(key => {
+          const data = allData[key];
+          const teacherUsername = key.replace('teacher-', '');
+          const teacher = TEACHERS.find(t => t.username === teacherUsername);
+          const displayName = teacher ? teacher.displayName : teacherUsername;
+          const studentCount = data.students ? data.students.length : 0;
+          const totalObs = data.observations ? Object.values(data.observations).reduce((sum, o) => sum + (o.history ? o.history.length : 0), 0) : 0;
+
+          return `
+            <div class="card" style="margin-bottom:12px">
+              <div class="card-header" style="display:flex;justify-content:space-between;align-items:center">
+                <div>
+                  <div style="font-weight:700;font-size:16px">${displayName}</div>
+                  <div style="font-size:12px;color:var(--text-secondary);font-weight:400">${studentCount} student${studentCount !== 1 ? 's' : ''} &bull; ${totalObs} observation${totalObs !== 1 ? 's' : ''}</div>
+                </div>
+                <button class="btn btn-sm btn-primary" onclick="adminViewTeacher('${teacherUsername}')">View Data</button>
+              </div>
+              <div id="admin-detail-${teacherUsername}" class="hidden">
+                <div class="card-body" style="max-height:500px;overflow-y:auto"></div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } catch (e) {
+        console.error('Admin load error:', e);
+        document.getElementById('adminLoading').textContent = 'Error loading data.';
+      }
+    }
+
+    async function adminViewTeacher(username) {
+      const detailDiv = document.getElementById('admin-detail-' + username);
+      if (!detailDiv.classList.contains('hidden')) {
+        detailDiv.classList.add('hidden');
+        return;
+      }
+
+      const bodyDiv = detailDiv.querySelector('.card-body');
+      bodyDiv.innerHTML = '<div style="padding:12px;color:var(--text-secondary)">Loading...</div>';
+      detailDiv.classList.remove('hidden');
+
+      try {
+        const res = await fetch(API_URL + '?user=' + encodeURIComponent(username));
+        if (!res.ok) throw new Error('Server error');
+        const data = await res.json();
+
+        if (!data || !data.students || data.students.length === 0) {
+          bodyDiv.innerHTML = '<div style="padding:12px;color:var(--text-secondary)">No students added yet.</div>';
+          return;
+        }
+
+        bodyDiv.innerHTML = data.students
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map(student => {
+            const obs = data.observations[student.id]?.history || [];
+            const lastObs = obs.length > 0 ? new Date(obs[obs.length - 1].timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Never';
+
+            const obsDetails = obs.slice().reverse().slice(0, 5).map(record => {
+              const date = new Date(record.timestamp);
+              const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+              const principles = [
+                record.principles?.sequence ? 'Sequence' : '',
+                record.principles?.correspondence ? '1-to-1' : '',
+                record.principles?.cardinality ? 'Cardinality' : ''
+              ].filter(Boolean).join(', ');
+              return `<div style="font-size:11px;color:var(--text-secondary);padding:4px 0;border-top:1px solid var(--neutral-100)">${dateStr} &bull; ${record.collectionSize || '?'} &bull; ${principles || 'No principles checked'}${record.note ? ' &bull; <em>' + record.note + '</em>' : ''}</div>`;
+            }).join('');
+
+            return `
+              <div style="padding:12px 0;border-bottom:1px solid var(--neutral-200)">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div style="font-weight:600;font-size:14px">${student.name}</div>
+                  <div style="font-size:12px;color:var(--text-secondary)">${obs.length} obs &bull; Last: ${lastObs}</div>
+                </div>
+                ${obsDetails}
+                ${obs.length > 5 ? '<div style="font-size:11px;color:var(--info);padding-top:4px">+ ' + (obs.length - 5) + ' more observations</div>' : ''}
+              </div>
+            `;
+          }).join('');
+      } catch (e) {
+        bodyDiv.innerHTML = '<div style="padding:12px;color:var(--error)">Error loading teacher data.</div>';
+      }
+    }
+
+    function adminLogout() {
+      currentUser = null;
+      document.getElementById('adminPanel').classList.add('hidden');
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('usernameInput').value = '';
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('loginError').textContent = '';
     }
 
     // ========== KINDERGARTEN TRAJECTORIES ==========
@@ -994,7 +1145,7 @@
 
     async function loadStateFromServer() {
       try {
-        const res = await fetch(API_URL);
+        const res = await fetch(API_URL + '?user=' + encodeURIComponent(currentUser.username));
         if (!res.ok) throw new Error('Server error');
         const data = await res.json();
         if (data && data.students) {
@@ -1016,7 +1167,7 @@
       }
       _saving = true;
       try {
-        const res = await fetch(API_URL, {
+        const res = await fetch(API_URL + '?user=' + encodeURIComponent(currentUser.username), {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(state)
@@ -1540,13 +1691,25 @@
       document.body.removeChild(a);
     }
 
+    // ========== LOGOUT ==========
+    function teacherLogout() {
+      currentUser = null;
+      state = { students: [], selectedStudentId: null, studentLevels: {}, observations: {} };
+      document.getElementById('app').classList.add('hidden');
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('usernameInput').value = '';
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('loginError').textContent = '';
+    }
+
     // ========== INITIALIZATION ==========
     async function initApp() {
       await loadStateFromServer();
-      // Restore the full app HTML
       document.getElementById('app').innerHTML = '';
-      // Re-insert all views
       document.getElementById('app').innerHTML = document.getElementById('appTemplate').innerHTML;
+      // Show teacher name in header
+      const subEls = document.querySelectorAll('#rosterView .header-sub');
+      subEls.forEach(el => { el.textContent = currentUser.displayName + ' \u2014 Kindergarten Assessment'; });
       renderRoster();
       renderGroups();
     }
@@ -1564,6 +1727,7 @@
         <button class="header-btn" onclick="showView('groupsView')">Groups</button>
         <button class="header-btn" onclick="showView('trajectoriesView')">Trajectories</button>
         <button class="header-btn" onclick="exportData()">Export</button>
+        <button class="header-btn" onclick="teacherLogout()">Sign Out</button>
       </div>
 
       <div class="input-row">
