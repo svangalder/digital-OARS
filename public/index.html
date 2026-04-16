@@ -1,1 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Counting Collections — Kindergarten</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:#1a1714;--ink-2:#3d3a36;--ink-3:#7a756e;--ink-4:#b3ada5;
+      --paper:#faf8f5;--paper-2:#f2ede6;--paper-3:#e8e0d4;
+      --accent:#c85a2a;--accent-2:#e8855a;--accent-light:#fdf0ea;
+      --green:#2a7a4b;--green-light:#e8f5ee;
+      --blue:#2a5a8a;--blue-light:#e8f0f8;
+      --amber:#a06020;--amber-light:#fef3e2;
+      --purple:#6b3a9a;--purple-light:#f3eaff;--purple-border:#ddd3ee;
+      --warn:#b34a00;--warn-light:#fff3eb;
+      --radius:10px;--radius-lg:16px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Sora',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;}
+    #app{max-width:860px;margin:0 auto;}
+    .header{background:var(--ink);color:var(--paper);padding:0 16px;height:60px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:50;}
+    .header-wordmark{flex:1;display:flex;flex-direction:column;gap:1px;}
+    .header-title{font-family:'DM Serif Display',serif;font-size:17px;letter-spacing:.01em;line-height:1;}
+    .header-sub{font-size:10px;font-weight:400;color:var(--ink-4);letter-spacing:.08em;text-transform:uppercase;}
+    .header-nav{display:flex;gap:4px;}
+    .nav-btn{background:transparent;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.75);border-radius:6px;padding:6px 11px;font-family:'Sora',sans-serif;font-size:11px;font-weight:500;cursor:pointer;letter-spacing:.03em;transition:all .15s;white-space:nowrap;}
+    .nav-btn:hover{background:rgba(255,255,255,.1);color:white;border-color:rgba(255,255,255,.35);}
+    .view{display:none;}.view.active{display:block;}
 
+    /* ═══ AUTH SCREEN ═══ */
+    .auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--paper);}
+    .auth-card{background:white;border:1px solid var(--paper-3);border-radius:var(--radius-lg);padding:32px 28px;max-width:380px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,.06);}
+    .auth-logo{font-family:'DM Serif Display',serif;font-size:24px;color:var(--ink);margin-bottom:4px;}
+    .auth-sub{font-size:12px;color:var(--ink-4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:24px;}
+    .auth-section-label{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px;}
+    .auth-input{width:100%;font-family:'Sora',sans-serif;font-size:15px;border:1.5px solid var(--paper-3);border-radius:var(--radius);padding:11px 14px;background:var(--paper);color:var(--ink);transition:border-color .15s;margin-bottom:12px;}
+    .auth-input:focus{outline:none;border-color:var(--accent);background:white;}
+    .auth-input::placeholder{color:var(--ink-4);}
+    .auth-pin-row{display:flex;gap:8px;margin-bottom:12px;}
+    .auth-pin-digit{width:52px;height:56px;font-family:'DM Serif Display',serif;font-size:24px;text-align:center;border:1.5px solid var(--paper-3);border-radius:var(--radius);background:var(--paper);color:var(--ink);transition:border-color .15s;}
+    .auth-pin-digit:focus{outline:none;border-color:var(--accent);background:white;}
+    .auth-btn{width:100%;background:var(--ink);color:var(--paper);border:none;border-radius:var(--radius);padding:13px;font-family:'DM Serif Display',serif;font-size:16px;cursor:pointer;letter-spacing:.02em;transition:all .2s;margin-top:6px;}
+    .auth-btn:hover{background:var(--accent);}
+    .auth-divider{text-align:center;font-size:11px;color:var(--ink-4);margin:16px 0;}
+    .auth-link{font-size:12px;color:var(--blue);text-decoration:none;cursor:pointer;display:inline-block;margin-top:8px;background:none;border:none;font-family:'Sora',sans-serif;}
+    .auth-link:hover{text-decoration:underline;}
+    .auth-error{font-size:12px;color:var(--accent);margin-top:6px;display:none;}
+    .auth-success{font-size:12px;color:var(--green);margin-top:6px;display:none;}
+    .sync-code-box{background:var(--paper-2);border:1px solid var(--paper-3);border-radius:var(--radius);padding:12px 14px;font-family:monospace;font-size:18px;letter-spacing:.15em;text-align:center;color:var(--ink);font-weight:700;margin:8px 0 12px;}
+
+    /* SYNC STATUS BAR */
+    .sync-bar{padding:7px 16px;background:var(--paper-2);border-bottom:1px solid var(--paper-3);display:flex;align-items:center;justify-content:space-between;gap:10px;}
+    .sync-status{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-3);}
+    .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--paper-3);}
+    .sync-dot.synced{background:var(--green);}
+    .sync-dot.syncing{background:var(--amber);animation:pulse 1s infinite;}
+    .sync-dot.error{background:var(--accent);}
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+    .sync-btn{font-size:11px;font-weight:600;color:var(--blue);background:none;border:none;cursor:pointer;font-family:'Sora',sans-serif;padding:0;}
+    .sync-btn:hover{text-decoration:underline;}
+    .teacher-pill{font-size:10px;font-weight:700;letter-spacing:.05em;padding:3px 9px;border-radius:20px;background:var(--paper-3);color:var(--ink-3);}
+
+    /* ANALYTICS NOTICE BANNER */
+    .analytics-notice{background:var(--blue-light);border-bottom:1px solid #c8ddf0;padding:9px 16px;display:flex;align-items:flex-start;gap:10px;font-size:11px;color:var(--blue);line-height:1.5;}
+    .analytics-notice-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
+    .analytics-dismiss{background:none;border:none;color:var(--blue);font-family:'Sora',sans-serif;font-size:11px;font-weight:600;cursor:pointer;margin-left:auto;white-space:nowrap;padding-left:10px;flex-shrink:0;}
+
+    /* MODE BAR */
+    .mode-bar{display:flex;align-items:center;gap:12px;padding:12px 16px;background:white;border-bottom:1px solid var(--paper-3);}
+    .mode-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap;}
+    .mode-toggle{display:flex;border:1.5px solid var(--paper-3);border-radius:8px;overflow:hidden;flex:1;}
+    .mode-opt{flex:1;padding:8px 10px;font-family:'Sora',sans-serif;font-size:11px;font-weight:600;cursor:pointer;border:none;background:white;color:var(--ink-3);transition:all .15s;text-align:center;}
+    .mode-opt:first-child{border-right:1px solid var(--paper-3);}
+    .mode-opt.active-cc{background:var(--ink);color:white;}
+    .mode-opt.active-station{background:var(--purple);color:white;}
+
+    /* ADD BAR */
+    .add-bar{display:flex;gap:10px;padding:12px 16px;background:white;border-bottom:1px solid var(--paper-3);}
+    .add-bar input{flex:1;font-family:'Sora',sans-serif;font-size:14px;border:1.5px solid var(--paper-3);border-radius:var(--radius);padding:9px 13px;background:var(--paper);color:var(--ink);transition:border-color .15s;}
+    .add-bar input:focus{outline:none;border-color:var(--accent);background:white;}
+    .add-bar input::placeholder{color:var(--ink-4);}
+    .btn-add{background:var(--accent);color:white;border:none;border-radius:var(--radius);padding:9px 18px;font-family:'Sora',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:background .15s;white-space:nowrap;}
+    .btn-add:hover{background:#b04d22;}
+
+    /* STATION SELECTOR */
+    .station-selector{padding:12px 16px;background:var(--purple-light);border-bottom:1px solid var(--purple-border);}
+    .station-selector-label{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--purple);margin-bottom:9px;}
+    .station-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+    .station-tile{padding:10px 12px;border:1.5px solid var(--purple-border);border-radius:var(--radius);background:white;cursor:pointer;transition:all .15s;}
+    .station-tile:hover{border-color:var(--purple);}
+    .station-tile.selected{border-color:var(--purple);background:var(--purple-light);box-shadow:2px 2px 0 var(--purple-border);}
+    .stn-num{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;}
+    .stn-name{font-size:12px;font-weight:600;color:var(--ink);line-height:1.3;}
+    .stn-type{font-size:10px;color:var(--ink-3);font-style:italic;margin-top:1px;}
+    .c1{color:var(--blue);}.c2{color:var(--green);}.c3{color:var(--amber);}.c4{color:var(--purple);}
+
+    /* COVERAGE BAR */
+    .coverage-bar{margin:10px 14px 0;border-radius:var(--radius);overflow:hidden;border:1px solid var(--paper-3);}
+    .coverage-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:white;cursor:pointer;user-select:none;}
+    .coverage-header:hover{background:var(--paper);}
+    .coverage-title-row{display:flex;align-items:center;gap:8px;}
+    .coverage-title{font-size:12px;font-weight:700;color:var(--ink-2);}
+    .coverage-badge{font-size:10px;font-weight:700;letter-spacing:.05em;padding:3px 8px;border-radius:20px;}
+    .badge-warn{background:var(--warn-light);color:var(--warn);}
+    .badge-ok{background:var(--green-light);color:var(--green);}
+    .coverage-chevron{font-size:11px;color:var(--ink-4);font-weight:700;transition:transform .2s;}
+    .coverage-chevron.open{transform:rotate(180deg);}
+    .coverage-body{display:none;border-top:1px solid var(--paper-3);}
+    .coverage-body.open{display:block;}
+    .coverage-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px;padding:10px 12px;}
+    .coverage-student{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;border:1px solid var(--paper-3);}
+    .coverage-student.needs-obs{background:var(--warn-light);border-color:#f4c8aa;}
+    .coverage-student.has-obs{background:var(--green-light);border-color:#b8e8cc;}
+    .coverage-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+    .dot-warn{background:var(--warn);}.dot-ok{background:var(--green);}
+    .coverage-sname{font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .coverage-stime{font-size:10px;color:var(--ink-4);margin-top:1px;}
+
+    /* ROSTER */
+    .roster-list{padding:10px 14px;}
+    .student-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:white;border:1px solid var(--paper-3);border-radius:var(--radius);margin-bottom:7px;cursor:pointer;transition:all .2s;}
+    .student-row:hover{border-color:var(--accent-2);box-shadow:3px 3px 0 var(--paper-3);transform:translate(-1px,-1px);}
+    .station-row{display:flex;align-items:center;gap:12px;padding:11px 13px;background:white;border:1px solid var(--paper-3);border-radius:var(--radius);margin-bottom:7px;transition:all .2s;}
+    .station-row:hover{border-color:var(--purple);box-shadow:3px 3px 0 var(--purple-border);transform:translate(-1px,-1px);}
+    .station-row.needs-check{border-color:#f4c8aa;background:var(--warn-light);}
+    .station-row.needs-check:hover{border-color:var(--warn);}
+    .avatar{width:38px;height:38px;border-radius:50%;background:var(--paper-2);border:1.5px solid var(--paper-3);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:16px;color:var(--ink-2);flex-shrink:0;}
+    .avatar-warn{background:var(--warn-light);border-color:#f4c8aa;color:var(--warn);}
+    .student-info{flex:1;min-width:0;}
+    .student-name{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .student-meta{font-size:11px;color:var(--ink-4);}
+    .proficiency-pill{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:20px;white-space:nowrap;flex-shrink:0;pointer-events:none;}
+    .pill-early{background:var(--amber-light);color:var(--amber);}
+    .pill-developing{background:var(--blue-light);color:var(--blue);}
+    .pill-proficient{background:var(--green-light);color:var(--green);}
+    .delete-btn{background:transparent;border:1px solid var(--paper-3);color:var(--ink-4);border-radius:6px;padding:5px 9px;font-size:11px;font-family:'Sora',sans-serif;cursor:pointer;transition:all .15s;flex-shrink:0;}
+    .delete-btn:hover{background:#fff0ee;border-color:var(--accent-2);color:var(--accent);}
+    .today-count{font-size:10px;font-weight:700;color:var(--purple);}
+    .unseen-tag{font-size:10px;font-weight:700;color:var(--warn);}
+    .empty-state{text-align:center;padding:50px 20px;color:var(--ink-4);}
+    .empty-icon{font-family:'DM Serif Display',serif;font-size:40px;margin-bottom:10px;color:var(--paper-3);}
+    .empty-state p{font-size:13px;line-height:1.7;}
+
+    /* CARDS */
+    .content-pad{padding:12px 14px;}.spacer{height:40px;}
+    .card{background:white;border:1px solid var(--paper-3);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:12px;}
+    .card-head{padding:11px 15px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);background:var(--paper);border-bottom:1px solid var(--paper-3);display:flex;align-items:center;gap:7px;}
+    .card-head .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+    .card-body{padding:13px 15px;}
+
+    /* OPTION TILES */
+    .option-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+    .option-tile{display:flex;align-items:center;gap:9px;padding:10px 12px;border:1.5px solid var(--paper-3);border-radius:var(--radius);cursor:pointer;transition:all .15s;background:var(--paper);}
+    .option-tile:hover{border-color:var(--accent-2);background:var(--accent-light);}
+    .option-tile input{accent-color:var(--accent);width:16px;height:16px;flex-shrink:0;}
+    .option-tile:has(input:checked){border-color:var(--accent);background:var(--accent-light);}
+    .option-label{font-size:13px;font-weight:500;color:var(--ink-2);}
+
+    /* CC PRINCIPLES */
+    .principle-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--paper-3);}
+    .principle-item:last-child{border-bottom:none;}
+    .principle-item input[type="checkbox"]{accent-color:var(--accent);width:18px;height:18px;margin-top:2px;flex-shrink:0;}
+    .principle-text{flex:1;}
+    .principle-name{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+    .principle-desc{font-size:11px;color:var(--ink-3);line-height:1.6;}
+
+    /* DROPDOWNS */
+    .dropdown-toggle-row{display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;padding:12px 15px;transition:background .1s;}
+    .dropdown-toggle-row:hover{background:var(--paper);}
+    .dropdown-label-text{font-size:13px;font-weight:500;color:var(--ink-2);}
+    .chevron{font-size:11px;color:var(--ink-4);transition:transform .2s;font-weight:700;}
+    .chevron.open{transform:rotate(180deg);}
+    .dropdown-body{display:none;padding:4px 15px 12px;border-top:1px solid var(--paper-3);background:var(--paper);}
+    .dropdown-body.open{display:block;}
+    .check-row{display:flex;align-items:flex-start;gap:10px;padding:7px 0;}
+    .check-row input[type="checkbox"]{accent-color:var(--accent);width:16px;height:16px;margin-top:2px;flex-shrink:0;}
+    .check-label{font-size:13px;color:var(--ink-2);line-height:1.5;}
+    .inline-input{font-family:'Sora',sans-serif;font-size:12px;border:1px solid var(--paper-3);border-radius:6px;padding:4px 9px;background:white;color:var(--ink);margin-left:8px;width:148px;}
+    .inline-input:focus{outline:none;border-color:var(--accent);}
+    .inline-input:disabled{background:var(--paper-2);color:var(--ink-4);}
+
+    textarea{font-family:'Sora',sans-serif;font-size:13px;border:1.5px solid var(--paper-3);border-radius:var(--radius);padding:11px 13px;width:100%;min-height:72px;resize:vertical;background:var(--paper);color:var(--ink);line-height:1.6;transition:border-color .15s;}
+    textarea:focus{outline:none;border-color:var(--accent);background:white;}
+    textarea::placeholder{color:var(--ink-4);}
+    .save-btn{display:block;width:calc(100% - 28px);margin:0 14px 14px;background:var(--ink);color:var(--paper);border:none;border-radius:var(--radius);padding:13px;font-family:'DM Serif Display',serif;font-size:16px;cursor:pointer;letter-spacing:.02em;transition:all .2s;}
+    .save-btn:hover{background:var(--accent);box-shadow:3px 3px 0 var(--paper-3);transform:translate(-1px,-1px);}
+
+    /* OBS HISTORY */
+    .obs-item{padding:11px 0;border-bottom:1px solid var(--paper-3);}
+    .obs-item:last-child{border-bottom:none;}
+    .obs-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;gap:6px;}
+    .obs-date{font-size:11px;font-weight:600;color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase;}
+    .obs-actions{display:flex;gap:5px;flex-shrink:0;}
+    .obs-btn{background:transparent;border:1px solid var(--paper-3);color:var(--ink-4);border-radius:5px;padding:3px 8px;font-family:'Sora',sans-serif;font-size:10px;font-weight:600;cursor:pointer;transition:all .15s;}
+    .obs-btn:hover{background:var(--paper-2);color:var(--ink-2);border-color:var(--ink-4);}
+    .obs-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:5px;}
+    .obs-tag-green{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;background:var(--green-light);color:var(--green);}
+    .obs-type-cc{font-size:10px;font-weight:700;letter-spacing:.05em;padding:2px 7px;border-radius:4px;background:var(--accent-light);color:var(--accent);text-transform:uppercase;}
+    .obs-type-station{font-size:10px;font-weight:700;letter-spacing:.05em;padding:2px 7px;border-radius:4px;background:var(--purple-light);color:var(--purple);text-transform:uppercase;}
+    .obs-detail{font-size:12px;color:var(--ink-3);margin-top:2px;line-height:1.5;}
+    .obs-note{font-size:12px;color:var(--ink-3);font-style:italic;margin-top:3px;}
+
+    /* GROUPS */
+    .groups-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;padding:14px;}
+    .group-card{background:white;border:1px solid var(--paper-3);border-radius:var(--radius-lg);overflow:hidden;}
+    .group-head{padding:11px 14px 9px;border-bottom:2px solid;}
+    .group-head-early{border-color:var(--amber);background:var(--amber-light);}
+    .group-head-developing{border-color:var(--blue);background:var(--blue-light);}
+    .group-head-proficient{border-color:var(--green);background:var(--green-light);}
+    .group-head-title{font-family:'DM Serif Display',serif;font-size:15px;margin-bottom:3px;}
+    .group-head-title-early{color:var(--amber);}.group-head-title-developing{color:var(--blue);}.group-head-title-proficient{color:var(--green);}
+    .group-head-desc{font-size:11px;color:var(--ink-3);line-height:1.5;}
+    .group-student{padding:9px 14px;border-bottom:1px solid var(--paper-3);cursor:pointer;transition:background .1s;}
+    .group-student:last-child{border-bottom:none;}
+    .group-student:hover{background:var(--paper);}
+    .group-student-name{font-size:13px;font-weight:600;color:var(--ink);}
+    .group-student-meta{font-size:11px;color:var(--ink-4);margin-top:1px;}
+
+    /* TRAJECTORIES */
+    .traj-intro{background:white;border:1px solid var(--paper-3);border-radius:var(--radius-lg);padding:15px;margin:14px 14px 0;}
+    .traj-intro-title{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:6px;}
+    .traj-intro-body{font-size:13px;color:var(--ink-2);line-height:1.7;}
+    .traj-bullets{margin:8px 0 0 16px;}
+    .traj-bullets li{font-size:12px;color:var(--ink-3);margin-bottom:4px;line-height:1.6;}
+    .traj-scroll-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:14px 14px 6px;}
+    .traj-timeline{display:flex;gap:8px;min-width:min-content;}
+    .traj-node{width:122px;flex-shrink:0;cursor:pointer;}
+    .traj-node-inner{background:white;border:1.5px solid var(--paper-3);border-radius:var(--radius);padding:12px 10px;text-align:center;transition:all .2s;}
+    .traj-node-inner:hover{border-color:var(--accent-2);box-shadow:3px 3px 0 var(--paper-3);transform:translate(-1px,-1px);}
+    .traj-number{width:33px;height:33px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:16px;margin:0 auto 8px;}
+    .traj-name{font-size:11px;font-weight:600;color:var(--ink);line-height:1.3;}
+    .traj-hint{font-size:10px;color:var(--ink-4);margin-top:6px;}
+    .traj-detail{margin:0 14px 14px;background:white;border:1.5px solid var(--paper-3);border-radius:var(--radius-lg);overflow:hidden;display:none;}
+    .traj-detail.visible{display:block;}
+    .traj-detail-head{padding:11px 15px;background:var(--paper);border-bottom:1px solid var(--paper-3);display:flex;justify-content:space-between;align-items:center;}
+    .traj-detail-title{font-family:'DM Serif Display',serif;font-size:15px;color:var(--ink);}
+    .close-btn{background:transparent;border:1px solid var(--paper-3);color:var(--ink-4);border-radius:6px;padding:5px 11px;font-family:'Sora',sans-serif;font-size:11px;cursor:pointer;transition:all .15s;}
+    .close-btn:hover{background:var(--paper-2);color:var(--ink);}
+    .traj-detail-body{padding:15px;}
+    .traj-section-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);margin-bottom:7px;}
+    .traj-section{margin-bottom:15px;}
+    .traj-section p{font-size:13px;color:var(--ink-2);line-height:1.7;}
+    .traj-indicators{margin:0 0 0 14px;}
+    .traj-indicators li{font-size:13px;color:var(--ink-2);margin-bottom:4px;line-height:1.5;}
+    .traj-teaching-box{background:var(--paper);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:10px 12px;font-size:13px;color:var(--ink-2);line-height:1.7;}
+    .traj-context-box{background:var(--blue-light);border-radius:var(--radius);padding:10px 12px;font-size:12px;color:var(--blue);line-height:1.7;}
+    .citation-card{background:white;border:1px solid var(--paper-3);border-radius:var(--radius);padding:12px 14px;margin:0 14px 14px;font-size:12px;color:var(--ink-3);line-height:1.7;}
+
+    /* STUDENT HEADER BAND */
+    .student-header-band{padding:13px 15px;background:white;border-bottom:1px solid var(--paper-3);display:flex;align-items:center;gap:12px;}
+    .student-header-avatar{width:40px;height:40px;border-radius:50%;background:var(--paper-2);border:2px solid var(--paper-3);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:18px;color:var(--ink-2);flex-shrink:0;}
+    .student-header-name{font-family:'DM Serif Display',serif;font-size:19px;color:var(--ink);line-height:1;}
+    .student-header-sub{font-size:11px;color:var(--ink-4);letter-spacing:.05em;margin-top:3px;text-transform:uppercase;}
+
+    /* QUICK LOG */
+    .ql-backdrop{display:none;position:fixed;inset:0;background:rgba(26,23,20,.5);z-index:100;align-items:flex-end;justify-content:center;}
+    .ql-backdrop.open{display:flex;}
+    .ql-sheet{background:var(--paper);width:100%;max-width:860px;border-radius:18px 18px 0 0;max-height:92vh;overflow-y:auto;}
+    .ql-handle{width:38px;height:4px;background:var(--paper-3);border-radius:2px;margin:12px auto 0;}
+    .ql-header{padding:13px 16px 12px;display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1px solid var(--paper-3);background:white;position:sticky;top:0;z-index:5;}
+    .ql-header-left{flex:1;}
+    .ql-student-name{font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink);line-height:1;}
+    .ql-station-badge{font-size:11px;font-weight:700;letter-spacing:.05em;padding:3px 9px;border-radius:20px;text-transform:uppercase;margin-top:5px;display:inline-block;}
+    .ql-close{background:transparent;border:1px solid var(--paper-3);color:var(--ink-3);border-radius:6px;padding:6px 12px;font-family:'Sora',sans-serif;font-size:11px;cursor:pointer;margin-left:10px;margin-top:2px;flex-shrink:0;}
+    .ql-note-area{padding:14px 16px 0;}
+    .ql-section-label{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-bottom:9px;}
+    .ql-note-textarea{font-family:'Sora',sans-serif;font-size:14px;border:1.5px solid var(--paper-3);border-radius:var(--radius);padding:13px;width:100%;min-height:100px;resize:vertical;background:white;color:var(--ink);line-height:1.7;transition:border-color .15s;}
+    .ql-note-textarea:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px rgba(107,58,154,.08);}
+    .ql-note-textarea::placeholder{color:var(--ink-4);}
+    .ql-behaviors-section{margin:12px 16px 0;}
+    .ql-expand-row{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:white;border:1.5px solid var(--purple-border);border-radius:var(--radius);cursor:pointer;user-select:none;transition:background .15s;}
+    .ql-expand-row.is-open{border-radius:var(--radius) var(--radius) 0 0;}
+    .ql-expand-row:hover{background:var(--purple-light);}
+    .ql-expand-label{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--purple);}
+    .ql-expand-dot{width:6px;height:6px;border-radius:50%;background:var(--purple);}
+    .ql-expand-chevron{font-size:11px;color:var(--purple);font-weight:700;transition:transform .2s;}
+    .ql-expand-chevron.open{transform:rotate(180deg);}
+    .ql-behaviors-panel{display:none;background:white;border:1.5px solid var(--purple-border);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:12px 12px 14px;}
+    .ql-behaviors-panel.open{display:block;}
+    .tile-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:14px;}
+    .cb-tile{position:relative;cursor:pointer;display:block;}
+    .cb-tile input[type="checkbox"]{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none;}
+    .cb-tile-body{position:relative;display:flex;flex-direction:column;padding:11px 12px 10px;background:var(--paper);border:1.5px solid var(--paper-3);border-radius:var(--radius);min-height:68px;transition:border-color .15s,background .15s,box-shadow .15s;}
+    .cb-tile:hover .cb-tile-body{border-color:var(--purple);background:var(--purple-light);}
+    .cb-tile.checked .cb-tile-body{border-color:var(--purple);background:var(--purple-light);box-shadow:2px 2px 0 var(--purple-border);}
+    .cb-tile-check{position:absolute;top:7px;right:7px;width:16px;height:16px;border-radius:50%;background:var(--paper-3);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:transparent;transition:background .15s,color .15s;line-height:1;}
+    .cb-tile.checked .cb-tile-check{background:var(--purple);color:white;}
+    .cb-tile-name{font-size:12px;font-weight:600;color:var(--ink);line-height:1.3;padding-right:18px;}
+    .cb-tile-desc{font-size:10px;color:var(--ink-3);line-height:1.4;margin-top:4px;}
+    .cb-tile-err:hover .cb-tile-body{border-color:var(--accent-2);background:var(--accent-light);}
+    .cb-tile-err.checked .cb-tile-body{border-color:var(--accent-2);background:var(--accent-light);box-shadow:2px 2px 0 #f0cbb8;}
+    .cb-tile-err.checked .cb-tile-check{background:var(--accent);color:white;}
+    #cc-tile-line:hover .cb-tile-body,#cc-tile-groups:hover .cb-tile-body,#cc-tile-containers:hover .cb-tile-body,#cc-tile-counting_on:hover .cb-tile-body,#cc-tile-strat-other:hover .cb-tile-body{border-color:var(--amber);background:var(--amber-light);}
+    #cc-tile-line.checked .cb-tile-body,#cc-tile-groups.checked .cb-tile-body,#cc-tile-containers.checked .cb-tile-body,#cc-tile-counting_on.checked .cb-tile-body,#cc-tile-strat-other.checked .cb-tile-body{border-color:var(--amber);background:var(--amber-light);box-shadow:2px 2px 0 #f0dcb8;}
+    #cc-tile-line.checked .cb-tile-check,#cc-tile-groups.checked .cb-tile-check,#cc-tile-containers.checked .cb-tile-check,#cc-tile-counting_on.checked .cb-tile-check,#cc-tile-strat-other.checked .cb-tile-check{background:var(--amber);color:white;}
+    .cb-tile[id^="stile-"]:hover .cb-tile-body{border-color:var(--amber);background:var(--amber-light);}
+    .cb-tile[id^="stile-"].checked .cb-tile-body{border-color:var(--amber);background:var(--amber-light);box-shadow:2px 2px 0 #f0dcb8;}
+    .cb-tile[id^="stile-"].checked .cb-tile-check{background:var(--amber);color:white;}
+    .ql-save-area{padding:14px 16px;}
+    .ql-save{display:block;width:100%;background:var(--purple);color:white;border:none;border-radius:var(--radius);padding:14px;font-family:'DM Serif Display',serif;font-size:17px;cursor:pointer;letter-spacing:.02em;transition:all .2s;}
+    .ql-save:hover{background:#5a2e88;box-shadow:3px 3px 0 var(--purple-border);transform:translate(-1px,-1px);}
+
+    /* PRIVACY NOTE in Settings */
+    .privacy-card{background:var(--blue-light);border:1px solid #c8ddf0;border-radius:var(--radius-lg);padding:14px 16px;margin-bottom:12px;}
+    .privacy-card-title{font-size:12px;font-weight:700;color:var(--blue);margin-bottom:6px;}
+    .privacy-card p{font-size:12px;color:var(--blue);line-height:1.6;}
+    .privacy-card ul{margin:6px 0 0 16px;}
+    .privacy-card li{font-size:11px;color:var(--blue);line-height:1.7;}
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ═══════════ AUTH SCREEN ═══════════ -->
+  <div id="authScreen" style="display:block;">
+    <div class="auth-screen">
+      <div class="auth-card" id="loginPanel">
+        <div class="auth-logo">Counting Collections</div>
+        <div class="auth-sub">Kindergarten Assessment · Teacher Login</div>
+
+        <div class="auth-section-label">Your classroom code</div>
+        <input class="auth-input" id="loginCode" placeholder="e.g. JONES-K2" maxlength="20" autocomplete="username" onkeydown="if(event.key==='Enter')document.getElementById('pinDigit0').focus()"/>
+
+        <div class="auth-section-label" style="margin-top:4px;">4-digit PIN</div>
+        <div class="auth-pin-row">
+          <input class="auth-pin-digit" id="pinDigit0" type="password" inputmode="numeric" maxlength="1" onkeyup="pinNav(0,event)"/>
+          <input class="auth-pin-digit" id="pinDigit1" type="password" inputmode="numeric" maxlength="1" onkeyup="pinNav(1,event)"/>
+          <input class="auth-pin-digit" id="pinDigit2" type="password" inputmode="numeric" maxlength="1" onkeyup="pinNav(2,event)"/>
+          <input class="auth-pin-digit" id="pinDigit3" type="password" inputmode="numeric" maxlength="1" onkeyup="pinNav(3,event)"/>
+        </div>
+        <div class="auth-error" id="loginError">Incorrect code or PIN. Please try again.</div>
+
+        <button class="auth-btn" onclick="attemptLogin()">Sign In</button>
+        <div class="auth-divider">— or —</div>
+        <button class="auth-link" onclick="showPanel('setupPanel')">Create a new classroom →</button>
+      </div>
+
+      <div class="auth-card" id="setupPanel" style="display:none;">
+        <div class="auth-logo">New Classroom</div>
+        <div class="auth-sub">Set up your teacher account</div>
+
+        <div class="auth-section-label">Choose a classroom code</div>
+        <input class="auth-input" id="setupCode" placeholder="e.g. SMITH-AM" maxlength="20" autocomplete="username"/>
+        <div style="font-size:11px;color:var(--ink-4);margin:-6px 0 12px;">Letters and numbers only. You'll use this to sign in on any device.</div>
+
+        <div class="auth-section-label">Choose a 4-digit PIN</div>
+        <div class="auth-pin-row">
+          <input class="auth-pin-digit" id="setupPin0" type="password" inputmode="numeric" maxlength="1" onkeyup="setupPinNav(0,event)"/>
+          <input class="auth-pin-digit" id="setupPin1" type="password" inputmode="numeric" maxlength="1" onkeyup="setupPinNav(1,event)"/>
+          <input class="auth-pin-digit" id="setupPin2" type="password" inputmode="numeric" maxlength="1" onkeyup="setupPinNav(2,event)"/>
+          <input class="auth-pin-digit" id="setupPin3" type="password" inputmode="numeric" maxlength="1" onkeyup="setupPinNav(3,event)"/>
+        </div>
+
+        <div class="auth-section-label">Confirm PIN</div>
+        <div class="auth-pin-row">
+          <input class="auth-pin-digit" id="setupPinC0" type="password" inputmode="numeric" maxlength="1" onkeyup="setupPinConfNav(0,event)"/>
+          <input class="auth-pin-digit" id="setupPinC1" type="password" inputmode="numeric" maxlength="1" onkeyup="setupPinConfNav(1,event)"/>
+          <input class="auth-pin-digit" id="setupPinC2" type="password" inputmode="numeric" maxlength="1" onkeyup="setupPinConfNav(2,event)"/>
+          <input class="auth-pin-digit" id="setupPinC3" type="password" inputmode="numeric" maxlength="1" onkeyup="setupPinConfNav(3,event)"/>
+        </div>
+        <div class="auth-error" id="setupError">PINs don't match or code already taken.</div>
+        <div class="auth-success" id="setupSuccess">Account created! Please sign in below.</div>
+
+        <div style="background:var(--blue-light);border-radius:var(--radius);padding:10px 12px;margin-bottom:14px;font-size:11px;color:var(--blue);line-height:1.6;">
+          <strong>Privacy note:</strong> Student names are stored under your PIN-protected classroom code and never shared. Only anonymised usage data (e.g. "teacher opened Trajectories") is collected — no student names or notes.
+        </div>
+
+        <button class="auth-btn" onclick="attemptSetup()">Create Classroom</button>
+        <div class="auth-divider">— or —</div>
+        <button class="auth-link" onclick="showPanel('loginPanel')">← Back to sign in</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ MAIN APP (hidden until auth) ═══════════ -->
+  <div id="mainApp" style="display:none;">
+
+    <!-- ROSTER VIEW -->
+    <div id="rosterView" class="view active">
+      <div class="header">
+        <div class="header-wordmark">
+          <div class="header-title">Counting Collections</div>
+          <div class="header-sub">Kindergarten Assessment</div>
+        </div>
+        <div class="header-nav">
+          <button class="nav-btn" onclick="trackEvent('nav_groups');showView('groupsView')">Groups</button>
+          <button class="nav-btn" onclick="trackEvent('nav_trajectories');showView('trajectoriesView')">Trajectories</button>
+          <button class="nav-btn" onclick="exportData()">Export</button>
+          <button class="nav-btn" onclick="signOut()">Sign out</button>
+        </div>
+      </div>
+
+      <!-- sync bar -->
+      <div class="sync-bar">
+        <div class="sync-status"><div class="sync-dot" id="syncDot"></div><span id="syncLabel">Loading…</span></div>
+        <span class="teacher-pill" id="teacherPill"></span>
+        <button class="sync-btn" onclick="syncNow()">Sync now</button>
+      </div>
+
+      <!-- analytics notice (dismissed once seen) -->
+      <div class="analytics-notice" id="analyticsNotice" style="display:none;">
+        <span class="analytics-notice-icon">ℹ</span>
+        <span>This tool collects <strong>anonymous</strong> usage data (e.g. which features you tap). No student names or notes are ever included.</span>
+        <button class="analytics-dismiss" onclick="dismissAnalyticsNotice()">Got it</button>
+      </div>
+
+      <div class="mode-bar">
+        <span class="mode-label">Mode</span>
+        <div class="mode-toggle">
+          <button class="mode-opt active-cc" id="modeCCBtn" onclick="setMode('cc')">Days 1–2: Counting Collections</button>
+          <button class="mode-opt" id="modeStBtn" onclick="setMode('station')">Days 3–5: Stations</button>
+        </div>
+      </div>
+      <div id="stationSelector" style="display:none;">
+        <div class="station-selector">
+          <div class="station-selector-label">Which station are you at?</div>
+          <div class="station-grid">
+            <div class="station-tile" onclick="selectStation(1)" id="stile-1"><div class="stn-num c1">Station 1</div><div class="stn-name">Independent</div><div class="stn-type">replaces differentiated teacher station</div></div>
+            <div class="station-tile" onclick="selectStation(2)" id="stile-2"><div class="stn-num c2">Station 2</div><div class="stn-name">Independent</div><div class="stn-type">replaces digital game</div></div>
+            <div class="station-tile" onclick="selectStation(3)" id="stile-3"><div class="stn-num c3">Station 3</div><div class="stn-name">Shake Those Disks</div><div class="stn-type">partner · familiar EM2 game</div></div>
+            <div class="station-tile" onclick="selectStation(4)" id="stile-4"><div class="stn-num c4">Station 4</div><div class="stn-name">Donut Shop</div><div class="stn-type">play-based · collaborative</div></div>
+          </div>
+        </div>
+        <div class="coverage-bar" id="coverageBar">
+          <div class="coverage-header" onclick="toggleCoverage()">
+            <div class="coverage-title-row"><span class="coverage-title">Class coverage today</span><span class="coverage-badge" id="coverageBadge"></span></div>
+            <span class="coverage-chevron" id="coverageChevron">▼</span>
+          </div>
+          <div class="coverage-body" id="coverageBody"><div class="coverage-grid" id="coverageGrid"></div></div>
+        </div>
+      </div>
+      <div class="add-bar" id="addBar">
+        <input type="text" id="newStudentInput" placeholder="Student name…" onkeydown="if(event.key==='Enter') addStudent()"/>
+        <button class="btn-add" onclick="addStudent()">+ Add</button>
+      </div>
+      <div class="roster-list" id="rosterList"></div>
+    </div>
+
+    <!-- TRAJECTORIES VIEW -->
+    <div id="trajectoriesView" class="view">
+      <div class="header">
+        <button class="nav-btn" onclick="showView('rosterView')">← Back</button>
+        <div class="header-wordmark" style="margin-left:10px;"><div class="header-title">The Counting Journey</div><div class="header-sub">Tap any level to learn more</div></div>
+      </div>
+      <div class="traj-intro">
+        <div class="traj-intro-title">Development is not linear</div>
+        <div class="traj-intro-body">Research shows children develop counting skills in varied, overlapping ways.
+          <ul class="traj-bullets">
+            <li><strong>Concurrent skills:</strong> Students often work on multiple levels simultaneously</li>
+            <li><strong>Variable pacing:</strong> Different rates are expected and developmentally normal</li>
+            <li><strong>Context-dependent:</strong> Success with organized objects may precede success with mixed piles</li>
+          </ul>
+        </div>
+      </div>
+      <div class="traj-scroll-wrap"><div class="traj-timeline" id="trajectoriesTimeline"></div></div>
+      <div class="traj-detail" id="trajDetailsPanel">
+        <div class="traj-detail-head"><div class="traj-detail-title" id="trajDetailTitle"></div><button class="close-btn" onclick="closeTrajDetail()">Close</button></div>
+        <div class="traj-detail-body" id="trajDetailContent"></div>
+      </div>
+      <div class="citation-card"><strong style="color:var(--ink-2);">Clements, D. H., &amp; Sarama, J.</strong> (2017/2019). Learning and teaching with learning trajectories [LT]². Marsico Institute, Morgridge College of Education, University of Denver.</div>
+      <div class="spacer"></div>
+    </div>
+
+    <!-- GROUPS VIEW -->
+    <div id="groupsView" class="view">
+      <div class="header">
+        <button class="nav-btn" onclick="showView('rosterView')">← Back</button>
+        <div class="header-wordmark" style="margin-left:10px;"><div class="header-title">Small Groups</div><div class="header-sub">By observed proficiency</div></div>
+      </div>
+      <div class="groups-grid">
+        <div class="group-card"><div class="group-head group-head-early"><div class="group-head-title group-head-title-early">Early Stage</div><div class="group-head-desc">Emerging understanding. Limited accuracy with small collections.</div></div><div id="groupEarly"></div></div>
+        <div class="group-card"><div class="group-head group-head-developing"><div class="group-head-title group-head-title-developing">Developing</div><div class="group-head-desc">Some principles demonstrated, but inconsistently.</div></div><div id="groupDeveloping"></div></div>
+        <div class="group-card"><div class="group-head group-head-proficient"><div class="group-head-title group-head-title-proficient">Consistent</div><div class="group-head-desc">All three counting principles across multiple observations.</div></div><div id="groupProficient"></div></div>
+      </div>
+      <div class="spacer"></div>
+    </div>
+
+    <!-- ASSESSMENT VIEW (Days 1–2) -->
+    <div id="assessmentView" class="view">
+      <div class="header">
+        <button class="nav-btn" onclick="showView('rosterView')">← Roster</button>
+        <div class="header-wordmark" style="margin-left:10px;"><div class="header-title" id="studentTitle"></div><div class="header-sub">Counting Collections · Days 1–2</div></div>
+      </div>
+      <div class="student-header-band">
+        <div class="student-header-avatar" id="studentAvatarBand"></div>
+        <div><div class="student-header-name" id="studentNameBand"></div><div class="student-header-sub" id="studentMetaBand"></div></div>
+      </div>
+      <div class="content-pad">
+        <div class="card">
+          <div class="card-head"><div class="dot"></div>Collection Size</div>
+          <div class="card-body">
+            <div class="option-grid">
+              <label class="option-tile"><input type="radio" name="collectionSize" value="1-10"/><span class="option-label">1–10 objects</span></label>
+              <label class="option-tile"><input type="radio" name="collectionSize" value="10-20"/><span class="option-label">10–20 objects</span></label>
+              <label class="option-tile"><input type="radio" name="collectionSize" value="20-50"/><span class="option-label">20–50 objects</span></label>
+              <label class="option-tile"><input type="radio" name="collectionSize" value="50+"/><span class="option-label">50+ objects</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="dot"></div>Core Counting Principles</div>
+          <div class="card-body" style="padding:12px 12px 14px;">
+            <div class="tile-grid" style="margin-bottom:0;">
+              <label class="cb-tile" id="cc-tile-sequence">
+                <input type="checkbox" data-principle="sequence" onchange="syncTile('cc-tile-sequence',this);updateErrorStates()"/>
+                <div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Number Word Sequence</div><div class="cb-tile-desc">Says numbers in correct order (1, 2, 3…)</div></div>
+              </label>
+              <label class="cb-tile" id="cc-tile-correspondence">
+                <input type="checkbox" data-principle="correspondence" onchange="syncTile('cc-tile-correspondence',this);updateErrorStates()"/>
+                <div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">One-to-One Correspondence</div><div class="cb-tile-desc">One number word per object, nothing skipped</div></div>
+              </label>
+              <label class="cb-tile" id="cc-tile-cardinality">
+                <input type="checkbox" data-principle="cardinality" onchange="syncTile('cc-tile-cardinality',this);updateErrorStates()"/>
+                <div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Cardinality</div><div class="cb-tile-desc">Last number said = total amount</div></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head" style="cursor:pointer;justify-content:space-between;" onclick="toggleDropdown('strategy')">
+            <div style="display:flex;align-items:center;gap:7px;"><div class="dot" style="background:var(--amber);"></div>Organizing Strategy</div>
+            <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:10px;font-weight:500;color:var(--ink-4);text-transform:none;letter-spacing:0;">optional</span><span class="chevron" id="toggle-strategy">▼</span></div>
+          </div>
+          <div class="dropdown-body" id="content-strategy" style="padding:12px 12px 14px;">
+            <div class="tile-grid" style="margin-bottom:0;">
+              <label class="cb-tile" id="cc-tile-line"><input type="checkbox" data-strategy="line" onchange="syncTile('cc-tile-line',this)"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">In a line</div></div></label>
+              <label class="cb-tile" id="cc-tile-groups"><input type="checkbox" data-strategy="groups" onchange="syncTile('cc-tile-groups',this)"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Grouped objects</div><div class="cb-tile-desc">By color, size, etc.</div></div></label>
+              <label class="cb-tile" id="cc-tile-containers"><input type="checkbox" data-strategy="containers" onchange="syncTile('cc-tile-containers',this)"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Used containers</div><div class="cb-tile-desc">Moved in/out</div></div></label>
+              <label class="cb-tile" id="cc-tile-counting_on"><input type="checkbox" data-strategy="counting_on" onchange="syncTile('cc-tile-counting_on',this)"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Counted on</div><div class="cb-tile-desc">Started from number other than 1</div></div></label>
+              <label class="cb-tile" id="cc-tile-strat-other"><input type="checkbox" data-strategy="other" onchange="syncTile('cc-tile-strat-other',this);toggleStrategyInput()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Other</div></div></label>
+            </div>
+            <input type="text" class="inline-input" id="strategyOther" placeholder="Describe other strategy…" disabled style="margin-left:0;margin-top:10px;width:100%;display:block;"/>
+          </div>
+        </div>
+        <div class="card" id="errorPatternGroup">
+          <div class="card-head" style="cursor:pointer;justify-content:space-between;" onclick="toggleDropdown('errors')">
+            <div style="display:flex;align-items:center;gap:7px;"><div class="dot" style="background:var(--accent-2);"></div>Error Patterns Noted</div>
+            <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:10px;font-weight:500;color:var(--ink-4);text-transform:none;letter-spacing:0;">optional</span><span class="chevron" id="toggle-errors">▼</span></div>
+          </div>
+          <div class="dropdown-body" id="content-errors" style="padding:12px 12px 14px;">
+            <div class="tile-grid" style="margin-bottom:0;">
+              <label class="cb-tile cb-tile-err" id="cc-tile-skips"><input type="checkbox" data-error="skips_numbers" onchange="syncTile('cc-tile-skips',this);updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Skipped numbers</div></div></label>
+              <label class="cb-tile cb-tile-err" id="cc-tile-repeats"><input type="checkbox" data-error="repeats_numbers" onchange="syncTile('cc-tile-repeats',this);updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Repeated numbers</div></div></label>
+              <label class="cb-tile cb-tile-err" id="cc-tile-track"><input type="checkbox" data-error="loses_track" onchange="syncTile('cc-tile-track',this);updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Lost track</div></div></label>
+              <label class="cb-tile cb-tile-err" id="cc-tile-double"><input type="checkbox" data-error="double_counts" onchange="syncTile('cc-tile-double',this);updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Double counted</div></div></label>
+              <label class="cb-tile cb-tile-err" id="cc-tile-again"><input type="checkbox" data-error="counts_again" onchange="syncTile('cc-tile-again',this);updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Recounted on "how many?"</div></div></label>
+              <label class="cb-tile cb-tile-err" id="cc-tile-err-other"><input type="checkbox" data-error="other" onchange="syncTile('cc-tile-err-other',this);toggleErrorInput();updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Other</div></div></label>
+            </div>
+            <input type="text" class="inline-input" id="errorOther" placeholder="Describe other error…" disabled style="margin-left:0;margin-top:10px;width:100%;display:block;"/>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="dot"></div>Quick Note</div>
+          <div class="card-body"><textarea id="observationNote" placeholder="E.g., organized by color, counted slowly, lost track after 5…"></textarea></div>
+        </div>
+      </div>
+      <div id="editBanner" style="display:none;margin:0 14px 10px;padding:10px 14px;background:#fff8e6;border:1.5px solid var(--amber);border-radius:var(--radius);font-size:12px;color:var(--amber);font-weight:600;align-items:center;justify-content:space-between;gap:10px;">
+        <span>Editing observation — make changes then save</span>
+        <button onclick="cancelEdit()" style="background:transparent;border:1px solid var(--amber);color:var(--amber);border-radius:6px;padding:4px 10px;font-family:'Sora',sans-serif;font-size:11px;cursor:pointer;">Cancel</button>
+      </div>
+      <button class="save-btn" id="ccSaveBtn" onclick="saveObservation()">Save Observation</button>
+      <div class="content-pad">
+        <div class="card"><div class="card-head"><div class="dot"></div>Observation History</div><div id="observationHistory"></div></div>
+      </div>
+      <div class="spacer"></div>
+    </div>
+
+    <!-- QUICK LOG BOTTOM SHEET -->
+    <div class="ql-backdrop" id="qlBackdrop">
+      <div class="ql-sheet">
+        <div class="ql-handle"></div>
+        <div class="ql-header">
+          <div class="ql-header-left">
+            <div class="ql-student-name" id="qlStudentName"></div>
+            <div class="ql-station-badge" id="qlStationBadge"></div>
+          </div>
+          <button class="ql-close" onclick="closeQuickLog()">Cancel</button>
+        </div>
+        <div class="ql-note-area">
+          <div class="ql-section-label">Anecdotal note</div>
+          <textarea class="ql-note-textarea" id="qlNote" placeholder="What did you notice? Jot anything — counting strategy, engagement, what they said…"></textarea>
+        </div>
+        <div class="ql-behaviors-section">
+          <div class="ql-expand-row" id="qlExpandRow" onclick="toggleQlBehaviors()">
+            <div class="ql-expand-label"><div class="ql-expand-dot"></div>Counting behaviors<span id="qlBehaviorSummary" style="color:var(--ink-3);font-weight:400;font-size:11px;"></span></div>
+            <span class="ql-expand-chevron" id="qlBehaviorsChevron">▼</span>
+          </div>
+          <div class="ql-behaviors-panel" id="qlBehaviorsPanel">
+            <div class="tile-grid" id="behaviorTileGrid">
+              <label class="cb-tile" id="tile-sequence"><input type="checkbox" data-ql="sequence" onchange="syncTile('tile-sequence',this);updateQlSummary()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Number Word Sequence</div><div class="cb-tile-desc">Says numbers in correct order</div></div></label>
+              <label class="cb-tile" id="tile-correspondence"><input type="checkbox" data-ql="correspondence" onchange="syncTile('tile-correspondence',this);updateQlSummary()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">One-to-One Correspondence</div><div class="cb-tile-desc">One word per object, nothing skipped</div></div></label>
+              <label class="cb-tile" id="tile-cardinality"><input type="checkbox" data-ql="cardinality" onchange="syncTile('tile-cardinality',this);updateQlSummary()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Cardinality</div><div class="cb-tile-desc">Last number = total amount</div></div></label>
+            </div>
+            <div class="ql-section-label" style="margin-bottom:8px;">Error patterns (optional)</div>
+            <div class="tile-grid">
+              <label class="cb-tile cb-tile-err" id="tile-skips"><input type="checkbox" data-ql-err="skips_numbers" onchange="syncTile('tile-skips',this);updateQlSummary()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Skipped numbers</div></div></label>
+              <label class="cb-tile cb-tile-err" id="tile-repeats"><input type="checkbox" data-ql-err="repeats_numbers" onchange="syncTile('tile-repeats',this);updateQlSummary()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Repeated numbers</div></div></label>
+              <label class="cb-tile cb-tile-err" id="tile-track"><input type="checkbox" data-ql-err="loses_track" onchange="syncTile('tile-track',this);updateQlSummary()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Lost track</div></div></label>
+              <label class="cb-tile cb-tile-err" id="tile-double"><input type="checkbox" data-ql-err="double_counts" onchange="syncTile('tile-double',this);updateQlSummary()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Double counted</div></div></label>
+              <label class="cb-tile cb-tile-err" id="tile-again"><input type="checkbox" data-ql-err="counts_again" onchange="syncTile('tile-again',this);updateQlSummary()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Recounted on "how many?"</div></div></label>
+            </div>
+          </div>
+        </div>
+        <div class="ql-behaviors-section" style="margin-top:8px;">
+          <div class="ql-expand-row" id="qlStratExpandRow" onclick="toggleQlStrategy()">
+            <div class="ql-expand-label"><div class="ql-expand-dot" style="background:var(--amber);"></div>Organizing strategy<span id="qlStrategySummary" style="color:var(--ink-3);font-weight:400;font-size:11px;"></span></div>
+            <span class="ql-expand-chevron" id="qlStrategyChevron">▼</span>
+          </div>
+          <div class="ql-behaviors-panel" id="qlStrategyPanel">
+            <div class="tile-grid" style="margin-bottom:0;">
+              <label class="cb-tile" id="stile-line"><input type="checkbox" data-ql-strat="line" onchange="syncTile('stile-line',this);updateQlStrategySummary()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">In a line</div></div></label>
+              <label class="cb-tile" id="stile-groups"><input type="checkbox" data-ql-strat="groups" onchange="syncTile('stile-groups',this);updateQlStrategySummary()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Grouped objects</div></div></label>
+              <label class="cb-tile" id="stile-containers"><input type="checkbox" data-ql-strat="containers" onchange="syncTile('stile-containers',this);updateQlStrategySummary()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Used containers</div></div></label>
+              <label class="cb-tile" id="stile-counting_on"><input type="checkbox" data-ql-strat="counting_on" onchange="syncTile('stile-counting_on',this);updateQlStrategySummary()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Counted on</div><div class="cb-tile-desc">Started from number other than 1</div></div></label>
+            </div>
+          </div>
+        </div>
+        <div class="ql-save-area">
+          <button class="ql-save" onclick="saveStationObservation()">Save Station Observation</button>
+          <div style="height:8px;"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /mainApp -->
+</div><!-- /app -->
+
+<script>
+/* ═══════════════════════════════════════════════
+   CONSTANTS & CRYPTO UTILITIES
+═══════════════════════════════════════════════ */
+const TRAJECTORIES=[{level:1,name:"Reciter",description:"Says number words in sequence (with some support), but cannot yet reliably match to objects when counting",indicators:["Chants or recites number words in order","May not start at 1, or may skip numbers","Does not coordinate number words with pointing/touching objects"],teachingFocus:"Help child point to and touch each object while saying numbers in order",context:"This is typically the foundation. All children benefit from repeated chanting and singing of number sequences."},{level:2,name:"Corresponder",description:"Matches number words to objects but may not understand that the last number means 'how many'",indicators:["Touches or points to each object as they count","Says one number word for each object","May recount to answer 'how many?' instead of knowing the last number"],teachingFocus:"Ask 'how many?' immediately after counting—emphasize that the last number tells the amount",context:"Children often spend significant time here. Some work on Corresponder and Counter Small skills in parallel."},{level:3,name:"Counter (Small)",description:"Counts small collections accurately with one-to-one correspondence and understands cardinality",indicators:["Counts 5–10 objects with accuracy","Knows the last number said tells 'how many'","Can count again to verify the total"],teachingFocus:"Organize objects in different ways; introduce larger collections; practice counting backward",context:"A significant milestone. Children often develop these skills with familiar contexts before managing mixed piles."},{level:4,name:"Counter (To 20)",description:"Counts larger collections accurately, often using organization strategies",indicators:["Counts 10–20+ objects accurately","Organizes objects to avoid losing track","Demonstrates cardinality with larger sets"],teachingFocus:"Introduce tens and ones language; explore skip counting; practice flexible counting",context:"While developing Counter (To 20), children may simultaneously begin Counter Backward."},{level:5,name:"Counter Backward",description:"Counts backward from 10 to 1",indicators:["Counts backward from 10: '10, 9, 8…'","Can count backward when removing objects","Understands reverse order of number sequence"],teachingFocus:"Use countdown games; practice removal counting with manipulatives",context:"Often develops alongside Counter (To 20). Both show growth in number sequence flexibility."},{level:6,name:"Counter from N",description:"Counts from numbers other than 1 and determines numbers just before or after",indicators:["When asked to count from 6 to 8, counts '6, 7, 8'","Answers 'what comes before 7?' with 'six'","Can count on or backward from any number"],teachingFocus:"Practice 'what comes next' and 'what comes before' games",context:"Often develops in parallel with Skip Counter skills."},{level:7,name:"Skip Counter",description:"Skip counts by tens up to 100 with understanding",indicators:["Counts '10, 20, 30… 100'","Understands 'thirty means 3 tens'","Counts groups efficiently"],teachingFocus:"Use activities with groups of 10; emphasize place value",context:"Some children show early signs while solidifying other skills."}];
+const TRAJ_COLORS=[{num:'#a06020',bg:'#fef3e2'},{num:'#2a5a8a',bg:'#e8f0f8'},{num:'#2a7a4b',bg:'#e8f5ee'},{num:'#6b3a9a',bg:'#f2eaff'},{num:'#c85a2a',bg:'#fdf0ea'},{num:'#2a7a72',bg:'#e8f5f3'},{num:'#7a2a6b',bg:'#fceaf8'}];
+const STATIONS={1:{short:'Station 1',color:'#2a5a8a',bg:'#e8f0f8'},2:{short:'Station 2',color:'#2a7a4b',bg:'#e8f5ee'},3:{short:'Station 3 — Shake Those Disks',color:'#a06020',bg:'#fef3e2'},4:{short:'Station 4 — Donut Shop',color:'#6b3a9a',bg:'#f3eaff'}};
+
+/* Simple deterministic hash (for PIN verification, not cryptographic — good enough for classroom gate) */
+async function hashPin(pin, salt) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(salt + ':' + pin);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hashBuffer)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+/* ═══════════════════════════════════════════════
+   AUTH STATE
+═══════════════════════════════════════════════ */
+let currentTeacher = null; // {code, storageKey}
+
+function getAuthKey(code) { return 'auth:' + code.toUpperCase().trim(); }
+function getDataKey(code) { return 'data:' + code.toUpperCase().trim(); }
+
+function showPanel(id) {
+  ['loginPanel','setupPanel'].forEach(p=>document.getElementById(p).style.display='none');
+  document.getElementById(id).style.display='block';
+}
+
+function pinNav(idx, e) {
+  const v = e.target.value.replace(/[^0-9]/g,'');
+  e.target.value = v.slice(-1);
+  if(v && idx < 3) document.getElementById('pinDigit'+(idx+1)).focus();
+  if(e.key==='Enter') attemptLogin();
+}
+function setupPinNav(idx, e) {
+  const v = e.target.value.replace(/[^0-9]/g,'');
+  e.target.value = v.slice(-1);
+  if(v && idx < 3) document.getElementById('setupPin'+(idx+1)).focus();
+}
+function setupPinConfNav(idx, e) {
+  const v = e.target.value.replace(/[^0-9]/g,'');
+  e.target.value = v.slice(-1);
+  if(v && idx < 3) document.getElementById('setupPinC'+(idx+1)).focus();
+  if(e.key==='Enter') attemptSetup();
+}
+
+function getPin(prefix) {
+  return [0,1,2,3].map(i=>document.getElementById(prefix+i).value).join('');
+}
+
+async function attemptLogin() {
+  const code = document.getElementById('loginCode').value.trim().toUpperCase();
+  const pin = getPin('pinDigit');
+  const errEl = document.getElementById('loginError');
+  errEl.style.display = 'none';
+
+  if(!code || pin.length !== 4) { errEl.textContent='Please enter your classroom code and 4-digit PIN.'; errEl.style.display='block'; return; }
+
+  const stored = localStorage.getItem(getAuthKey(code));
+  if(!stored) { errEl.textContent='Classroom code not found. Check spelling or create a new classroom.'; errEl.style.display='block'; return; }
+
+  const authData = JSON.parse(stored);
+  const hashed = await hashPin(pin, authData.salt);
+  if(hashed !== authData.pinHash) { errEl.textContent='Incorrect PIN. Please try again.'; errEl.style.display='block'; return; }
+
+  currentTeacher = { code, storageKey: getDataKey(code) };
+  localStorage.setItem('lastSession', code);
+  bootApp();
+}
+
+async function attemptSetup() {
+  const code = document.getElementById('setupCode').value.trim().toUpperCase().replace(/[^A-Z0-9\-]/g,'');
+  const pin = getPin('setupPin');
+  const pinC = getPin('setupPinC');
+  const errEl = document.getElementById('setupError');
+  const okEl = document.getElementById('setupSuccess');
+  errEl.style.display='none'; okEl.style.display='none';
+
+  if(!code || code.length < 3) { errEl.textContent='Classroom code must be at least 3 characters.'; errEl.style.display='block'; return; }
+  if(pin.length !== 4) { errEl.textContent='PIN must be 4 digits.'; errEl.style.display='block'; return; }
+  if(pin !== pinC) { errEl.textContent="PINs don't match."; errEl.style.display='block'; return; }
+  if(localStorage.getItem(getAuthKey(code))) { errEl.textContent='That classroom code is already taken. Choose another.'; errEl.style.display='block'; return; }
+
+  const salt = Math.random().toString(36).slice(2) + Date.now().toString(36);
+  const pinHash = await hashPin(pin, salt);
+  localStorage.setItem(getAuthKey(code), JSON.stringify({pinHash, salt, created: new Date().toISOString()}));
+  localStorage.setItem(getDataKey(code), JSON.stringify({students:[],studentLevels:{},observations:{}}));
+
+  okEl.textContent = `Classroom "${code}" created! Sign in below.`;
+  okEl.style.display='block';
+  document.getElementById('loginCode').value = code;
+  setTimeout(()=>showPanel('loginPanel'),1500);
+}
+
+function signOut() {
+  if(!confirm('Sign out? Your data is saved and will be here when you log back in.')) return;
+  currentTeacher = null;
+  state = {students:[],studentLevels:{},observations:{}};
+  document.getElementById('mainApp').style.display='none';
+  document.getElementById('authScreen').style.display='block';
+  showPanel('loginPanel');
+}
+
+/* ═══════════════════════════════════════════════
+   CROSS-DEVICE SYNC (localStorage + manual export/import)
+   Primary: localStorage per-browser. Secondary: export/import JSON.
+   For real cross-device sync we push/pull via a shared sync endpoint.
+   Here we use localStorage + timestamp-based merge on import.
+═══════════════════════════════════════════════ */
+let syncTimeout = null;
+
+function setSyncStatus(status, text) {
+  const dot = document.getElementById('syncDot');
+  const label = document.getElementById('syncLabel');
+  dot.className = 'sync-dot ' + status;
+  label.textContent = text;
+}
+
+function scheduleSave() {
+  setSyncStatus('syncing','Saving…');
+  clearTimeout(syncTimeout);
+  syncTimeout = setTimeout(()=>{
+    saveState();
+    setSyncStatus('synced','Saved');
+  }, 800);
+}
+
+function syncNow() {
+  saveState();
+  setSyncStatus('synced','Saved just now');
+}
+
+/* ═══════════════════════════════════════════════
+   ANONYMOUS USAGE ANALYTICS
+   Stores events locally under 'analytics:{code}' key.
+   No student names, notes, or identifiable info ever stored.
+   Events: {event, ts, sessionId}
+═══════════════════════════════════════════════ */
+const sessionId = Math.random().toString(36).slice(2,10);
+
+function trackEvent(eventName, meta={}) {
+  if(!currentTeacher) return;
+  const analyticsKey = 'analytics:' + currentTeacher.code;
+  let log = [];
+  try { log = JSON.parse(localStorage.getItem(analyticsKey)||'[]'); } catch(e){}
+  // Never include student names, notes, or any PII
+  const safeEvent = {
+    event: eventName,
+    ts: new Date().toISOString(),
+    sessionId,
+    // Only safe aggregate metadata
+    studentCount: state.students ? state.students.length : 0,
+    totalObs: state.students ? state.students.reduce((s,st)=>(s+(state.observations[st.id]?.history?.length||0)),0) : 0,
+    ...Object.fromEntries(Object.entries(meta).filter(([k])=>!['name','note','text'].includes(k)))
+  };
+  log.push(safeEvent);
+  // Keep last 500 events per classroom
+  if(log.length > 500) log = log.slice(-500);
+  localStorage.setItem(analyticsKey, JSON.stringify(log));
+}
+
+function getAnalyticsSummary() {
+  if(!currentTeacher) return [];
+  const analyticsKey = 'analytics:' + currentTeacher.code;
+  try { return JSON.parse(localStorage.getItem(analyticsKey)||'[]'); } catch(e){ return []; }
+}
+
+function dismissAnalyticsNotice() {
+  document.getElementById('analyticsNotice').style.display='none';
+  if(currentTeacher) localStorage.setItem('analytics_noticed:'+currentTeacher.code,'1');
+  trackEvent('analytics_notice_dismissed');
+}
+
+/* ═══════════════════════════════════════════════
+   APP STATE
+═══════════════════════════════════════════════ */
+let state = {students:[],studentLevels:{},observations:{}};
+let appMode='cc', selectedStation=null, qlStudentId=null, editingObsIdx=null;
+
+function loadState() {
+  if(!currentTeacher) return;
+  const raw = localStorage.getItem(currentTeacher.storageKey);
+  if(raw) {
+    try {
+      state = JSON.parse(raw);
+      state.students.forEach(st=>{
+        if(!state.studentLevels[st.id]) state.studentLevels[st.id]=1;
+        if(!state.observations[st.id]) state.observations[st.id]={history:[]};
+      });
+    } catch(e) { state = {students:[],studentLevels:{},observations:{}}; }
+  }
+}
+
+function saveState() {
+  if(!currentTeacher) return;
+  localStorage.setItem(currentTeacher.storageKey, JSON.stringify(state));
+}
+
+function bootApp() {
+  loadState();
+  document.getElementById('authScreen').style.display='none';
+  document.getElementById('mainApp').style.display='block';
+  document.getElementById('teacherPill').textContent = currentTeacher.code;
+  // Show analytics notice if first time
+  const noticed = localStorage.getItem('analytics_noticed:'+currentTeacher.code);
+  if(!noticed) document.getElementById('analyticsNotice').style.display='flex';
+  setSyncStatus('synced','Up to date');
+  renderRoster();
+  trackEvent('session_start');
+}
+
+/* Check for previous session on load */
+window.addEventListener('load', ()=>{
+  const last = localStorage.getItem('lastSession');
+  if(last) document.getElementById('loginCode').value = last;
+});
+
+/* ═══════════════════════════════════════════════
+   SYNC TILE
+═══════════════════════════════════════════════ */
+function syncTile(tileId, cb) {
+  document.getElementById(tileId)?.classList.toggle('checked', cb.checked);
+}
+
+/* ═══════════════════════════════════════════════
+   MODE
+═══════════════════════════════════════════════ */
+function setMode(m) {
+  appMode = m;
+  document.getElementById('modeCCBtn').className='mode-opt'+(m==='cc'?' active-cc':'');
+  document.getElementById('modeStBtn').className='mode-opt'+(m==='station'?' active-station':'');
+  document.getElementById('stationSelector').style.display=m==='station'?'block':'none';
+  document.getElementById('addBar').style.display=m==='cc'?'flex':'none';
+  renderRoster();
+  if(m==='station') renderCoverage();
+  trackEvent('mode_switch', {mode:m});
+}
+
+function selectStation(n) {
+  selectedStation = n;
+  document.querySelectorAll('.station-tile').forEach(t=>t.classList.remove('selected'));
+  document.getElementById('stile-'+n).classList.add('selected');
+  renderRoster(); renderCoverage();
+  trackEvent('station_selected',{station:n});
+}
+
+/* ═══════════════════════════════════════════════
+   COVERAGE
+═══════════════════════════════════════════════ */
+function hasObsToday(id) {
+  const today=new Date().toDateString();
+  return(state.observations[id]?.history||[]).some(o=>o.type==='station'&&new Date(o.timestamp).toDateString()===today);
+}
+function lastObsTime(id) {
+  const obs=(state.observations[id]?.history||[]).filter(o=>o.type==='station');
+  return obs.length?new Date(obs[obs.length-1].timestamp):null;
+}
+function renderCoverage() {
+  if(!state.students.length) return;
+  const unseen=state.students.filter(s=>!hasObsToday(s.id));
+  const seen=state.students.filter(s=>hasObsToday(s.id));
+  const badge=document.getElementById('coverageBadge');
+  badge.textContent=unseen.length===0?'All seen today':`${unseen.length} not yet seen`;
+  badge.className='coverage-badge '+(unseen.length===0?'badge-ok':'badge-warn');
+  const sorted=[...unseen.sort((a,b)=>a.name.localeCompare(b.name)),...seen.sort((a,b)=>a.name.localeCompare(b.name))];
+  document.getElementById('coverageGrid').innerHTML=sorted.map(s=>{
+    const ok=hasObsToday(s.id);const t=lastObsTime(s.id);
+    const timeStr=t?t.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):'Not yet';
+    return`<div class="coverage-student ${ok?'has-obs':'needs-obs'}"><div class="coverage-dot ${ok?'dot-ok':'dot-warn'}"></div><div style="min-width:0;"><div class="coverage-sname">${s.name}</div><div class="coverage-stime">${timeStr}</div></div></div>`;
+  }).join('');
+}
+function toggleCoverage() {
+  document.getElementById('coverageBody').classList.toggle('open');
+  document.getElementById('coverageChevron').classList.toggle('open');
+  trackEvent('coverage_toggle');
+}
+
+/* ═══════════════════════════════════════════════
+   ROSTER
+═══════════════════════════════════════════════ */
+function addStudent() {
+  const input=document.getElementById('newStudentInput');
+  const name=input.value.trim();if(!name)return;
+  const s={id:Date.now().toString(),name};
+  state.students.push(s);
+  state.studentLevels[s.id]=1;
+  state.observations[s.id]={history:[]};
+  input.value='';
+  scheduleSave(); renderRoster();
+  trackEvent('student_added',{totalStudents:state.students.length});
+}
+function deleteStudent(id) {
+  if(!confirm('Delete this student and all observations?')) return;
+  state.students=state.students.filter(s=>s.id!==id);
+  delete state.studentLevels[id];delete state.observations[id];
+  scheduleSave(); renderRoster();
+  trackEvent('student_deleted',{totalStudents:state.students.length});
+}
+function calcProf(id) {
+  const obs=state.observations[id]?.history||[];if(!obs.length)return'early';
+  let seq=0,corr=0,card=0,errs=0;
+  obs.forEach(o=>{if(o.principles?.sequence)seq++;if(o.principles?.correspondence)corr++;if(o.principles?.cardinality)card++;if(o.errors)Object.values(o.errors).forEach(e=>{if(e)errs++;});});
+  const n=obs.length;
+  if(n>=2&&seq>=Math.ceil(n*.75)&&corr>=Math.ceil(n*.75)&&card>=Math.ceil(n*.75)&&errs<=1)return'proficient';
+  if(n>=1&&(seq+corr+card)>=(n*2))return'developing';
+  if(n>=2&&(seq>=Math.ceil(n*.5)||corr>=Math.ceil(n*.5)))return'developing';
+  return'early';
+}
+function stationObsToday(id) {
+  const today=new Date().toDateString();
+  return(state.observations[id]?.history||[]).filter(o=>o.type==='station'&&new Date(o.timestamp).toDateString()===today).length;
+}
+
+function renderRoster() {
+  const list=document.getElementById('rosterList');
+  const sorted=state.students.slice().sort((a,b)=>a.name.localeCompare(b.name));
+  if(!sorted.length){list.innerHTML='<div class="empty-state"><div class="empty-icon">𝟏𝟐𝟑</div><p>No students yet.<br>Add a name above to get started.</p></div>';return;}
+  if(appMode==='station'){
+    if(!selectedStation){list.innerHTML='<div class="empty-state" style="padding:36px 20px;"><p style="color:var(--purple);">← Select a station above to begin logging.</p></div>';return;}
+    const unseen=sorted.filter(s=>!hasObsToday(s.id));const seen=sorted.filter(s=>hasObsToday(s.id));
+    list.innerHTML=[...unseen,...seen].map(s=>{
+      const obs=state.observations[s.id]?.history||[];const td=stationObsToday(s.id);const nc=!hasObsToday(s.id);
+      const prof=calcProf(s.id);const pl=prof==='proficient'?'Consistent':prof.charAt(0).toUpperCase()+prof.slice(1);
+      return`<div class="${nc?'station-row needs-check':'station-row'}" onclick="openQuickLog('${s.id}')" style="cursor:pointer;"><div class="${nc?'avatar avatar-warn':'avatar'}">${s.name[0].toUpperCase()}</div><div class="student-info"><div class="student-name">${s.name}</div><div class="student-meta">${nc?`<span class="unseen-tag">not yet seen</span>`:`<span class="today-count">${td} today</span>`} · ${obs.length} total obs</div></div><span class="proficiency-pill pill-${prof}">${pl}</span></div>`;
+    }).join('');return;
+  }
+  list.innerHTML=sorted.map(s=>{
+    const obs=state.observations[s.id]?.history||[];const n=obs.length;
+    const last=n>0?new Date(obs[obs.length-1].timestamp).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'Never';
+    const prof=calcProf(s.id);const pl=prof==='proficient'?'Consistent':prof.charAt(0).toUpperCase()+prof.slice(1);
+    return`<div class="student-row" onclick="selectStudent('${s.id}')"><div class="avatar">${s.name[0].toUpperCase()}</div><div class="student-info"><div class="student-name">${s.name}</div><div class="student-meta">${n} observation${n!==1?'s':''} · Last: ${last}</div></div><span class="proficiency-pill pill-${prof}">${pl}</span><button class="delete-btn" onclick="event.stopPropagation();deleteStudent('${s.id}')">Remove</button></div>`;
+  }).join('');
+}
+
+/* ═══════════════════════════════════════════════
+   CC ASSESSMENT
+═══════════════════════════════════════════════ */
+function selectStudent(id) {
+  state.selectedStudentId=id;const s=state.students.find(x=>x.id===id);if(!s)return;
+  document.getElementById('studentTitle').textContent=s.name;
+  document.getElementById('studentAvatarBand').textContent=s.name[0].toUpperCase();
+  document.getElementById('studentNameBand').textContent=s.name;
+  const obs=state.observations[id]?.history||[];
+  document.getElementById('studentMetaBand').textContent=`${obs.length} observation${obs.length!==1?'s':''} recorded`;
+  renderObservationHistory();showView('assessmentView');
+  trackEvent('student_opened',{obsCount:obs.length});
+}
+
+function renderObservationHistory() {
+  const allObs=state.observations[state.selectedStudentId]?.history||[];
+  const div=document.getElementById('observationHistory');
+  if(!allObs.length){div.innerHTML='<div class="card-body" style="text-align:center;color:var(--ink-4);padding:20px;font-size:13px;">No observations yet</div>';return;}
+  const profLabel={early:'Early',developing:'Developing',proficient:'Consistent'};
+  const profPill={early:'pill-early',developing:'pill-developing',proficient:'pill-proficient'};
+  function calcProfFromSlice(slice){
+    if(!slice.length)return'early';
+    let seq=0,corr=0,card=0,errs=0;
+    slice.forEach(o=>{if(o.principles?.sequence)seq++;if(o.principles?.correspondence)corr++;if(o.principles?.cardinality)card++;if(o.errors)Object.values(o.errors).forEach(e=>{if(e)errs++;});});
+    const n=slice.length;
+    if(n>=2&&seq>=Math.ceil(n*.75)&&corr>=Math.ceil(n*.75)&&card>=Math.ceil(n*.75)&&errs<=1)return'proficient';
+    if(n>=1&&(seq+corr+card)>=(n*2))return'developing';
+    if(n>=2&&(seq>=Math.ceil(n*.5)||corr>=Math.ceil(n*.5)))return'developing';
+    return'early';
+  }
+  div.innerHTML='<div class="card-body">'+allObs.slice().reverse().map((rec,idx)=>{
+    const origIdx=allObs.length-1-idx;
+    const profAtPoint=calcProfFromSlice(allObs.slice(0,origIdx+1));
+    const date=new Date(rec.timestamp).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    const isStation=rec.type==='station';
+    const typeTag=isStation?`<span class="obs-type-station">${rec.stationName||'Station'}</span>`:`<span class="obs-type-cc">Counting Collections</span>`;
+    const pTags=[rec.principles?.sequence?'✓ Seq':'',rec.principles?.correspondence?'✓ 1-to-1':'',rec.principles?.cardinality?'✓ Card':''].filter(Boolean).map(t=>`<span class="obs-tag-green">${t}</span>`).join('');
+    const sizeLine=!isStation&&rec.collectionSize?` · ${rec.collectionSize} obj`:'';
+    let details='';
+    if(!isStation){const strat=Object.entries(rec.strategies||{}).filter(([k,v])=>v&&k!=='other').map(([k])=>k.replace(/_/g,' ')).join(', ');const stratFull=rec.strategies?.other&&rec.strategyOtherText?(strat?strat+', '+rec.strategyOtherText:rec.strategyOtherText):strat;const errs=Object.entries(rec.errors||{}).filter(([k,v])=>v&&k!=='other').map(([k])=>k.replace(/_/g,' ')).join(', ');const errFull=rec.errors?.other&&rec.errorOtherText?(errs?errs+', '+rec.errorOtherText:rec.errorOtherText):errs;if(stratFull)details+=`<div class="obs-detail">Strategy: ${stratFull}</div>`;if(errFull)details+=`<div class="obs-detail">Errors: ${errFull}</div>`;}
+    else{const strat=Object.entries(rec.strategies||{}).filter(([k,v])=>v).map(([k])=>k.replace(/_/g,' ')).join(', ');if(strat)details+=`<div class="obs-detail">Strategy: ${strat}</div>`;const errs=Object.entries(rec.errors||{}).filter(([k,v])=>v).map(([k])=>k.replace(/_/g,' ')).join(', ');if(errs)details+=`<div class="obs-detail">Errors: ${errs}</div>`;}
+    return`<div class="obs-item"><div class="obs-header"><div class="obs-date">${date}${sizeLine}</div><div class="obs-actions"><span class="proficiency-pill ${profPill[profAtPoint]}" style="font-size:9px;padding:2px 7px;">${profLabel[profAtPoint]}</span><button class="obs-btn" onclick="editObs(${idx})">Edit</button><button class="obs-btn" onclick="deleteObs(${idx})">Delete</button></div></div><div class="obs-tags">${typeTag}${pTags?'&ensp;'+pTags:''}</div>${details}${rec.note?`<div class="obs-note">"${rec.note}"</div>`:''}</div>`;
+  }).join('')+'</div>';
+}
+
+function toggleDropdown(s) {
+  document.getElementById('toggle-'+s).classList.toggle('open');
+  document.getElementById('content-'+s).classList.toggle('open');
+  trackEvent('section_toggle',{section:s});
+}
+function toggleStrategyInput(){const cb=document.querySelector('[data-strategy="other"]');const i=document.getElementById('strategyOther');i.disabled=!cb.checked;if(!cb.checked)i.value='';}
+function toggleErrorInput(){const cb=document.querySelector('[data-error="other"]');const i=document.getElementById('errorOther');i.disabled=!cb.checked;if(!cb.checked)i.value='';}
+function updateErrorStates(){
+  const s=document.querySelector('[data-principle="sequence"]').checked,c=document.querySelector('[data-principle="correspondence"]').checked,k=document.querySelector('[data-principle="cardinality"]').checked,all=s&&c&&k;
+  document.querySelectorAll('[data-error]').forEach(cb=>{if(cb.dataset.error!=='other'){cb.disabled=all;if(all){cb.checked=false;cb.closest('.cb-tile')?.classList.remove('checked');}}});
+  const eg=document.getElementById('errorPatternGroup');eg.style.opacity=all?'0.4':'1';eg.style.pointerEvents=all?'none':'auto';
+  updatePrincipleStates();
+}
+function updatePrincipleStates(){
+  const sk=document.querySelector('[data-error="skips_numbers"]').checked,rp=document.querySelector('[data-error="repeats_numbers"]').checked,lt=document.querySelector('[data-error="loses_track"]').checked,dc=document.querySelector('[data-error="double_counts"]').checked,ca=document.querySelector('[data-error="counts_again"]').checked;
+  const seq=document.querySelector('[data-principle="sequence"]'),cor=document.querySelector('[data-principle="correspondence"]'),card=document.querySelector('[data-principle="cardinality"]');
+  seq.disabled=sk||rp;if(seq.disabled){seq.checked=false;document.getElementById('cc-tile-sequence')?.classList.remove('checked');}
+  cor.disabled=lt||dc;if(cor.disabled){cor.checked=false;document.getElementById('cc-tile-correspondence')?.classList.remove('checked');}
+  card.disabled=ca;if(card.disabled){card.checked=false;document.getElementById('cc-tile-cardinality')?.classList.remove('checked');}
+}
+function updateErrorCheckStates(){updatePrincipleStates();}
+
+function saveObservation(){
+  if(!state.selectedStudentId){alert('Please select a student first');return;}
+  const sz=document.querySelector('input[name="collectionSize"]:checked');if(!sz){alert('Please select a collection size');return;}
+  const principles={sequence:document.querySelector('[data-principle="sequence"]').checked,correspondence:document.querySelector('[data-principle="correspondence"]').checked,cardinality:document.querySelector('[data-principle="cardinality"]').checked};
+  const strategies={};document.querySelectorAll('[data-strategy]').forEach(cb=>{strategies[cb.dataset.strategy]=cb.checked;});
+  const errors={};document.querySelectorAll('[data-error]').forEach(cb=>{errors[cb.dataset.error]=cb.checked;});
+  const record={type:'cc',timestamp:new Date().toISOString(),collectionSize:sz.value,principles,strategies,strategyOtherText:document.getElementById('strategyOther').value.trim(),errors,errorOtherText:document.getElementById('errorOther').value.trim(),note:document.getElementById('observationNote').value.trim()};
+  const history=state.observations[state.selectedStudentId].history;
+  if(editingObsIdx!==null){
+    record.timestamp=history[history.length-1-editingObsIdx].timestamp;
+    history[history.length-1-editingObsIdx]=record;
+    editingObsIdx=null;
+  } else {
+    history.push(record);
+  }
+  resetCCForm();
+  document.getElementById('editBanner').style.display='none';
+  document.getElementById('ccSaveBtn').textContent='Save Observation';
+  scheduleSave();renderObservationHistory();renderRoster();renderGroups();
+  trackEvent('observation_saved',{type:'cc',collectionSize:sz.value,principles:Object.values(principles).filter(Boolean).length});
+}
+
+function resetCCForm(){
+  document.querySelectorAll('input[name="collectionSize"]').forEach(r=>r.checked=false);
+  document.querySelectorAll('[data-principle],[data-strategy],[data-error]').forEach(cb=>cb.checked=false);
+  ['cc-tile-sequence','cc-tile-correspondence','cc-tile-cardinality','cc-tile-line','cc-tile-groups','cc-tile-containers','cc-tile-counting_on','cc-tile-strat-other','cc-tile-skips','cc-tile-repeats','cc-tile-track','cc-tile-double','cc-tile-again','cc-tile-err-other'].forEach(id=>{document.getElementById(id)?.classList.remove('checked');});
+  ['strategyOther','errorOther','observationNote'].forEach(id=>document.getElementById(id).value='');
+  toggleStrategyInput();toggleErrorInput();
+}
+
+function editObs(displayIdx){
+  const allObs=state.observations[state.selectedStudentId]?.history||[];
+  const origIdx=allObs.length-1-displayIdx;const rec=allObs[origIdx];
+  if(rec.type==='station'){editingObsIdx=displayIdx;openQuickLogForEdit(rec,origIdx);return;}
+  editingObsIdx=displayIdx;
+  document.querySelector('.content-pad').scrollIntoView({behavior:'smooth',block:'start'});
+  document.querySelectorAll('input[name="collectionSize"]').forEach(r=>{r.checked=(r.value===rec.collectionSize);});
+  const ptiles={sequence:'cc-tile-sequence',correspondence:'cc-tile-correspondence',cardinality:'cc-tile-cardinality'};
+  Object.entries(rec.principles||{}).forEach(([k,v])=>{const cb=document.querySelector(`[data-principle="${k}"]`);if(cb)cb.checked=v;document.getElementById(ptiles[k])?.classList.toggle('checked',v);});
+  const stileMap={line:'cc-tile-line',groups:'cc-tile-groups',containers:'cc-tile-containers',counting_on:'cc-tile-counting_on',other:'cc-tile-strat-other'};
+  let anyStrat=false;
+  Object.entries(rec.strategies||{}).forEach(([k,v])=>{const cb=document.querySelector(`[data-strategy="${k}"]`);if(cb)cb.checked=v;document.getElementById(stileMap[k])?.classList.toggle('checked',v);if(v)anyStrat=true;});
+  document.getElementById('strategyOther').value=rec.strategyOtherText||'';toggleStrategyInput();
+  if(anyStrat){const bd=document.getElementById('content-strategy');const ch=document.getElementById('toggle-strategy');if(!bd.classList.contains('open')){bd.classList.add('open');ch.classList.add('open');}}
+  const etileMap={skips_numbers:'cc-tile-skips',repeats_numbers:'cc-tile-repeats',loses_track:'cc-tile-track',double_counts:'cc-tile-double',counts_again:'cc-tile-again',other:'cc-tile-err-other'};
+  let anyErr=false;
+  Object.entries(rec.errors||{}).forEach(([k,v])=>{const cb=document.querySelector(`[data-error="${k}"]`);if(cb)cb.checked=v;document.getElementById(etileMap[k])?.classList.toggle('checked',v);if(v)anyErr=true;});
+  document.getElementById('errorOther').value=rec.errorOtherText||'';toggleErrorInput();
+  if(anyErr){const bd=document.getElementById('content-errors');const ch=document.getElementById('toggle-errors');if(!bd.classList.contains('open')){bd.classList.add('open');ch.classList.add('open');}}
+  document.getElementById('observationNote').value=rec.note||'';
+  updateErrorStates();
+  document.getElementById('editBanner').style.display='flex';
+  document.getElementById('ccSaveBtn').textContent='Update Observation';
+}
+
+function cancelEdit(){
+  editingObsIdx=null;resetCCForm();
+  document.getElementById('editBanner').style.display='none';
+  document.getElementById('ccSaveBtn').textContent='Save Observation';
+}
+
+function deleteObs(idx){
+  if(!confirm('Delete this observation?')) return;
+  const obs=state.observations[state.selectedStudentId].history;
+  obs.reverse();obs.splice(idx,1);obs.reverse();
+  scheduleSave();renderObservationHistory();renderGroups();renderRoster();
+  trackEvent('observation_deleted');
+}
+
+/* ═══════════════════════════════════════════════
+   QUICK LOG
+═══════════════════════════════════════════════ */
+function openQuickLog(id){
+  if(!selectedStation){alert('Please select a station first.');return;}
+  qlStudentId=id;const s=state.students.find(x=>x.id===id);const stn=STATIONS[selectedStation];
+  document.getElementById('qlStudentName').textContent=s.name;
+  const badge=document.getElementById('qlStationBadge');badge.textContent=stn.short;badge.style.background=stn.bg;badge.style.color=stn.color;
+  resetQuickLog();
+  document.getElementById('qlBackdrop').classList.add('open');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>document.getElementById('qlNote').focus(),200);
+  trackEvent('quick_log_opened',{station:selectedStation});
+}
+
+function resetQuickLog(){
+  ['tile-sequence','tile-correspondence','tile-cardinality','tile-skips','tile-repeats','tile-track','tile-double','tile-again','stile-line','stile-groups','stile-containers','stile-counting_on'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;el.classList.remove('checked');const cb=el.querySelector('input');if(cb)cb.checked=false;
+  });
+  document.getElementById('qlNote').value='';
+  updateQlSummary();updateQlStrategySummary();
+  document.getElementById('qlBehaviorsPanel').classList.remove('open');
+  document.getElementById('qlBehaviorsChevron').classList.remove('open');
+  document.getElementById('qlExpandRow').classList.remove('is-open');
+  document.getElementById('qlStrategyPanel').classList.remove('open');
+  document.getElementById('qlStrategyChevron').classList.remove('open');
+  document.getElementById('qlStratExpandRow').classList.remove('is-open');
+}
+
+function openQuickLogForEdit(rec,origIdx){
+  if(!selectedStation)selectedStation=rec.stationNum||1;
+  qlStudentId=state.selectedStudentId;
+  const s=state.students.find(x=>x.id===qlStudentId);
+  const stn=STATIONS[rec.stationNum]||STATIONS[selectedStation];
+  document.getElementById('qlStudentName').textContent=s.name;
+  const badge=document.getElementById('qlStationBadge');badge.textContent=stn.short;badge.style.background=stn.bg;badge.style.color=stn.color;
+  resetQuickLog();
+  const qlMap={sequence:'tile-sequence',correspondence:'tile-correspondence',cardinality:'tile-cardinality'};
+  Object.entries(rec.principles||{}).forEach(([k,v])=>{const cb=document.querySelector(`[data-ql="${k}"]`);if(cb)cb.checked=v;document.getElementById(qlMap[k])?.classList.toggle('checked',v);});
+  const stratMap={line:'stile-line',groups:'stile-groups',containers:'stile-containers',counting_on:'stile-counting_on'};let anyStrat=false;
+  Object.entries(rec.strategies||{}).forEach(([k,v])=>{const cb=document.querySelector(`[data-ql-strat="${k}"]`);if(cb)cb.checked=v;document.getElementById(stratMap[k])?.classList.toggle('checked',v);if(v)anyStrat=true;});
+  const errMap={skips_numbers:'tile-skips',repeats_numbers:'tile-repeats',loses_track:'tile-track',double_counts:'tile-double',counts_again:'tile-again'};let anyErr=false;
+  Object.entries(rec.errors||{}).forEach(([k,v])=>{const cb=document.querySelector(`[data-ql-err="${k}"]`);if(cb)cb.checked=v;document.getElementById(errMap[k])?.classList.toggle('checked',v);if(v)anyErr=true;});
+  document.getElementById('qlNote').value=rec.note||'';
+  updateQlSummary();updateQlStrategySummary();
+  const hasBehaviors=Object.values(rec.principles||{}).some(Boolean)||anyErr;
+  if(hasBehaviors){document.getElementById('qlBehaviorsPanel').classList.add('open');document.getElementById('qlBehaviorsChevron').classList.add('open');document.getElementById('qlExpandRow').classList.add('is-open');}
+  if(anyStrat){document.getElementById('qlStrategyPanel').classList.add('open');document.getElementById('qlStrategyChevron').classList.add('open');document.getElementById('qlStratExpandRow').classList.add('is-open');}
+  document.getElementById('qlBackdrop').classList.add('open');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>document.getElementById('qlNote').focus(),200);
+}
+
+function closeQuickLog(){document.getElementById('qlBackdrop').classList.remove('open');document.body.style.overflow='';qlStudentId=null;editingObsIdx=null;}
+function toggleQlStrategy(){document.getElementById('qlStrategyPanel').classList.toggle('open');document.getElementById('qlStrategyChevron').classList.toggle('open');document.getElementById('qlStratExpandRow').classList.toggle('is-open');trackEvent('ql_strategy_toggled');}
+function updateQlStrategySummary(){const n=[...document.querySelectorAll('[data-ql-strat]:checked')].length;document.getElementById('qlStrategySummary').textContent=n>0?`(${n} noted)`:'';}
+function toggleQlBehaviors(){document.getElementById('qlBehaviorsPanel').classList.toggle('open');document.getElementById('qlBehaviorsChevron').classList.toggle('open');document.getElementById('qlExpandRow').classList.toggle('is-open');trackEvent('ql_behaviors_toggled');}
+function updateQlSummary(){const b=[...document.querySelectorAll('[data-ql]:checked')].length;const e=[...document.querySelectorAll('[data-ql-err]:checked')].length;const total=b+e;document.getElementById('qlBehaviorSummary').textContent=total>0?`(${total} noted)`:'';}
+
+function saveStationObservation(){
+  if(!qlStudentId||!selectedStation)return;
+  const stn=STATIONS[selectedStation];
+  const principles={sequence:document.querySelector('[data-ql="sequence"]').checked,correspondence:document.querySelector('[data-ql="correspondence"]').checked,cardinality:document.querySelector('[data-ql="cardinality"]').checked};
+  const errors={};document.querySelectorAll('[data-ql-err]').forEach(cb=>{errors[cb.dataset.qlErr]=cb.checked;});
+  const strategies={};document.querySelectorAll('[data-ql-strat]').forEach(cb=>{strategies[cb.dataset.qlStrat]=cb.checked;});
+  const note=document.getElementById('qlNote').value.trim();
+  if(!state.observations[qlStudentId])state.observations[qlStudentId]={history:[]};
+  const history=state.observations[qlStudentId].history;
+  if(editingObsIdx!==null){
+    const origIdx=history.length-1-editingObsIdx;const orig=history[origIdx];
+    history[origIdx]={...orig,principles,strategies,errors,note};editingObsIdx=null;
+  } else {
+    history.push({type:'station',stationNum:selectedStation,stationName:stn.short,timestamp:new Date().toISOString(),principles,strategies,errors,note});
+  }
+  scheduleSave();closeQuickLog();
+  if(state.selectedStudentId===qlStudentId)renderObservationHistory();
+  renderRoster();renderGroups();renderCoverage();
+  trackEvent('observation_saved',{type:'station',station:selectedStation,principles:Object.values(principles).filter(Boolean).length});
+}
+
+/* ═══════════════════════════════════════════════
+   GROUPS
+═══════════════════════════════════════════════ */
+function renderGroups(){
+  const groups={early:[],developing:[],proficient:[]};state.students.forEach(s=>groups[calcProf(s.id)].push(s));
+  ['early','developing','proficient'].forEach(g=>{
+    const students=groups[g].slice().sort((a,b)=>a.name.localeCompare(b.name));
+    document.getElementById('group'+g.charAt(0).toUpperCase()+g.slice(1)).innerHTML=students.length===0
+      ?'<div class="group-student" style="color:var(--ink-4);font-size:12px;cursor:default;padding:14px;">No students at this level yet</div>'
+      :students.map(s=>{const obs=state.observations[s.id]?.history||[];const last=obs.length>0?new Date(obs[obs.length-1].timestamp).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'Never';return`<div class="group-student" onclick="selectStudentGroup('${s.id}')"><div class="group-student-name">${s.name}</div><div class="group-student-meta">${obs.length} obs · Last: ${last}</div></div>`;}).join('');
+  });
+}
+function selectStudentGroup(id){setMode('cc');selectStudent(id);trackEvent('group_student_clicked');}
+
+/* ═══════════════════════════════════════════════
+   TRAJECTORIES
+═══════════════════════════════════════════════ */
+function renderTrajectories(){
+  document.getElementById('trajectoriesTimeline').innerHTML=TRAJECTORIES.map((t,i)=>{const c=TRAJ_COLORS[i];return`<div class="traj-node" onclick="showTrajDetail(${i})"><div class="traj-node-inner"><div class="traj-number" style="background:${c.bg};color:${c.num};">${t.level}</div><div class="traj-name">${t.name}</div><div class="traj-hint">Tap to learn more</div></div></div>`;}).join('');
+}
+function showTrajDetail(i){
+  const t=TRAJECTORIES[i];const c=TRAJ_COLORS[i];
+  document.getElementById('trajDetailTitle').innerHTML=`<span style="color:${c.num};">Level ${t.level}:</span> ${t.name}`;
+  document.getElementById('trajDetailContent').innerHTML=`<div class="traj-section"><div class="traj-section-label">Description</div><p>${t.description}</p></div><div class="traj-section"><div class="traj-section-label">What to look for</div><ul class="traj-indicators">${t.indicators.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="traj-section"><div class="traj-section-label">Teaching focus</div><div class="traj-teaching-box">${t.teachingFocus}</div></div><div class="traj-section" style="margin-bottom:0;"><div class="traj-section-label">About this level</div><div class="traj-context-box">${t.context}</div></div>`;
+  document.getElementById('trajDetailsPanel').classList.add('visible');
+  setTimeout(()=>document.getElementById('trajDetailsPanel').scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+  trackEvent('trajectory_viewed',{level:t.level});
+}
+function closeTrajDetail(){document.getElementById('trajDetailsPanel').classList.remove('visible');}
+
+/* ═══════════════════════════════════════════════
+   VIEWS
+═══════════════════════════════════════════════ */
+function showView(v){
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  document.getElementById(v).classList.add('active');
+  if(v==='trajectoriesView')renderTrajectories();
+  else if(v==='groupsView')renderGroups();
+  window.scrollTo(0,0);
+  trackEvent('view_shown',{view:v});
+}
+
+/* ═══════════════════════════════════════════════
+   EXPORT
+   Exports class data + anonymous analytics summary.
+   Student names included only in teacher's own download.
+═══════════════════════════════════════════════ */
+function exportData(){
+  let csv='Student,Proficiency,Total Obs,CC Obs,Station Obs\n';
+  state.students.forEach(s=>{const prof=calcProf(s.id);const obs=state.observations[s.id]?.history||[];const cc=obs.filter(o=>o.type==='cc'||!o.type).length;const st=obs.filter(o=>o.type==='station').length;csv+=`"${s.name}","${prof}",${obs.length},${cc},${st}\n`;});
+
+  // Append anonymous analytics summary (no student names)
+  const log=getAnalyticsSummary();
+  if(log.length){
+    csv+='\n\n"--- ANONYMOUS USAGE LOG (no student data) ---"\n"Event","Timestamp","Session","Student Count","Total Obs"\n';
+    log.forEach(e=>{csv+=`"${e.event}","${e.ts}","${e.sessionId||''}",${e.studentCount||0},${e.totalObs||0}\n`;});
+  }
+
+  const blob=new Blob([csv],{type:'text/csv'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`counting-${currentTeacher?.code||'assessment'}-${new Date().toISOString().split('T')[0]}.csv`;document.body.appendChild(a);a.click();URL.revokeObjectURL(url);document.body.removeChild(a);
+  trackEvent('export_triggered');
+}
+</script>
+</body>
+</html>
