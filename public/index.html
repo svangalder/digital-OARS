@@ -50,7 +50,6 @@
     .auth-link:hover{text-decoration:underline;}
     .auth-error{font-size:12px;color:var(--accent);margin-top:6px;display:none;}
     .auth-success{font-size:12px;color:var(--green);margin-top:6px;display:none;}
-    .sync-code-box{background:var(--paper-2);border:1px solid var(--paper-3);border-radius:var(--radius);padding:12px 14px;font-family:monospace;font-size:18px;letter-spacing:.15em;text-align:center;color:var(--ink);font-weight:700;margin:8px 0 12px;}
 
     /* SYNC STATUS BAR */
     .sync-bar{padding:7px 16px;background:var(--paper-2);border-bottom:1px solid var(--paper-3);display:flex;align-items:center;justify-content:space-between;gap:10px;}
@@ -95,7 +94,6 @@
     .station-tile.selected{border-color:var(--purple);background:var(--purple-light);box-shadow:2px 2px 0 var(--purple-border);}
     .stn-num{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;}
     .stn-name{font-size:12px;font-weight:600;color:var(--ink);line-height:1.3;}
-    .stn-type{font-size:10px;color:var(--ink-3);font-style:italic;margin-top:1px;}
     .c1{color:var(--blue);}.c2{color:var(--green);}.c3{color:var(--amber);}.c4{color:var(--purple);}
 
     /* COVERAGE BAR */
@@ -189,6 +187,16 @@
     .save-btn{display:block;width:calc(100% - 28px);margin:0 14px 14px;background:var(--ink);color:var(--paper);border:none;border-radius:var(--radius);padding:13px;font-family:'DM Serif Display',serif;font-size:16px;cursor:pointer;letter-spacing:.02em;transition:all .2s;}
     .save-btn:hover{background:var(--accent);box-shadow:3px 3px 0 var(--paper-3);transform:translate(-1px,-1px);}
 
+    /* SWIPE NAV BAR (CC assessment) */
+    .swipe-nav{display:flex;align-items:center;background:var(--paper-2);border-bottom:1px solid var(--paper-3);padding:0;}
+    .swipe-nav-btn{flex:0 0 52px;height:48px;background:transparent;border:none;cursor:pointer;font-size:20px;color:var(--ink-3);display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s;}
+    .swipe-nav-btn:hover{background:var(--paper-3);color:var(--ink);}
+    .swipe-nav-btn:disabled{opacity:.25;cursor:default;}
+    .swipe-nav-center{flex:1;text-align:center;padding:10px 0;}
+    .swipe-nav-name{font-family:'DM Serif Display',serif;font-size:15px;color:var(--ink);}
+    .swipe-nav-counter{font-size:10px;color:var(--ink-4);margin-top:2px;letter-spacing:.05em;}
+    .swipe-hint{font-size:10px;color:var(--ink-4);text-align:center;padding:5px 0 2px;letter-spacing:.04em;}
+
     /* OBS HISTORY */
     .obs-item{padding:11px 0;border-bottom:1px solid var(--paper-3);}
     .obs-item:last-child{border-bottom:none;}
@@ -256,6 +264,11 @@
     .student-header-name{font-family:'DM Serif Display',serif;font-size:19px;color:var(--ink);line-height:1;}
     .student-header-sub{font-size:11px;color:var(--ink-4);letter-spacing:.05em;margin-top:3px;text-transform:uppercase;}
 
+    /* SWIPE TRANSITION */
+    .swipe-content{transition:opacity .18s ease, transform .18s ease;}
+    .swipe-content.slide-left{opacity:0;transform:translateX(-28px);}
+    .swipe-content.slide-right{opacity:0;transform:translateX(28px);}
+
     /* QUICK LOG */
     .ql-backdrop{display:none;position:fixed;inset:0;background:rgba(26,23,20,.5);z-index:100;align-items:flex-end;justify-content:center;}
     .ql-backdrop.open{display:flex;}
@@ -266,6 +279,15 @@
     .ql-student-name{font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink);line-height:1;}
     .ql-station-badge{font-size:11px;font-weight:700;letter-spacing:.05em;padding:3px 9px;border-radius:20px;text-transform:uppercase;margin-top:5px;display:inline-block;}
     .ql-close{background:transparent;border:1px solid var(--paper-3);color:var(--ink-3);border-radius:6px;padding:6px 12px;font-family:'Sora',sans-serif;font-size:11px;cursor:pointer;margin-left:10px;margin-top:2px;flex-shrink:0;}
+
+    /* QUICK LOG PROGRESS DOTS */
+    .ql-progress{display:flex;align-items:center;gap:4px;padding:8px 16px;background:var(--paper-2);border-bottom:1px solid var(--paper-3);flex-wrap:wrap;}
+    .ql-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;transition:background .2s;}
+    .ql-dot.done{background:var(--green);}
+    .ql-dot.current{background:var(--blue);box-shadow:0 0 0 2px rgba(42,90,138,.25);}
+    .ql-dot.todo{background:var(--paper-3);}
+    .ql-progress-label{font-size:10px;color:var(--ink-4);margin-left:6px;white-space:nowrap;}
+
     .ql-note-area{padding:14px 16px 0;}
     .ql-section-label{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-bottom:9px;}
     .ql-note-textarea{font-family:'Sora',sans-serif;font-size:14px;border:1.5px solid var(--paper-3);border-radius:var(--radius);padding:13px;width:100%;min-height:100px;resize:vertical;background:white;color:var(--ink);line-height:1.7;transition:border-color .15s;}
@@ -300,31 +322,28 @@
     .cb-tile[id^="stile-"]:hover .cb-tile-body{border-color:var(--amber);background:var(--amber-light);}
     .cb-tile[id^="stile-"].checked .cb-tile-body{border-color:var(--amber);background:var(--amber-light);box-shadow:2px 2px 0 #f0dcb8;}
     .cb-tile[id^="stile-"].checked .cb-tile-check{background:var(--amber);color:white;}
-    .ql-save-area{padding:14px 16px;}
-    .ql-save{display:block;width:100%;background:var(--purple);color:white;border:none;border-radius:var(--radius);padding:14px;font-family:'DM Serif Display',serif;font-size:17px;cursor:pointer;letter-spacing:.02em;transition:all .2s;}
-    .ql-save:hover{background:#5a2e88;box-shadow:3px 3px 0 var(--purple-border);transform:translate(-1px,-1px);}
 
-    /* PRIVACY NOTE in Settings */
-    .privacy-card{background:var(--blue-light);border:1px solid #c8ddf0;border-radius:var(--radius-lg);padding:14px 16px;margin-bottom:12px;}
-    .privacy-card-title{font-size:12px;font-weight:700;color:var(--blue);margin-bottom:6px;}
-    .privacy-card p{font-size:12px;color:var(--blue);line-height:1.6;}
-    .privacy-card ul{margin:6px 0 0 16px;}
-    .privacy-card li{font-size:11px;color:var(--blue);line-height:1.7;}
+    /* QUICK LOG SAVE BUTTONS */
+    .ql-save-area{padding:14px 16px;display:flex;gap:9px;}
+    .ql-save{flex:1;background:var(--purple);color:white;border:none;border-radius:var(--radius);padding:14px;font-family:'DM Serif Display',serif;font-size:17px;cursor:pointer;letter-spacing:.02em;transition:all .2s;}
+    .ql-save:hover{background:#5a2e88;box-shadow:3px 3px 0 var(--purple-border);transform:translate(-1px,-1px);}
+    .ql-save-next{flex:1;background:var(--ink);color:white;border:none;border-radius:var(--radius);padding:14px;font-family:'DM Serif Display',serif;font-size:16px;cursor:pointer;letter-spacing:.02em;transition:all .2s;}
+    .ql-save-next:hover{background:var(--accent);box-shadow:3px 3px 0 var(--paper-3);transform:translate(-1px,-1px);}
+    .ql-save-next:disabled{opacity:.35;cursor:default;transform:none;box-shadow:none;}
+    .ql-swipe-hint{text-align:center;font-size:10px;color:var(--ink-4);padding:0 16px 10px;letter-spacing:.04em;}
   </style>
 </head>
 <body>
 <div id="app">
 
-  <!-- ═══════════ AUTH SCREEN ═══════════ -->
+  <!-- AUTH SCREEN -->
   <div id="authScreen" style="display:block;">
     <div class="auth-screen">
       <div class="auth-card" id="loginPanel">
         <div class="auth-logo">Counting Collections</div>
         <div class="auth-sub">Kindergarten Assessment · Teacher Login</div>
-
         <div class="auth-section-label">Your classroom code</div>
         <input class="auth-input" id="loginCode" placeholder="e.g. JONES-K2" maxlength="20" autocomplete="username" onkeydown="if(event.key==='Enter')document.getElementById('pinDigit0').focus()"/>
-
         <div class="auth-section-label" style="margin-top:4px;">4-digit PIN</div>
         <div class="auth-pin-row">
           <input class="auth-pin-digit" id="pinDigit0" type="password" inputmode="numeric" maxlength="1" onkeyup="pinNav(0,event)"/>
@@ -333,7 +352,6 @@
           <input class="auth-pin-digit" id="pinDigit3" type="password" inputmode="numeric" maxlength="1" onkeyup="pinNav(3,event)"/>
         </div>
         <div class="auth-error" id="loginError">Incorrect code or PIN. Please try again.</div>
-
         <button class="auth-btn" onclick="attemptLogin()">Sign In</button>
         <div class="auth-divider">— or —</div>
         <button class="auth-link" onclick="showPanel('setupPanel')">Create a new classroom →</button>
@@ -342,11 +360,9 @@
       <div class="auth-card" id="setupPanel" style="display:none;">
         <div class="auth-logo">New Classroom</div>
         <div class="auth-sub">Set up your teacher account</div>
-
         <div class="auth-section-label">Choose a classroom code</div>
         <input class="auth-input" id="setupCode" placeholder="e.g. SMITH-AM" maxlength="20" autocomplete="username"/>
         <div style="font-size:11px;color:var(--ink-4);margin:-6px 0 12px;">Letters and numbers only. You'll use this to sign in on any device.</div>
-
         <div class="auth-section-label">Choose a 4-digit PIN</div>
         <div class="auth-pin-row">
           <input class="auth-pin-digit" id="setupPin0" type="password" inputmode="numeric" maxlength="1" onkeyup="setupPinNav(0,event)"/>
@@ -354,7 +370,6 @@
           <input class="auth-pin-digit" id="setupPin2" type="password" inputmode="numeric" maxlength="1" onkeyup="setupPinNav(2,event)"/>
           <input class="auth-pin-digit" id="setupPin3" type="password" inputmode="numeric" maxlength="1" onkeyup="setupPinNav(3,event)"/>
         </div>
-
         <div class="auth-section-label">Confirm PIN</div>
         <div class="auth-pin-row">
           <input class="auth-pin-digit" id="setupPinC0" type="password" inputmode="numeric" maxlength="1" onkeyup="setupPinConfNav(0,event)"/>
@@ -364,11 +379,9 @@
         </div>
         <div class="auth-error" id="setupError">PINs don't match or code already taken.</div>
         <div class="auth-success" id="setupSuccess">Account created! Please sign in below.</div>
-
         <div style="background:var(--blue-light);border-radius:var(--radius);padding:10px 12px;margin-bottom:14px;font-size:11px;color:var(--blue);line-height:1.6;">
-          <strong>Privacy note:</strong> Student names are stored under your PIN-protected classroom code and never shared. Only anonymised usage data (e.g. "teacher opened Trajectories") is collected — no student names or notes.
+          <strong>Privacy note:</strong> Student names are stored under your PIN-protected classroom code and never shared. Only anonymised usage data is collected — no student names or notes.
         </div>
-
         <button class="auth-btn" onclick="attemptSetup()">Create Classroom</button>
         <div class="auth-divider">— or —</div>
         <button class="auth-link" onclick="showPanel('loginPanel')">← Back to sign in</button>
@@ -376,7 +389,7 @@
     </div>
   </div>
 
-  <!-- ═══════════ MAIN APP (hidden until auth) ═══════════ -->
+  <!-- MAIN APP -->
   <div id="mainApp" style="display:none;">
 
     <!-- ROSTER VIEW -->
@@ -393,21 +406,16 @@
           <button class="nav-btn" onclick="signOut()">Sign out</button>
         </div>
       </div>
-
-      <!-- sync bar -->
       <div class="sync-bar">
         <div class="sync-status"><div class="sync-dot" id="syncDot"></div><span id="syncLabel">Loading…</span></div>
         <span class="teacher-pill" id="teacherPill"></span>
         <button class="sync-btn" onclick="syncNow()">Sync now</button>
       </div>
-
-      <!-- analytics notice (dismissed once seen) -->
       <div class="analytics-notice" id="analyticsNotice" style="display:none;">
         <span class="analytics-notice-icon">ℹ</span>
         <span>This tool collects <strong>anonymous</strong> usage data (e.g. which features you tap). No student names or notes are ever included.</span>
         <button class="analytics-dismiss" onclick="dismissAnalyticsNotice()">Got it</button>
       </div>
-
       <div class="mode-bar">
         <span class="mode-label">Mode</span>
         <div class="mode-toggle">
@@ -419,10 +427,10 @@
         <div class="station-selector">
           <div class="station-selector-label">Which station are you at?</div>
           <div class="station-grid">
-            <div class="station-tile" onclick="selectStation(1)" id="stile-1"><div class="stn-num c1">Station 1</div><div class="stn-name">Independent</div><div class="stn-type">replaces differentiated teacher station</div></div>
-            <div class="station-tile" onclick="selectStation(2)" id="stile-2"><div class="stn-num c2">Station 2</div><div class="stn-name">Independent</div><div class="stn-type">replaces digital game</div></div>
-            <div class="station-tile" onclick="selectStation(3)" id="stile-3"><div class="stn-num c3">Station 3</div><div class="stn-name">Shake Those Disks</div><div class="stn-type">partner · familiar EM2 game</div></div>
-            <div class="station-tile" onclick="selectStation(4)" id="stile-4"><div class="stn-num c4">Station 4</div><div class="stn-name">Donut Shop</div><div class="stn-type">play-based · collaborative</div></div>
+            <div class="station-tile" onclick="selectStation(1)" id="stile-1"><div class="stn-num c1">Station 1</div><div class="stn-name">Game</div></div>
+            <div class="station-tile" onclick="selectStation(2)" id="stile-2"><div class="stn-num c2">Station 2</div><div class="stn-name">Pictures</div></div>
+            <div class="station-tile" onclick="selectStation(3)" id="stile-3"><div class="stn-num c3">Station 3</div><div class="stn-name">Doughnut Shop</div></div>
+            <div class="station-tile" onclick="selectStation(4)" id="stile-4"><div class="stn-num c4">Station 4</div><div class="stn-name">Ten-Frames</div></div>
           </div>
         </div>
         <div class="coverage-bar" id="coverageBar">
@@ -485,101 +493,107 @@
         <button class="nav-btn" onclick="showView('rosterView')">← Roster</button>
         <div class="header-wordmark" style="margin-left:10px;"><div class="header-title" id="studentTitle"></div><div class="header-sub">Counting Collections · Days 1–2</div></div>
       </div>
-      <div class="student-header-band">
-        <div class="student-header-avatar" id="studentAvatarBand"></div>
-        <div><div class="student-header-name" id="studentNameBand"></div><div class="student-header-sub" id="studentMetaBand"></div></div>
+
+      <!-- Swipe nav bar -->
+      <div class="swipe-nav" id="swipeNavBar">
+        <button class="swipe-nav-btn" id="swipePrevBtn" onclick="navigateStudent(-1)" title="Previous student">‹</button>
+        <div class="swipe-nav-center">
+          <div class="swipe-nav-name" id="swipeNavName"></div>
+          <div class="swipe-nav-counter" id="swipeNavCounter"></div>
+        </div>
+        <button class="swipe-nav-btn" id="swipeNextBtn" onclick="navigateStudent(1)" title="Next student">›</button>
       </div>
-      <div class="content-pad">
-        <div class="card">
-          <div class="card-head"><div class="dot"></div>Collection Size</div>
-          <div class="card-body">
-            <div class="option-grid">
-              <label class="option-tile"><input type="radio" name="collectionSize" value="1-10"/><span class="option-label">1–10 objects</span></label>
-              <label class="option-tile"><input type="radio" name="collectionSize" value="10-20"/><span class="option-label">10–20 objects</span></label>
-              <label class="option-tile"><input type="radio" name="collectionSize" value="20-50"/><span class="option-label">20–50 objects</span></label>
-              <label class="option-tile"><input type="radio" name="collectionSize" value="50+"/><span class="option-label">50+ objects</span></label>
+
+      <div id="assessmentSwipeContent" class="swipe-content">
+        <div class="student-header-band">
+          <div class="student-header-avatar" id="studentAvatarBand"></div>
+          <div><div class="student-header-name" id="studentNameBand"></div><div class="student-header-sub" id="studentMetaBand"></div></div>
+        </div>
+        <div class="content-pad">
+          <div class="card">
+            <div class="card-head"><div class="dot"></div>Collection Size</div>
+            <div class="card-body">
+              <div class="option-grid">
+                <label class="option-tile"><input type="radio" name="collectionSize" value="1-10"/><span class="option-label">1–10 objects</span></label>
+                <label class="option-tile"><input type="radio" name="collectionSize" value="11-20"/><span class="option-label">11–20 objects</span></label>
+                <label class="option-tile"><input type="radio" name="collectionSize" value="21-50"/><span class="option-label">21–50 objects</span></label>
+                <label class="option-tile"><input type="radio" name="collectionSize" value="51+"/><span class="option-label">51+ objects</span></label>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="card">
-          <div class="card-head"><div class="dot"></div>Core Counting Principles</div>
-          <div class="card-body" style="padding:12px 12px 14px;">
-            <div class="tile-grid" style="margin-bottom:0;">
-              <label class="cb-tile" id="cc-tile-sequence">
-                <input type="checkbox" data-principle="sequence" onchange="syncTile('cc-tile-sequence',this);updateErrorStates()"/>
-                <div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Number Word Sequence</div><div class="cb-tile-desc">Says numbers in correct order (1, 2, 3…)</div></div>
-              </label>
-              <label class="cb-tile" id="cc-tile-correspondence">
-                <input type="checkbox" data-principle="correspondence" onchange="syncTile('cc-tile-correspondence',this);updateErrorStates()"/>
-                <div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">One-to-One Correspondence</div><div class="cb-tile-desc">One number word per object, nothing skipped</div></div>
-              </label>
-              <label class="cb-tile" id="cc-tile-cardinality">
-                <input type="checkbox" data-principle="cardinality" onchange="syncTile('cc-tile-cardinality',this);updateErrorStates()"/>
-                <div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Cardinality</div><div class="cb-tile-desc">Last number said = total amount</div></div>
-              </label>
+          <div class="card">
+            <div class="card-head"><div class="dot"></div>Core Counting Principles</div>
+            <div class="card-body" style="padding:12px 12px 14px;">
+              <div class="tile-grid" style="margin-bottom:0;">
+                <label class="cb-tile" id="cc-tile-sequence"><input type="checkbox" data-principle="sequence" onchange="syncTile('cc-tile-sequence',this);updateErrorStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Number Word Sequence</div><div class="cb-tile-desc">Says numbers in correct order (1, 2, 3…)</div></div></label>
+                <label class="cb-tile" id="cc-tile-correspondence"><input type="checkbox" data-principle="correspondence" onchange="syncTile('cc-tile-correspondence',this);updateErrorStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">One-to-One Correspondence</div><div class="cb-tile-desc">One number word per object, nothing skipped</div></div></label>
+                <label class="cb-tile" id="cc-tile-cardinality"><input type="checkbox" data-principle="cardinality" onchange="syncTile('cc-tile-cardinality',this);updateErrorStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Cardinality</div><div class="cb-tile-desc">Last number said = total amount</div></div></label>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="card">
-          <div class="card-head" style="cursor:pointer;justify-content:space-between;" onclick="toggleDropdown('strategy')">
-            <div style="display:flex;align-items:center;gap:7px;"><div class="dot" style="background:var(--amber);"></div>Organizing Strategy</div>
-            <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:10px;font-weight:500;color:var(--ink-4);text-transform:none;letter-spacing:0;">optional</span><span class="chevron" id="toggle-strategy">▼</span></div>
-          </div>
-          <div class="dropdown-body" id="content-strategy" style="padding:12px 12px 14px;">
-            <div class="tile-grid" style="margin-bottom:0;">
-              <label class="cb-tile" id="cc-tile-line"><input type="checkbox" data-strategy="line" onchange="syncTile('cc-tile-line',this)"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">In a line</div></div></label>
-              <label class="cb-tile" id="cc-tile-groups"><input type="checkbox" data-strategy="groups" onchange="syncTile('cc-tile-groups',this)"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Grouped objects</div><div class="cb-tile-desc">By color, size, etc.</div></div></label>
-              <label class="cb-tile" id="cc-tile-containers"><input type="checkbox" data-strategy="containers" onchange="syncTile('cc-tile-containers',this)"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Used containers</div><div class="cb-tile-desc">Moved in/out</div></div></label>
-              <label class="cb-tile" id="cc-tile-counting_on"><input type="checkbox" data-strategy="counting_on" onchange="syncTile('cc-tile-counting_on',this)"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Counted on</div><div class="cb-tile-desc">Started from number other than 1</div></div></label>
-              <label class="cb-tile" id="cc-tile-strat-other"><input type="checkbox" data-strategy="other" onchange="syncTile('cc-tile-strat-other',this);toggleStrategyInput()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Other</div></div></label>
+          <div class="card">
+            <div class="card-head" style="cursor:pointer;justify-content:space-between;" onclick="toggleDropdown('strategy')">
+              <div style="display:flex;align-items:center;gap:7px;"><div class="dot" style="background:var(--amber);"></div>Organizing Strategy</div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:10px;font-weight:500;color:var(--ink-4);text-transform:none;letter-spacing:0;">optional</span><span class="chevron" id="toggle-strategy">▼</span></div>
             </div>
-            <input type="text" class="inline-input" id="strategyOther" placeholder="Describe other strategy…" disabled style="margin-left:0;margin-top:10px;width:100%;display:block;"/>
-          </div>
-        </div>
-        <div class="card" id="errorPatternGroup">
-          <div class="card-head" style="cursor:pointer;justify-content:space-between;" onclick="toggleDropdown('errors')">
-            <div style="display:flex;align-items:center;gap:7px;"><div class="dot" style="background:var(--accent-2);"></div>Error Patterns Noted</div>
-            <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:10px;font-weight:500;color:var(--ink-4);text-transform:none;letter-spacing:0;">optional</span><span class="chevron" id="toggle-errors">▼</span></div>
-          </div>
-          <div class="dropdown-body" id="content-errors" style="padding:12px 12px 14px;">
-            <div class="tile-grid" style="margin-bottom:0;">
-              <label class="cb-tile cb-tile-err" id="cc-tile-skips"><input type="checkbox" data-error="skips_numbers" onchange="syncTile('cc-tile-skips',this);updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Skipped numbers</div></div></label>
-              <label class="cb-tile cb-tile-err" id="cc-tile-repeats"><input type="checkbox" data-error="repeats_numbers" onchange="syncTile('cc-tile-repeats',this);updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Repeated numbers</div></div></label>
-              <label class="cb-tile cb-tile-err" id="cc-tile-track"><input type="checkbox" data-error="loses_track" onchange="syncTile('cc-tile-track',this);updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Lost track</div></div></label>
-              <label class="cb-tile cb-tile-err" id="cc-tile-double"><input type="checkbox" data-error="double_counts" onchange="syncTile('cc-tile-double',this);updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Double counted</div></div></label>
-              <label class="cb-tile cb-tile-err" id="cc-tile-again"><input type="checkbox" data-error="counts_again" onchange="syncTile('cc-tile-again',this);updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Recounted on "how many?"</div></div></label>
-              <label class="cb-tile cb-tile-err" id="cc-tile-err-other"><input type="checkbox" data-error="other" onchange="syncTile('cc-tile-err-other',this);toggleErrorInput();updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Other</div></div></label>
+            <div class="dropdown-body" id="content-strategy" style="padding:12px 12px 14px;">
+              <div class="tile-grid" style="margin-bottom:0;">
+                <label class="cb-tile" id="cc-tile-line"><input type="checkbox" data-strategy="line" onchange="syncTile('cc-tile-line',this)"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">In a line</div></div></label>
+                <label class="cb-tile" id="cc-tile-groups"><input type="checkbox" data-strategy="groups" onchange="syncTile('cc-tile-groups',this)"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Grouped objects</div><div class="cb-tile-desc">By color, size, etc.</div></div></label>
+                <label class="cb-tile" id="cc-tile-containers"><input type="checkbox" data-strategy="containers" onchange="syncTile('cc-tile-containers',this)"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Used containers</div><div class="cb-tile-desc">Moved in/out</div></div></label>
+                <label class="cb-tile" id="cc-tile-counting_on"><input type="checkbox" data-strategy="counting_on" onchange="syncTile('cc-tile-counting_on',this)"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Counted on</div><div class="cb-tile-desc">Started from number other than 1</div></div></label>
+                <label class="cb-tile" id="cc-tile-strat-other"><input type="checkbox" data-strategy="other" onchange="syncTile('cc-tile-strat-other',this);toggleStrategyInput()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Other</div></div></label>
+              </div>
+              <input type="text" class="inline-input" id="strategyOther" placeholder="Describe other strategy…" disabled style="margin-left:0;margin-top:10px;width:100%;display:block;"/>
             </div>
-            <input type="text" class="inline-input" id="errorOther" placeholder="Describe other error…" disabled style="margin-left:0;margin-top:10px;width:100%;display:block;"/>
+          </div>
+          <div class="card" id="errorPatternGroup">
+            <div class="card-head" style="cursor:pointer;justify-content:space-between;" onclick="toggleDropdown('errors')">
+              <div style="display:flex;align-items:center;gap:7px;"><div class="dot" style="background:var(--accent-2);"></div>Error Patterns Noted</div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:10px;font-weight:500;color:var(--ink-4);text-transform:none;letter-spacing:0;">optional</span><span class="chevron" id="toggle-errors">▼</span></div>
+            </div>
+            <div class="dropdown-body" id="content-errors" style="padding:12px 12px 14px;">
+              <div class="tile-grid" style="margin-bottom:0;">
+                <label class="cb-tile cb-tile-err" id="cc-tile-skips"><input type="checkbox" data-error="skips_numbers" onchange="syncTile('cc-tile-skips',this);updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Skipped numbers</div></div></label>
+                <label class="cb-tile cb-tile-err" id="cc-tile-repeats"><input type="checkbox" data-error="repeats_numbers" onchange="syncTile('cc-tile-repeats',this);updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Repeated numbers</div></div></label>
+                <label class="cb-tile cb-tile-err" id="cc-tile-track"><input type="checkbox" data-error="loses_track" onchange="syncTile('cc-tile-track',this);updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Lost track</div></div></label>
+                <label class="cb-tile cb-tile-err" id="cc-tile-double"><input type="checkbox" data-error="double_counts" onchange="syncTile('cc-tile-double',this);updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Double counted</div></div></label>
+                <label class="cb-tile cb-tile-err" id="cc-tile-again"><input type="checkbox" data-error="counts_again" onchange="syncTile('cc-tile-again',this);updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Recounted on "how many?"</div></div></label>
+                <label class="cb-tile cb-tile-err" id="cc-tile-err-other"><input type="checkbox" data-error="other" onchange="syncTile('cc-tile-err-other',this);toggleErrorInput();updateErrorCheckStates()"/><div class="cb-tile-body"><div class="cb-tile-check">✓</div><div class="cb-tile-name">Other</div></div></label>
+              </div>
+              <input type="text" class="inline-input" id="errorOther" placeholder="Describe other error…" disabled style="margin-left:0;margin-top:10px;width:100%;display:block;"/>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="dot"></div>Quick Note</div>
+            <div class="card-body"><textarea id="observationNote" placeholder="E.g., organized by color, counted slowly, lost track after 5…"></textarea></div>
           </div>
         </div>
-        <div class="card">
-          <div class="card-head"><div class="dot"></div>Quick Note</div>
-          <div class="card-body"><textarea id="observationNote" placeholder="E.g., organized by color, counted slowly, lost track after 5…"></textarea></div>
+        <div id="editBanner" style="display:none;margin:0 14px 10px;padding:10px 14px;background:#fff8e6;border:1.5px solid var(--amber);border-radius:var(--radius);font-size:12px;color:var(--amber);font-weight:600;align-items:center;justify-content:space-between;gap:10px;">
+          <span>Editing observation — make changes then save</span>
+          <button onclick="cancelEdit()" style="background:transparent;border:1px solid var(--amber);color:var(--amber);border-radius:6px;padding:4px 10px;font-family:'Sora',sans-serif;font-size:11px;cursor:pointer;">Cancel</button>
         </div>
+        <button class="save-btn" id="ccSaveBtn" onclick="saveObservation()">Save Observation</button>
+        <div class="content-pad">
+          <div class="card"><div class="card-head"><div class="dot"></div>Observation History</div><div id="observationHistory"></div></div>
+        </div>
+        <div class="spacer"></div>
       </div>
-      <div id="editBanner" style="display:none;margin:0 14px 10px;padding:10px 14px;background:#fff8e6;border:1.5px solid var(--amber);border-radius:var(--radius);font-size:12px;color:var(--amber);font-weight:600;align-items:center;justify-content:space-between;gap:10px;">
-        <span>Editing observation — make changes then save</span>
-        <button onclick="cancelEdit()" style="background:transparent;border:1px solid var(--amber);color:var(--amber);border-radius:6px;padding:4px 10px;font-family:'Sora',sans-serif;font-size:11px;cursor:pointer;">Cancel</button>
-      </div>
-      <button class="save-btn" id="ccSaveBtn" onclick="saveObservation()">Save Observation</button>
-      <div class="content-pad">
-        <div class="card"><div class="card-head"><div class="dot"></div>Observation History</div><div id="observationHistory"></div></div>
-      </div>
-      <div class="spacer"></div>
     </div>
 
     <!-- QUICK LOG BOTTOM SHEET -->
     <div class="ql-backdrop" id="qlBackdrop">
-      <div class="ql-sheet">
+      <div class="ql-sheet" id="qlSheet">
         <div class="ql-handle"></div>
         <div class="ql-header">
           <div class="ql-header-left">
             <div class="ql-student-name" id="qlStudentName"></div>
             <div class="ql-station-badge" id="qlStationBadge"></div>
           </div>
-          <button class="ql-close" onclick="closeQuickLog()">Cancel</button>
+          <button class="ql-close" onclick="closeQuickLog()">Close</button>
         </div>
+        <!-- Progress dots -->
+        <div class="ql-progress" id="qlProgress"></div>
         <div class="ql-note-area">
           <div class="ql-section-label">Anecdotal note</div>
           <textarea class="ql-note-textarea" id="qlNote" placeholder="What did you notice? Jot anything — counting strategy, engagement, what they said…"></textarea>
@@ -620,275 +634,265 @@
           </div>
         </div>
         <div class="ql-save-area">
-          <button class="ql-save" onclick="saveStationObservation()">Save Station Observation</button>
-          <div style="height:8px;"></div>
+          <button class="ql-save-next" id="qlSaveNextBtn" onclick="saveStationObservation(true)">Save &amp; next →</button>
+          <button class="ql-save" onclick="saveStationObservation(false)">Save</button>
         </div>
+        <div class="ql-swipe-hint" id="qlSwipeHint">← swipe left to save &amp; advance · swipe right to go back →</div>
       </div>
     </div>
 
-  </div><!-- /mainApp -->
-</div><!-- /app -->
+  </div>
+</div>
 
 <script>
-/* ═══════════════════════════════════════════════
-   CONSTANTS & CRYPTO UTILITIES
-═══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   CONSTANTS
+═══════════════════════════════════════════ */
 const TRAJECTORIES=[{level:1,name:"Reciter",description:"Says number words in sequence (with some support), but cannot yet reliably match to objects when counting",indicators:["Chants or recites number words in order","May not start at 1, or may skip numbers","Does not coordinate number words with pointing/touching objects"],teachingFocus:"Help child point to and touch each object while saying numbers in order",context:"This is typically the foundation. All children benefit from repeated chanting and singing of number sequences."},{level:2,name:"Corresponder",description:"Matches number words to objects but may not understand that the last number means 'how many'",indicators:["Touches or points to each object as they count","Says one number word for each object","May recount to answer 'how many?' instead of knowing the last number"],teachingFocus:"Ask 'how many?' immediately after counting—emphasize that the last number tells the amount",context:"Children often spend significant time here. Some work on Corresponder and Counter Small skills in parallel."},{level:3,name:"Counter (Small)",description:"Counts small collections accurately with one-to-one correspondence and understands cardinality",indicators:["Counts 5–10 objects with accuracy","Knows the last number said tells 'how many'","Can count again to verify the total"],teachingFocus:"Organize objects in different ways; introduce larger collections; practice counting backward",context:"A significant milestone. Children often develop these skills with familiar contexts before managing mixed piles."},{level:4,name:"Counter (To 20)",description:"Counts larger collections accurately, often using organization strategies",indicators:["Counts 10–20+ objects accurately","Organizes objects to avoid losing track","Demonstrates cardinality with larger sets"],teachingFocus:"Introduce tens and ones language; explore skip counting; practice flexible counting",context:"While developing Counter (To 20), children may simultaneously begin Counter Backward."},{level:5,name:"Counter Backward",description:"Counts backward from 10 to 1",indicators:["Counts backward from 10: '10, 9, 8…'","Can count backward when removing objects","Understands reverse order of number sequence"],teachingFocus:"Use countdown games; practice removal counting with manipulatives",context:"Often develops alongside Counter (To 20). Both show growth in number sequence flexibility."},{level:6,name:"Counter from N",description:"Counts from numbers other than 1 and determines numbers just before or after",indicators:["When asked to count from 6 to 8, counts '6, 7, 8'","Answers 'what comes before 7?' with 'six'","Can count on or backward from any number"],teachingFocus:"Practice 'what comes next' and 'what comes before' games",context:"Often develops in parallel with Skip Counter skills."},{level:7,name:"Skip Counter",description:"Skip counts by tens up to 100 with understanding",indicators:["Counts '10, 20, 30… 100'","Understands 'thirty means 3 tens'","Counts groups efficiently"],teachingFocus:"Use activities with groups of 10; emphasize place value",context:"Some children show early signs while solidifying other skills."}];
 const TRAJ_COLORS=[{num:'#a06020',bg:'#fef3e2'},{num:'#2a5a8a',bg:'#e8f0f8'},{num:'#2a7a4b',bg:'#e8f5ee'},{num:'#6b3a9a',bg:'#f2eaff'},{num:'#c85a2a',bg:'#fdf0ea'},{num:'#2a7a72',bg:'#e8f5f3'},{num:'#7a2a6b',bg:'#fceaf8'}];
-const STATIONS={1:{short:'Station 1',color:'#2a5a8a',bg:'#e8f0f8'},2:{short:'Station 2',color:'#2a7a4b',bg:'#e8f5ee'},3:{short:'Station 3 — Shake Those Disks',color:'#a06020',bg:'#fef3e2'},4:{short:'Station 4 — Donut Shop',color:'#6b3a9a',bg:'#f3eaff'}};
+const STATIONS={1:{short:'Station 1 — Game',color:'#2a5a8a',bg:'#e8f0f8'},2:{short:'Station 2 — Pictures',color:'#2a7a4b',bg:'#e8f5ee'},3:{short:'Station 3 — Doughnut Shop',color:'#a06020',bg:'#fef3e2'},4:{short:'Station 4 — Ten-Frames',color:'#6b3a9a',bg:'#f3eaff'}};
 
-/* Simple deterministic hash (for PIN verification, not cryptographic — good enough for classroom gate) */
-async function hashPin(pin, salt) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(salt + ':' + pin);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  return Array.from(new Uint8Array(hashBuffer)).map(b=>b.toString(16).padStart(2,'0')).join('');
+async function hashPin(pin,salt){const e=new TextEncoder();const d=e.encode(salt+':'+pin);const h=await crypto.subtle.digest('SHA-256',d);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('');}
+
+/* ═══════════════════════════════════════════
+   AUTH
+═══════════════════════════════════════════ */
+let currentTeacher=null;
+function getAuthKey(c){return'auth:'+c.toUpperCase().trim();}
+function getDataKey(c){return'data:'+c.toUpperCase().trim();}
+function showPanel(id){['loginPanel','setupPanel'].forEach(p=>document.getElementById(p).style.display='none');document.getElementById(id).style.display='block';}
+function pinNav(i,e){const v=e.target.value.replace(/[^0-9]/g,'');e.target.value=v.slice(-1);if(v&&i<3)document.getElementById('pinDigit'+(i+1)).focus();if(e.key==='Enter')attemptLogin();}
+function setupPinNav(i,e){const v=e.target.value.replace(/[^0-9]/g,'');e.target.value=v.slice(-1);if(v&&i<3)document.getElementById('setupPin'+(i+1)).focus();}
+function setupPinConfNav(i,e){const v=e.target.value.replace(/[^0-9]/g,'');e.target.value=v.slice(-1);if(v&&i<3)document.getElementById('setupPinC'+(i+1)).focus();if(e.key==='Enter')attemptSetup();}
+function getPin(p){return[0,1,2,3].map(i=>document.getElementById(p+i).value).join('');}
+
+async function attemptLogin(){
+  const code=document.getElementById('loginCode').value.trim().toUpperCase();
+  const pin=getPin('pinDigit');const errEl=document.getElementById('loginError');errEl.style.display='none';
+  if(!code||pin.length!==4){errEl.textContent='Please enter your classroom code and 4-digit PIN.';errEl.style.display='block';return;}
+  const stored=localStorage.getItem(getAuthKey(code));
+  if(!stored){errEl.textContent='Classroom code not found.';errEl.style.display='block';return;}
+  const auth=JSON.parse(stored);const hashed=await hashPin(pin,auth.salt);
+  if(hashed!==auth.pinHash){errEl.textContent='Incorrect PIN.';errEl.style.display='block';return;}
+  currentTeacher={code,storageKey:getDataKey(code)};localStorage.setItem('lastSession',code);bootApp();
 }
 
-/* ═══════════════════════════════════════════════
-   AUTH STATE
-═══════════════════════════════════════════════ */
-let currentTeacher = null; // {code, storageKey}
-
-function getAuthKey(code) { return 'auth:' + code.toUpperCase().trim(); }
-function getDataKey(code) { return 'data:' + code.toUpperCase().trim(); }
-
-function showPanel(id) {
-  ['loginPanel','setupPanel'].forEach(p=>document.getElementById(p).style.display='none');
-  document.getElementById(id).style.display='block';
-}
-
-function pinNav(idx, e) {
-  const v = e.target.value.replace(/[^0-9]/g,'');
-  e.target.value = v.slice(-1);
-  if(v && idx < 3) document.getElementById('pinDigit'+(idx+1)).focus();
-  if(e.key==='Enter') attemptLogin();
-}
-function setupPinNav(idx, e) {
-  const v = e.target.value.replace(/[^0-9]/g,'');
-  e.target.value = v.slice(-1);
-  if(v && idx < 3) document.getElementById('setupPin'+(idx+1)).focus();
-}
-function setupPinConfNav(idx, e) {
-  const v = e.target.value.replace(/[^0-9]/g,'');
-  e.target.value = v.slice(-1);
-  if(v && idx < 3) document.getElementById('setupPinC'+(idx+1)).focus();
-  if(e.key==='Enter') attemptSetup();
-}
-
-function getPin(prefix) {
-  return [0,1,2,3].map(i=>document.getElementById(prefix+i).value).join('');
-}
-
-async function attemptLogin() {
-  const code = document.getElementById('loginCode').value.trim().toUpperCase();
-  const pin = getPin('pinDigit');
-  const errEl = document.getElementById('loginError');
-  errEl.style.display = 'none';
-
-  if(!code || pin.length !== 4) { errEl.textContent='Please enter your classroom code and 4-digit PIN.'; errEl.style.display='block'; return; }
-
-  const stored = localStorage.getItem(getAuthKey(code));
-  if(!stored) { errEl.textContent='Classroom code not found. Check spelling or create a new classroom.'; errEl.style.display='block'; return; }
-
-  const authData = JSON.parse(stored);
-  const hashed = await hashPin(pin, authData.salt);
-  if(hashed !== authData.pinHash) { errEl.textContent='Incorrect PIN. Please try again.'; errEl.style.display='block'; return; }
-
-  currentTeacher = { code, storageKey: getDataKey(code) };
-  localStorage.setItem('lastSession', code);
-  bootApp();
-}
-
-async function attemptSetup() {
-  const code = document.getElementById('setupCode').value.trim().toUpperCase().replace(/[^A-Z0-9\-]/g,'');
-  const pin = getPin('setupPin');
-  const pinC = getPin('setupPinC');
-  const errEl = document.getElementById('setupError');
-  const okEl = document.getElementById('setupSuccess');
-  errEl.style.display='none'; okEl.style.display='none';
-
-  if(!code || code.length < 3) { errEl.textContent='Classroom code must be at least 3 characters.'; errEl.style.display='block'; return; }
-  if(pin.length !== 4) { errEl.textContent='PIN must be 4 digits.'; errEl.style.display='block'; return; }
-  if(pin !== pinC) { errEl.textContent="PINs don't match."; errEl.style.display='block'; return; }
-  if(localStorage.getItem(getAuthKey(code))) { errEl.textContent='That classroom code is already taken. Choose another.'; errEl.style.display='block'; return; }
-
-  const salt = Math.random().toString(36).slice(2) + Date.now().toString(36);
-  const pinHash = await hashPin(pin, salt);
-  localStorage.setItem(getAuthKey(code), JSON.stringify({pinHash, salt, created: new Date().toISOString()}));
-  localStorage.setItem(getDataKey(code), JSON.stringify({students:[],studentLevels:{},observations:{}}));
-
-  okEl.textContent = `Classroom "${code}" created! Sign in below.`;
-  okEl.style.display='block';
-  document.getElementById('loginCode').value = code;
+async function attemptSetup(){
+  const code=document.getElementById('setupCode').value.trim().toUpperCase().replace(/[^A-Z0-9\-]/g,'');
+  const pin=getPin('setupPin');const pinC=getPin('setupPinC');
+  const errEl=document.getElementById('setupError');const okEl=document.getElementById('setupSuccess');
+  errEl.style.display='none';okEl.style.display='none';
+  if(!code||code.length<3){errEl.textContent='Classroom code must be at least 3 characters.';errEl.style.display='block';return;}
+  if(pin.length!==4){errEl.textContent='PIN must be 4 digits.';errEl.style.display='block';return;}
+  if(pin!==pinC){errEl.textContent="PINs don't match.";errEl.style.display='block';return;}
+  if(localStorage.getItem(getAuthKey(code))){errEl.textContent='That code is already taken.';errEl.style.display='block';return;}
+  const salt=Math.random().toString(36).slice(2)+Date.now().toString(36);
+  const pinHash=await hashPin(pin,salt);
+  localStorage.setItem(getAuthKey(code),JSON.stringify({pinHash,salt,created:new Date().toISOString()}));
+  localStorage.setItem(getDataKey(code),JSON.stringify({students:[],studentLevels:{},observations:{}}));
+  okEl.textContent=`Classroom "${code}" created! Sign in below.`;okEl.style.display='block';
+  document.getElementById('loginCode').value=code;
   setTimeout(()=>showPanel('loginPanel'),1500);
 }
 
-function signOut() {
-  if(!confirm('Sign out? Your data is saved and will be here when you log back in.')) return;
-  currentTeacher = null;
-  state = {students:[],studentLevels:{},observations:{}};
-  document.getElementById('mainApp').style.display='none';
-  document.getElementById('authScreen').style.display='block';
-  showPanel('loginPanel');
+function signOut(){
+  if(!confirm('Sign out? Your data is saved.'))return;
+  currentTeacher=null;state={students:[],studentLevels:{},observations:{}};
+  document.getElementById('mainApp').style.display='none';document.getElementById('authScreen').style.display='block';showPanel('loginPanel');
 }
 
-/* ═══════════════════════════════════════════════
-   CROSS-DEVICE SYNC (localStorage + manual export/import)
-   Primary: localStorage per-browser. Secondary: export/import JSON.
-   For real cross-device sync we push/pull via a shared sync endpoint.
-   Here we use localStorage + timestamp-based merge on import.
-═══════════════════════════════════════════════ */
-let syncTimeout = null;
+/* ═══════════════════════════════════════════
+   SYNC
+═══════════════════════════════════════════ */
+let syncTimeout=null;
+function setSyncStatus(s,t){document.getElementById('syncDot').className='sync-dot '+s;document.getElementById('syncLabel').textContent=t;}
+function scheduleSave(){setSyncStatus('syncing','Saving…');clearTimeout(syncTimeout);syncTimeout=setTimeout(()=>{saveState();setSyncStatus('synced','Saved');},800);}
+function syncNow(){saveState();setSyncStatus('synced','Saved just now');}
 
-function setSyncStatus(status, text) {
-  const dot = document.getElementById('syncDot');
-  const label = document.getElementById('syncLabel');
-  dot.className = 'sync-dot ' + status;
-  label.textContent = text;
+/* ═══════════════════════════════════════════
+   ANALYTICS
+═══════════════════════════════════════════ */
+const sessionId=Math.random().toString(36).slice(2,10);
+function trackEvent(n,m={}){
+  if(!currentTeacher)return;
+  const k='analytics:'+currentTeacher.code;let log=[];
+  try{log=JSON.parse(localStorage.getItem(k)||'[]');}catch(e){}
+  const ev={event:n,ts:new Date().toISOString(),sessionId,studentCount:state.students?state.students.length:0,...Object.fromEntries(Object.entries(m).filter(([k])=>!['name','note','text'].includes(k)))};
+  log.push(ev);if(log.length>500)log=log.slice(-500);localStorage.setItem(k,JSON.stringify(log));
 }
+function getAnalyticsSummary(){if(!currentTeacher)return[];const k='analytics:'+currentTeacher.code;try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(e){return[];}}
+function dismissAnalyticsNotice(){document.getElementById('analyticsNotice').style.display='none';if(currentTeacher)localStorage.setItem('analytics_noticed:'+currentTeacher.code,'1');trackEvent('analytics_notice_dismissed');}
 
-function scheduleSave() {
-  setSyncStatus('syncing','Saving…');
-  clearTimeout(syncTimeout);
-  syncTimeout = setTimeout(()=>{
-    saveState();
-    setSyncStatus('synced','Saved');
-  }, 800);
+/* ═══════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════ */
+let state={students:[],studentLevels:{},observations:{}};
+let appMode='cc',selectedStation=null,qlStudentId=null,editingObsIdx=null;
+
+function loadState(){
+  if(!currentTeacher)return;
+  const raw=localStorage.getItem(currentTeacher.storageKey);
+  if(raw){try{state=JSON.parse(raw);state.students.forEach(st=>{if(!state.studentLevels[st.id])state.studentLevels[st.id]=1;if(!state.observations[st.id])state.observations[st.id]={history:[]};});}catch(e){state={students:[],studentLevels:{},observations:{}};}}
 }
+function saveState(){if(!currentTeacher)return;localStorage.setItem(currentTeacher.storageKey,JSON.stringify(state));}
 
-function syncNow() {
-  saveState();
-  setSyncStatus('synced','Saved just now');
-}
-
-/* ═══════════════════════════════════════════════
-   ANONYMOUS USAGE ANALYTICS
-   Stores events locally under 'analytics:{code}' key.
-   No student names, notes, or identifiable info ever stored.
-   Events: {event, ts, sessionId}
-═══════════════════════════════════════════════ */
-const sessionId = Math.random().toString(36).slice(2,10);
-
-function trackEvent(eventName, meta={}) {
-  if(!currentTeacher) return;
-  const analyticsKey = 'analytics:' + currentTeacher.code;
-  let log = [];
-  try { log = JSON.parse(localStorage.getItem(analyticsKey)||'[]'); } catch(e){}
-  // Never include student names, notes, or any PII
-  const safeEvent = {
-    event: eventName,
-    ts: new Date().toISOString(),
-    sessionId,
-    // Only safe aggregate metadata
-    studentCount: state.students ? state.students.length : 0,
-    totalObs: state.students ? state.students.reduce((s,st)=>(s+(state.observations[st.id]?.history?.length||0)),0) : 0,
-    ...Object.fromEntries(Object.entries(meta).filter(([k])=>!['name','note','text'].includes(k)))
-  };
-  log.push(safeEvent);
-  // Keep last 500 events per classroom
-  if(log.length > 500) log = log.slice(-500);
-  localStorage.setItem(analyticsKey, JSON.stringify(log));
-}
-
-function getAnalyticsSummary() {
-  if(!currentTeacher) return [];
-  const analyticsKey = 'analytics:' + currentTeacher.code;
-  try { return JSON.parse(localStorage.getItem(analyticsKey)||'[]'); } catch(e){ return []; }
-}
-
-function dismissAnalyticsNotice() {
-  document.getElementById('analyticsNotice').style.display='none';
-  if(currentTeacher) localStorage.setItem('analytics_noticed:'+currentTeacher.code,'1');
-  trackEvent('analytics_notice_dismissed');
-}
-
-/* ═══════════════════════════════════════════════
-   APP STATE
-═══════════════════════════════════════════════ */
-let state = {students:[],studentLevels:{},observations:{}};
-let appMode='cc', selectedStation=null, qlStudentId=null, editingObsIdx=null;
-
-function loadState() {
-  if(!currentTeacher) return;
-  const raw = localStorage.getItem(currentTeacher.storageKey);
-  if(raw) {
-    try {
-      state = JSON.parse(raw);
-      state.students.forEach(st=>{
-        if(!state.studentLevels[st.id]) state.studentLevels[st.id]=1;
-        if(!state.observations[st.id]) state.observations[st.id]={history:[]};
-      });
-    } catch(e) { state = {students:[],studentLevels:{},observations:{}}; }
-  }
-}
-
-function saveState() {
-  if(!currentTeacher) return;
-  localStorage.setItem(currentTeacher.storageKey, JSON.stringify(state));
-}
-
-function bootApp() {
+function bootApp(){
   loadState();
-  document.getElementById('authScreen').style.display='none';
-  document.getElementById('mainApp').style.display='block';
-  document.getElementById('teacherPill').textContent = currentTeacher.code;
-  // Show analytics notice if first time
-  const noticed = localStorage.getItem('analytics_noticed:'+currentTeacher.code);
-  if(!noticed) document.getElementById('analyticsNotice').style.display='flex';
+  document.getElementById('authScreen').style.display='none';document.getElementById('mainApp').style.display='block';
+  document.getElementById('teacherPill').textContent=currentTeacher.code;
+  if(!localStorage.getItem('analytics_noticed:'+currentTeacher.code))document.getElementById('analyticsNotice').style.display='flex';
   setSyncStatus('synced','Up to date');
-  renderRoster();
-  trackEvent('session_start');
+  renderRoster();trackEvent('session_start');
+  initSwipeGestures();
 }
 
-/* Check for previous session on load */
-window.addEventListener('load', ()=>{
-  const last = localStorage.getItem('lastSession');
-  if(last) document.getElementById('loginCode').value = last;
-});
+window.addEventListener('load',()=>{const last=localStorage.getItem('lastSession');if(last)document.getElementById('loginCode').value=last;});
 
-/* ═══════════════════════════════════════════════
-   SYNC TILE
-═══════════════════════════════════════════════ */
-function syncTile(tileId, cb) {
-  document.getElementById(tileId)?.classList.toggle('checked', cb.checked);
+/* ═══════════════════════════════════════════
+   SWIPE GESTURES
+═══════════════════════════════════════════ */
+function initSwipeGestures(){
+  // CC assessment view — swipe between students
+  const assessEl=document.getElementById('assessmentView');
+  let aStartX=0,aStartY=0,aSwiping=false;
+  assessEl.addEventListener('touchstart',e=>{
+    // Don't capture swipes on interactive elements
+    if(e.target.closest('input,textarea,select,button,label'))return;
+    aStartX=e.touches[0].clientX;aStartY=e.touches[0].clientY;aSwiping=true;
+  },{passive:true});
+  assessEl.addEventListener('touchend',e=>{
+    if(!aSwiping)return;aSwiping=false;
+    const dx=e.changedTouches[0].clientX-aStartX;
+    const dy=e.changedTouches[0].clientY-aStartY;
+    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>50){
+      navigateStudent(dx<0?1:-1);
+    }
+  },{passive:true});
+
+  // Quick log sheet — swipe left = save & next, swipe right = go back one student
+  const qlSheet=document.getElementById('qlSheet');
+  let qStartX=0,qStartY=0,qSwiping=false;
+  qlSheet.addEventListener('touchstart',e=>{
+    if(e.target.closest('textarea,input'))return;
+    qStartX=e.touches[0].clientX;qStartY=e.touches[0].clientY;qSwiping=true;
+  },{passive:true});
+  qlSheet.addEventListener('touchend',e=>{
+    if(!qSwiping)return;qSwiping=false;
+    const dx=e.changedTouches[0].clientX-qStartX;
+    const dy=e.changedTouches[0].clientY-qStartY;
+    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>60){
+      if(dx<0){
+        // swipe left = save & next
+        saveStationObservation(true);
+      } else {
+        // swipe right = navigate to previous student in roster
+        navigateQuickLogStudent(-1);
+      }
+    }
+  },{passive:true});
 }
 
-/* ═══════════════════════════════════════════════
-   MODE
-═══════════════════════════════════════════════ */
-function setMode(m) {
-  appMode = m;
+/* ═══════════════════════════════════════════
+   STUDENT NAVIGATION (CC mode)
+═══════════════════════════════════════════ */
+function getSortedStudents(){
+  return state.students.slice().sort((a,b)=>a.name.localeCompare(b.name));
+}
+
+function navigateStudent(dir){
+  const sorted=getSortedStudents();
+  if(sorted.length<2)return;
+  const idx=sorted.findIndex(s=>s.id===state.selectedStudentId);
+  if(idx===-1)return;
+  const newIdx=(idx+dir+sorted.length)%sorted.length;
+  const slideClass=dir>0?'slide-left':'slide-right';
+  const content=document.getElementById('assessmentSwipeContent');
+  content.classList.add(slideClass);
+  setTimeout(()=>{
+    selectStudentDirect(sorted[newIdx].id);
+    content.classList.remove(slideClass);
+  },160);
+}
+
+function updateSwipeNav(){
+  const sorted=getSortedStudents();
+  const idx=sorted.findIndex(s=>s.id===state.selectedStudentId);
+  if(idx===-1)return;
+  document.getElementById('swipeNavName').textContent=sorted[idx].name;
+  document.getElementById('swipeNavCounter').textContent=`${idx+1} of ${sorted.length}`;
+  document.getElementById('swipePrevBtn').disabled=sorted.length<2;
+  document.getElementById('swipeNextBtn').disabled=sorted.length<2;
+}
+
+/* ═══════════════════════════════════════════
+   QUICK LOG STUDENT NAVIGATION
+═══════════════════════════════════════════ */
+function getStationRosterOrder(){
+  // Unseen first, then seen — same order as rendered roster
+  const sorted=getSortedStudents();
+  const unseen=sorted.filter(s=>!hasObsToday(s.id));
+  const seen=sorted.filter(s=>hasObsToday(s.id));
+  return[...unseen,...seen];
+}
+
+function navigateQuickLogStudent(dir){
+  const order=getStationRosterOrder();
+  const idx=order.findIndex(s=>s.id===qlStudentId);
+  if(idx===-1||order.length<2)return;
+  const newIdx=(idx+dir+order.length)%order.length;
+  // Save current without advancing, then open new
+  _saveStationRecord(false);
+  qlStudentId=order[newIdx].id;
+  _openQuickLogForId(order[newIdx].id);
+}
+
+function renderQlProgress(){
+  const order=getStationRosterOrder();
+  const prog=document.getElementById('qlProgress');
+  const unseen=order.filter(s=>!hasObsToday(s.id));
+  const seen=order.filter(s=>hasObsToday(s.id));
+  const dots=order.map(s=>{
+    const isCurrent=s.id===qlStudentId;
+    const isDone=hasObsToday(s.id)&&!isCurrent;
+    const cls=isCurrent?'ql-dot current':isDone?'ql-dot done':'ql-dot todo';
+    return`<div class="${cls}" title="${s.name}"></div>`;
+  }).join('');
+  prog.innerHTML=dots+`<span class="ql-progress-label">${seen.length} of ${order.length} seen today</span>`;
+
+  // Update save & next button
+  const nextUnseen=order.find((s,i)=>i>order.findIndex(x=>x.id===qlStudentId)&&!hasObsToday(s.id));
+  const btn=document.getElementById('qlSaveNextBtn');
+  if(nextUnseen){btn.disabled=false;btn.textContent='Save & next →';}
+  else{btn.disabled=true;btn.textContent='All students seen ✓';}
+}
+
+/* ═══════════════════════════════════════════
+   TILE SYNC / MODE / STATION
+═══════════════════════════════════════════ */
+function syncTile(id,cb){document.getElementById(id)?.classList.toggle('checked',cb.checked);}
+function setMode(m){
+  appMode=m;
   document.getElementById('modeCCBtn').className='mode-opt'+(m==='cc'?' active-cc':'');
   document.getElementById('modeStBtn').className='mode-opt'+(m==='station'?' active-station':'');
   document.getElementById('stationSelector').style.display=m==='station'?'block':'none';
   document.getElementById('addBar').style.display=m==='cc'?'flex':'none';
-  renderRoster();
-  if(m==='station') renderCoverage();
-  trackEvent('mode_switch', {mode:m});
+  renderRoster();if(m==='station')renderCoverage();
+  trackEvent('mode_switch',{mode:m});
 }
-
-function selectStation(n) {
-  selectedStation = n;
+function selectStation(n){
+  selectedStation=n;
   document.querySelectorAll('.station-tile').forEach(t=>t.classList.remove('selected'));
   document.getElementById('stile-'+n).classList.add('selected');
-  renderRoster(); renderCoverage();
-  trackEvent('station_selected',{station:n});
+  renderRoster();renderCoverage();trackEvent('station_selected',{station:n});
 }
 
-/* ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    COVERAGE
-═══════════════════════════════════════════════ */
-function hasObsToday(id) {
-  const today=new Date().toDateString();
-  return(state.observations[id]?.history||[]).some(o=>o.type==='station'&&new Date(o.timestamp).toDateString()===today);
-}
-function lastObsTime(id) {
-  const obs=(state.observations[id]?.history||[]).filter(o=>o.type==='station');
-  return obs.length?new Date(obs[obs.length-1].timestamp):null;
-}
-function renderCoverage() {
-  if(!state.students.length) return;
+═══════════════════════════════════════════ */
+function hasObsToday(id){const t=new Date().toDateString();return(state.observations[id]?.history||[]).some(o=>o.type==='station'&&new Date(o.timestamp).toDateString()===t);}
+function lastObsTime(id){const obs=(state.observations[id]?.history||[]).filter(o=>o.type==='station');return obs.length?new Date(obs[obs.length-1].timestamp):null;}
+function renderCoverage(){
+  if(!state.students.length)return;
   const unseen=state.students.filter(s=>!hasObsToday(s.id));
   const seen=state.students.filter(s=>hasObsToday(s.id));
   const badge=document.getElementById('coverageBadge');
@@ -897,38 +901,26 @@ function renderCoverage() {
   const sorted=[...unseen.sort((a,b)=>a.name.localeCompare(b.name)),...seen.sort((a,b)=>a.name.localeCompare(b.name))];
   document.getElementById('coverageGrid').innerHTML=sorted.map(s=>{
     const ok=hasObsToday(s.id);const t=lastObsTime(s.id);
-    const timeStr=t?t.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):'Not yet';
-    return`<div class="coverage-student ${ok?'has-obs':'needs-obs'}"><div class="coverage-dot ${ok?'dot-ok':'dot-warn'}"></div><div style="min-width:0;"><div class="coverage-sname">${s.name}</div><div class="coverage-stime">${timeStr}</div></div></div>`;
+    const ts=t?t.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):'Not yet';
+    return`<div class="coverage-student ${ok?'has-obs':'needs-obs'}"><div class="coverage-dot ${ok?'dot-ok':'dot-warn'}"></div><div style="min-width:0;"><div class="coverage-sname">${s.name}</div><div class="coverage-stime">${ts}</div></div></div>`;
   }).join('');
 }
-function toggleCoverage() {
-  document.getElementById('coverageBody').classList.toggle('open');
-  document.getElementById('coverageChevron').classList.toggle('open');
-  trackEvent('coverage_toggle');
-}
+function toggleCoverage(){document.getElementById('coverageBody').classList.toggle('open');document.getElementById('coverageChevron').classList.toggle('open');}
 
-/* ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    ROSTER
-═══════════════════════════════════════════════ */
-function addStudent() {
-  const input=document.getElementById('newStudentInput');
-  const name=input.value.trim();if(!name)return;
-  const s={id:Date.now().toString(),name};
-  state.students.push(s);
-  state.studentLevels[s.id]=1;
-  state.observations[s.id]={history:[]};
-  input.value='';
-  scheduleSave(); renderRoster();
-  trackEvent('student_added',{totalStudents:state.students.length});
+═══════════════════════════════════════════ */
+function addStudent(){
+  const input=document.getElementById('newStudentInput');const name=input.value.trim();if(!name)return;
+  const s={id:Date.now().toString(),name};state.students.push(s);state.studentLevels[s.id]=1;state.observations[s.id]={history:[]};
+  input.value='';scheduleSave();renderRoster();trackEvent('student_added',{totalStudents:state.students.length});
 }
-function deleteStudent(id) {
-  if(!confirm('Delete this student and all observations?')) return;
-  state.students=state.students.filter(s=>s.id!==id);
-  delete state.studentLevels[id];delete state.observations[id];
-  scheduleSave(); renderRoster();
-  trackEvent('student_deleted',{totalStudents:state.students.length});
+function deleteStudent(id){
+  if(!confirm('Delete this student and all observations?'))return;
+  state.students=state.students.filter(s=>s.id!==id);delete state.studentLevels[id];delete state.observations[id];
+  scheduleSave();renderRoster();trackEvent('student_deleted');
 }
-function calcProf(id) {
+function calcProf(id){
   const obs=state.observations[id]?.history||[];if(!obs.length)return'early';
   let seq=0,corr=0,card=0,errs=0;
   obs.forEach(o=>{if(o.principles?.sequence)seq++;if(o.principles?.correspondence)corr++;if(o.principles?.cardinality)card++;if(o.errors)Object.values(o.errors).forEach(e=>{if(e)errs++;});});
@@ -938,14 +930,11 @@ function calcProf(id) {
   if(n>=2&&(seq>=Math.ceil(n*.5)||corr>=Math.ceil(n*.5)))return'developing';
   return'early';
 }
-function stationObsToday(id) {
-  const today=new Date().toDateString();
-  return(state.observations[id]?.history||[]).filter(o=>o.type==='station'&&new Date(o.timestamp).toDateString()===today).length;
-}
+function stationObsToday(id){const t=new Date().toDateString();return(state.observations[id]?.history||[]).filter(o=>o.type==='station'&&new Date(o.timestamp).toDateString()===t).length;}
 
-function renderRoster() {
+function renderRoster(){
   const list=document.getElementById('rosterList');
-  const sorted=state.students.slice().sort((a,b)=>a.name.localeCompare(b.name));
+  const sorted=getSortedStudents();
   if(!sorted.length){list.innerHTML='<div class="empty-state"><div class="empty-icon">𝟏𝟐𝟑</div><p>No students yet.<br>Add a name above to get started.</p></div>';return;}
   if(appMode==='station'){
     if(!selectedStation){list.innerHTML='<div class="empty-state" style="padding:36px 20px;"><p style="color:var(--purple);">← Select a station above to begin logging.</p></div>';return;}
@@ -964,21 +953,26 @@ function renderRoster() {
   }).join('');
 }
 
-/* ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    CC ASSESSMENT
-═══════════════════════════════════════════════ */
-function selectStudent(id) {
+═══════════════════════════════════════════ */
+function selectStudent(id){
+  selectStudentDirect(id);showView('assessmentView');trackEvent('student_opened');
+}
+
+function selectStudentDirect(id){
   state.selectedStudentId=id;const s=state.students.find(x=>x.id===id);if(!s)return;
   document.getElementById('studentTitle').textContent=s.name;
   document.getElementById('studentAvatarBand').textContent=s.name[0].toUpperCase();
   document.getElementById('studentNameBand').textContent=s.name;
   const obs=state.observations[id]?.history||[];
   document.getElementById('studentMetaBand').textContent=`${obs.length} observation${obs.length!==1?'s':''} recorded`;
-  renderObservationHistory();showView('assessmentView');
-  trackEvent('student_opened',{obsCount:obs.length});
+  updateSwipeNav();renderObservationHistory();
+  // Reset form when navigating to new student (unless editing)
+  if(editingObsIdx===null)resetCCForm();
 }
 
-function renderObservationHistory() {
+function renderObservationHistory(){
   const allObs=state.observations[state.selectedStudentId]?.history||[];
   const div=document.getElementById('observationHistory');
   if(!allObs.length){div.innerHTML='<div class="card-body" style="text-align:center;color:var(--ink-4);padding:20px;font-size:13px;">No observations yet</div>';return;}
@@ -995,8 +989,7 @@ function renderObservationHistory() {
     return'early';
   }
   div.innerHTML='<div class="card-body">'+allObs.slice().reverse().map((rec,idx)=>{
-    const origIdx=allObs.length-1-idx;
-    const profAtPoint=calcProfFromSlice(allObs.slice(0,origIdx+1));
+    const origIdx=allObs.length-1-idx;const profAtPoint=calcProfFromSlice(allObs.slice(0,origIdx+1));
     const date=new Date(rec.timestamp).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
     const isStation=rec.type==='station';
     const typeTag=isStation?`<span class="obs-type-station">${rec.stationName||'Station'}</span>`:`<span class="obs-type-cc">Counting Collections</span>`;
@@ -1009,11 +1002,7 @@ function renderObservationHistory() {
   }).join('')+'</div>';
 }
 
-function toggleDropdown(s) {
-  document.getElementById('toggle-'+s).classList.toggle('open');
-  document.getElementById('content-'+s).classList.toggle('open');
-  trackEvent('section_toggle',{section:s});
-}
+function toggleDropdown(s){document.getElementById('toggle-'+s).classList.toggle('open');document.getElementById('content-'+s).classList.toggle('open');}
 function toggleStrategyInput(){const cb=document.querySelector('[data-strategy="other"]');const i=document.getElementById('strategyOther');i.disabled=!cb.checked;if(!cb.checked)i.value='';}
 function toggleErrorInput(){const cb=document.querySelector('[data-error="other"]');const i=document.getElementById('errorOther');i.disabled=!cb.checked;if(!cb.checked)i.value='';}
 function updateErrorStates(){
@@ -1039,18 +1028,11 @@ function saveObservation(){
   const errors={};document.querySelectorAll('[data-error]').forEach(cb=>{errors[cb.dataset.error]=cb.checked;});
   const record={type:'cc',timestamp:new Date().toISOString(),collectionSize:sz.value,principles,strategies,strategyOtherText:document.getElementById('strategyOther').value.trim(),errors,errorOtherText:document.getElementById('errorOther').value.trim(),note:document.getElementById('observationNote').value.trim()};
   const history=state.observations[state.selectedStudentId].history;
-  if(editingObsIdx!==null){
-    record.timestamp=history[history.length-1-editingObsIdx].timestamp;
-    history[history.length-1-editingObsIdx]=record;
-    editingObsIdx=null;
-  } else {
-    history.push(record);
-  }
-  resetCCForm();
-  document.getElementById('editBanner').style.display='none';
-  document.getElementById('ccSaveBtn').textContent='Save Observation';
+  if(editingObsIdx!==null){record.timestamp=history[history.length-1-editingObsIdx].timestamp;history[history.length-1-editingObsIdx]=record;editingObsIdx=null;}
+  else{history.push(record);}
+  resetCCForm();document.getElementById('editBanner').style.display='none';document.getElementById('ccSaveBtn').textContent='Save Observation';
   scheduleSave();renderObservationHistory();renderRoster();renderGroups();
-  trackEvent('observation_saved',{type:'cc',collectionSize:sz.value,principles:Object.values(principles).filter(Boolean).length});
+  trackEvent('observation_saved',{type:'cc'});
 }
 
 function resetCCForm(){
@@ -1070,49 +1052,45 @@ function editObs(displayIdx){
   document.querySelectorAll('input[name="collectionSize"]').forEach(r=>{r.checked=(r.value===rec.collectionSize);});
   const ptiles={sequence:'cc-tile-sequence',correspondence:'cc-tile-correspondence',cardinality:'cc-tile-cardinality'};
   Object.entries(rec.principles||{}).forEach(([k,v])=>{const cb=document.querySelector(`[data-principle="${k}"]`);if(cb)cb.checked=v;document.getElementById(ptiles[k])?.classList.toggle('checked',v);});
-  const stileMap={line:'cc-tile-line',groups:'cc-tile-groups',containers:'cc-tile-containers',counting_on:'cc-tile-counting_on',other:'cc-tile-strat-other'};
-  let anyStrat=false;
+  const stileMap={line:'cc-tile-line',groups:'cc-tile-groups',containers:'cc-tile-containers',counting_on:'cc-tile-counting_on',other:'cc-tile-strat-other'};let anyStrat=false;
   Object.entries(rec.strategies||{}).forEach(([k,v])=>{const cb=document.querySelector(`[data-strategy="${k}"]`);if(cb)cb.checked=v;document.getElementById(stileMap[k])?.classList.toggle('checked',v);if(v)anyStrat=true;});
   document.getElementById('strategyOther').value=rec.strategyOtherText||'';toggleStrategyInput();
   if(anyStrat){const bd=document.getElementById('content-strategy');const ch=document.getElementById('toggle-strategy');if(!bd.classList.contains('open')){bd.classList.add('open');ch.classList.add('open');}}
-  const etileMap={skips_numbers:'cc-tile-skips',repeats_numbers:'cc-tile-repeats',loses_track:'cc-tile-track',double_counts:'cc-tile-double',counts_again:'cc-tile-again',other:'cc-tile-err-other'};
-  let anyErr=false;
+  const etileMap={skips_numbers:'cc-tile-skips',repeats_numbers:'cc-tile-repeats',loses_track:'cc-tile-track',double_counts:'cc-tile-double',counts_again:'cc-tile-again',other:'cc-tile-err-other'};let anyErr=false;
   Object.entries(rec.errors||{}).forEach(([k,v])=>{const cb=document.querySelector(`[data-error="${k}"]`);if(cb)cb.checked=v;document.getElementById(etileMap[k])?.classList.toggle('checked',v);if(v)anyErr=true;});
   document.getElementById('errorOther').value=rec.errorOtherText||'';toggleErrorInput();
   if(anyErr){const bd=document.getElementById('content-errors');const ch=document.getElementById('toggle-errors');if(!bd.classList.contains('open')){bd.classList.add('open');ch.classList.add('open');}}
   document.getElementById('observationNote').value=rec.note||'';
-  updateErrorStates();
-  document.getElementById('editBanner').style.display='flex';
-  document.getElementById('ccSaveBtn').textContent='Update Observation';
+  updateErrorStates();document.getElementById('editBanner').style.display='flex';document.getElementById('ccSaveBtn').textContent='Update Observation';
 }
 
-function cancelEdit(){
-  editingObsIdx=null;resetCCForm();
-  document.getElementById('editBanner').style.display='none';
-  document.getElementById('ccSaveBtn').textContent='Save Observation';
-}
+function cancelEdit(){editingObsIdx=null;resetCCForm();document.getElementById('editBanner').style.display='none';document.getElementById('ccSaveBtn').textContent='Save Observation';}
 
 function deleteObs(idx){
-  if(!confirm('Delete this observation?')) return;
+  if(!confirm('Delete this observation?'))return;
   const obs=state.observations[state.selectedStudentId].history;
   obs.reverse();obs.splice(idx,1);obs.reverse();
-  scheduleSave();renderObservationHistory();renderGroups();renderRoster();
-  trackEvent('observation_deleted');
+  scheduleSave();renderObservationHistory();renderGroups();renderRoster();trackEvent('observation_deleted');
 }
 
-/* ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    QUICK LOG
-═══════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function openQuickLog(id){
   if(!selectedStation){alert('Please select a station first.');return;}
-  qlStudentId=id;const s=state.students.find(x=>x.id===id);const stn=STATIONS[selectedStation];
+  qlStudentId=id;
+  _openQuickLogForId(id);
+  trackEvent('quick_log_opened',{station:selectedStation});
+}
+
+function _openQuickLogForId(id){
+  const s=state.students.find(x=>x.id===id);if(!s)return;
+  const stn=STATIONS[selectedStation];
   document.getElementById('qlStudentName').textContent=s.name;
   const badge=document.getElementById('qlStationBadge');badge.textContent=stn.short;badge.style.background=stn.bg;badge.style.color=stn.color;
-  resetQuickLog();
-  document.getElementById('qlBackdrop').classList.add('open');
-  document.body.style.overflow='hidden';
+  resetQuickLog();renderQlProgress();
+  document.getElementById('qlBackdrop').classList.add('open');document.body.style.overflow='hidden';
   setTimeout(()=>document.getElementById('qlNote').focus(),200);
-  trackEvent('quick_log_opened',{station:selectedStation});
 }
 
 function resetQuickLog(){
@@ -1121,12 +1099,8 @@ function resetQuickLog(){
   });
   document.getElementById('qlNote').value='';
   updateQlSummary();updateQlStrategySummary();
-  document.getElementById('qlBehaviorsPanel').classList.remove('open');
-  document.getElementById('qlBehaviorsChevron').classList.remove('open');
-  document.getElementById('qlExpandRow').classList.remove('is-open');
-  document.getElementById('qlStrategyPanel').classList.remove('open');
-  document.getElementById('qlStrategyChevron').classList.remove('open');
-  document.getElementById('qlStratExpandRow').classList.remove('is-open');
+  document.getElementById('qlBehaviorsPanel').classList.remove('open');document.getElementById('qlBehaviorsChevron').classList.remove('open');document.getElementById('qlExpandRow').classList.remove('is-open');
+  document.getElementById('qlStrategyPanel').classList.remove('open');document.getElementById('qlStrategyChevron').classList.remove('open');document.getElementById('qlStratExpandRow').classList.remove('is-open');
 }
 
 function openQuickLogForEdit(rec,origIdx){
@@ -1136,7 +1110,7 @@ function openQuickLogForEdit(rec,origIdx){
   const stn=STATIONS[rec.stationNum]||STATIONS[selectedStation];
   document.getElementById('qlStudentName').textContent=s.name;
   const badge=document.getElementById('qlStationBadge');badge.textContent=stn.short;badge.style.background=stn.bg;badge.style.color=stn.color;
-  resetQuickLog();
+  resetQuickLog();renderQlProgress();
   const qlMap={sequence:'tile-sequence',correspondence:'tile-correspondence',cardinality:'tile-cardinality'};
   Object.entries(rec.principles||{}).forEach(([k,v])=>{const cb=document.querySelector(`[data-ql="${k}"]`);if(cb)cb.checked=v;document.getElementById(qlMap[k])?.classList.toggle('checked',v);});
   const stratMap={line:'stile-line',groups:'stile-groups',containers:'stile-containers',counting_on:'stile-counting_on'};let anyStrat=false;
@@ -1148,19 +1122,18 @@ function openQuickLogForEdit(rec,origIdx){
   const hasBehaviors=Object.values(rec.principles||{}).some(Boolean)||anyErr;
   if(hasBehaviors){document.getElementById('qlBehaviorsPanel').classList.add('open');document.getElementById('qlBehaviorsChevron').classList.add('open');document.getElementById('qlExpandRow').classList.add('is-open');}
   if(anyStrat){document.getElementById('qlStrategyPanel').classList.add('open');document.getElementById('qlStrategyChevron').classList.add('open');document.getElementById('qlStratExpandRow').classList.add('is-open');}
-  document.getElementById('qlBackdrop').classList.add('open');
-  document.body.style.overflow='hidden';
+  document.getElementById('qlBackdrop').classList.add('open');document.body.style.overflow='hidden';
   setTimeout(()=>document.getElementById('qlNote').focus(),200);
 }
 
 function closeQuickLog(){document.getElementById('qlBackdrop').classList.remove('open');document.body.style.overflow='';qlStudentId=null;editingObsIdx=null;}
-function toggleQlStrategy(){document.getElementById('qlStrategyPanel').classList.toggle('open');document.getElementById('qlStrategyChevron').classList.toggle('open');document.getElementById('qlStratExpandRow').classList.toggle('is-open');trackEvent('ql_strategy_toggled');}
+function toggleQlStrategy(){document.getElementById('qlStrategyPanel').classList.toggle('open');document.getElementById('qlStrategyChevron').classList.toggle('open');document.getElementById('qlStratExpandRow').classList.toggle('is-open');}
 function updateQlStrategySummary(){const n=[...document.querySelectorAll('[data-ql-strat]:checked')].length;document.getElementById('qlStrategySummary').textContent=n>0?`(${n} noted)`:'';}
-function toggleQlBehaviors(){document.getElementById('qlBehaviorsPanel').classList.toggle('open');document.getElementById('qlBehaviorsChevron').classList.toggle('open');document.getElementById('qlExpandRow').classList.toggle('is-open');trackEvent('ql_behaviors_toggled');}
+function toggleQlBehaviors(){document.getElementById('qlBehaviorsPanel').classList.toggle('open');document.getElementById('qlBehaviorsChevron').classList.toggle('open');document.getElementById('qlExpandRow').classList.toggle('is-open');}
 function updateQlSummary(){const b=[...document.querySelectorAll('[data-ql]:checked')].length;const e=[...document.querySelectorAll('[data-ql-err]:checked')].length;const total=b+e;document.getElementById('qlBehaviorSummary').textContent=total>0?`(${total} noted)`:'';}
 
-function saveStationObservation(){
-  if(!qlStudentId||!selectedStation)return;
+function _saveStationRecord(updateTimestamp){
+  if(!qlStudentId||!selectedStation)return false;
   const stn=STATIONS[selectedStation];
   const principles={sequence:document.querySelector('[data-ql="sequence"]').checked,correspondence:document.querySelector('[data-ql="correspondence"]').checked,cardinality:document.querySelector('[data-ql="cardinality"]').checked};
   const errors={};document.querySelectorAll('[data-ql-err]').forEach(cb=>{errors[cb.dataset.qlErr]=cb.checked;});
@@ -1174,15 +1147,42 @@ function saveStationObservation(){
   } else {
     history.push({type:'station',stationNum:selectedStation,stationName:stn.short,timestamp:new Date().toISOString(),principles,strategies,errors,note});
   }
-  scheduleSave();closeQuickLog();
+  scheduleSave();
   if(state.selectedStudentId===qlStudentId)renderObservationHistory();
-  renderRoster();renderGroups();renderCoverage();
-  trackEvent('observation_saved',{type:'station',station:selectedStation,principles:Object.values(principles).filter(Boolean).length});
+  renderGroups();renderCoverage();
+  return true;
 }
 
-/* ═══════════════════════════════════════════════
+function saveStationObservation(andNext){
+  const saved=_saveStationRecord(true);if(!saved)return;
+  renderRoster();
+  trackEvent('observation_saved',{type:'station',station:selectedStation,andNext});
+
+  if(andNext){
+    // Find next unseen student in roster order
+    const order=getStationRosterOrder();
+    // Re-fetch order now that we've just saved (student moves to "seen")
+    const freshOrder=getStationRosterOrder();
+    const nextUnseen=freshOrder.find(s=>!hasObsToday(s.id)&&s.id!==qlStudentId);
+    if(nextUnseen){
+      qlStudentId=nextUnseen.id;
+      const s=state.students.find(x=>x.id===nextUnseen.id);
+      document.getElementById('qlStudentName').textContent=s.name;
+      resetQuickLog();renderQlProgress();
+      setTimeout(()=>document.getElementById('qlNote').focus(),200);
+    } else {
+      // All done!
+      closeQuickLog();
+      setTimeout(()=>alert('All students seen today! 🎉'),100);
+    }
+  } else {
+    closeQuickLog();
+  }
+}
+
+/* ═══════════════════════════════════════════
    GROUPS
-═══════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function renderGroups(){
   const groups={early:[],developing:[],proficient:[]};state.students.forEach(s=>groups[calcProf(s.id)].push(s));
   ['early','developing','proficient'].forEach(g=>{
@@ -1192,11 +1192,11 @@ function renderGroups(){
       :students.map(s=>{const obs=state.observations[s.id]?.history||[];const last=obs.length>0?new Date(obs[obs.length-1].timestamp).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'Never';return`<div class="group-student" onclick="selectStudentGroup('${s.id}')"><div class="group-student-name">${s.name}</div><div class="group-student-meta">${obs.length} obs · Last: ${last}</div></div>`;}).join('');
   });
 }
-function selectStudentGroup(id){setMode('cc');selectStudent(id);trackEvent('group_student_clicked');}
+function selectStudentGroup(id){setMode('cc');selectStudent(id);}
 
-/* ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    TRAJECTORIES
-═══════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function renderTrajectories(){
   document.getElementById('trajectoriesTimeline').innerHTML=TRAJECTORIES.map((t,i)=>{const c=TRAJ_COLORS[i];return`<div class="traj-node" onclick="showTrajDetail(${i})"><div class="traj-node-inner"><div class="traj-number" style="background:${c.bg};color:${c.num};">${t.level}</div><div class="traj-name">${t.name}</div><div class="traj-hint">Tap to learn more</div></div></div>`;}).join('');
 }
@@ -1210,34 +1210,25 @@ function showTrajDetail(i){
 }
 function closeTrajDetail(){document.getElementById('trajDetailsPanel').classList.remove('visible');}
 
-/* ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    VIEWS
-═══════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function showView(v){
   document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
   document.getElementById(v).classList.add('active');
   if(v==='trajectoriesView')renderTrajectories();
   else if(v==='groupsView')renderGroups();
-  window.scrollTo(0,0);
-  trackEvent('view_shown',{view:v});
+  window.scrollTo(0,0);trackEvent('view_shown',{view:v});
 }
 
-/* ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    EXPORT
-   Exports class data + anonymous analytics summary.
-   Student names included only in teacher's own download.
-═══════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function exportData(){
   let csv='Student,Proficiency,Total Obs,CC Obs,Station Obs\n';
   state.students.forEach(s=>{const prof=calcProf(s.id);const obs=state.observations[s.id]?.history||[];const cc=obs.filter(o=>o.type==='cc'||!o.type).length;const st=obs.filter(o=>o.type==='station').length;csv+=`"${s.name}","${prof}",${obs.length},${cc},${st}\n`;});
-
-  // Append anonymous analytics summary (no student names)
   const log=getAnalyticsSummary();
-  if(log.length){
-    csv+='\n\n"--- ANONYMOUS USAGE LOG (no student data) ---"\n"Event","Timestamp","Session","Student Count","Total Obs"\n';
-    log.forEach(e=>{csv+=`"${e.event}","${e.ts}","${e.sessionId||''}",${e.studentCount||0},${e.totalObs||0}\n`;});
-  }
-
+  if(log.length){csv+='\n\n"--- ANONYMOUS USAGE LOG ---"\n"Event","Timestamp","Session","Student Count"\n';log.forEach(e=>{csv+=`"${e.event}","${e.ts}","${e.sessionId||''}",${e.studentCount||0}\n`;});}
   const blob=new Blob([csv],{type:'text/csv'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`counting-${currentTeacher?.code||'assessment'}-${new Date().toISOString().split('T')[0]}.csv`;document.body.appendChild(a);a.click();URL.revokeObjectURL(url);document.body.removeChild(a);
   trackEvent('export_triggered');
 }
