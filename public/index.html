@@ -550,21 +550,6 @@
     .sc-setup.on{background:#eef4f9;border-color:var(--seq);color:var(--seq);}
     .sc:active{transform:scale(.96);}
 
-    /* "Other / something else" reveal under more-details */
-    .err-other-section{
-      background:white;border:1.5px solid var(--paper-3);border-radius:var(--radius);
-      padding:11px 12px;margin-bottom:8px;
-    }
-    .err-other-row{display:flex;flex-direction:column;gap:8px;}
-    .err-other-item{display:flex;flex-direction:column;}
-    .err-other-item label{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-4);margin-bottom:4px;}
-    .err-other-item input{
-      font-family:'Sora',sans-serif;font-size:13px;
-      border:1.5px solid var(--paper-3);border-radius:8px;
-      padding:8px 11px;background:var(--paper);color:var(--ink);
-    }
-    .err-other-item input:focus{outline:none;border-color:var(--accent);background:white;}
-
     /* Note */
     .note-toggle{width:100%;background:white;border:2px solid var(--paper-3);border-radius:var(--radius);padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:10px;font-size:13px;font-weight:600;color:var(--ink-3);-webkit-tap-highlight-color:transparent;min-height:44px;}
     .note-toggle-icon{font-size:11px;transition:transform .2s;color:var(--ink-4);}
@@ -1104,7 +1089,7 @@
 
         <!-- MORE DETAILS — collapsed by default. Holds arrangement, setup-by, and "something else" inputs. -->
         <button class="more-details-toggle" id="moreDetailsToggle" onclick="toggleMoreDetails()">
-          <span><span id="moreDetailsLabel">+ More details</span> <span style="font-weight:400;color:var(--ink-4);font-style:italic;">(arrangement, notes)</span></span>
+          <span><span id="moreDetailsLabel">+ More details</span> <span style="font-weight:400;color:var(--ink-4);font-style:italic;">(arrangement, setup)</span></span>
           <span class="chev">▼</span>
         </button>
         <div class="more-details-panel" id="moreDetailsPanel">
@@ -1126,24 +1111,6 @@
             </div>
           </div>
 
-          <div class="err-other-section">
-            <span class="strat-label">Something else (rare)</span>
-            <div class="strat-help">Use only if the standard error chips don't fit what you saw.</div>
-            <div class="err-other-row">
-              <div class="err-other-item">
-                <label>Sequence — something else</label>
-                <input id="other-input-err-sequence" placeholder="Briefly describe…" oninput="setOtherText('err_sequence',this.value);autoFlagOther('sequence',this.value)"/>
-              </div>
-              <div class="err-other-item">
-                <label>Correspondence — something else</label>
-                <input id="other-input-err-correspondence" placeholder="Briefly describe…" oninput="setOtherText('err_correspondence',this.value);autoFlagOther('correspondence',this.value)"/>
-              </div>
-              <div class="err-other-item">
-                <label>Cardinality — something else</label>
-                <input id="other-input-err-cardinality" placeholder="Briefly describe…" oninput="setOtherText('err_cardinality',this.value);autoFlagOther('cardinality',this.value)"/>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div class="note-toggle" onclick="toggleNote()" id="noteToggle">
@@ -2453,19 +2420,6 @@ function setOtherText(field,val){
   document.getElementById('emptySaveWarn').classList.remove('show');
 }
 
-/* If user types in a "something else" free-text field, automatically
-   flag the corresponding other_X error so it counts in saveObs / calcNeeds.
-   This preserves the existing data model — buildContextTags / calcNeeds
-   already handle other_sequence / other_correspondence / other_cardinality. */
-function autoFlagOther(principle,val){
-  const errKey='other_'+principle;
-  const shouldFlag=!!val.trim();
-  if(obsForm.errors[errKey]!==shouldFlag){
-    obsForm.errors[errKey]=shouldFlag;
-  }
-  document.getElementById('emptySaveWarn').classList.remove('show');
-}
-
 function setBehaviorCorrect(principle){
   // Toggle: tap again to clear
   const cur=obsForm.principleState[principle];
@@ -2476,13 +2430,6 @@ function setBehaviorCorrect(principle){
     // Clear any errors for this principle
     ERRORS_BY_PRINCIPLE[principle].forEach(err=>{
       obsForm.errors[err]=false;
-      // Also clear the other-text input if present
-      if(err.startsWith('other_')){
-        const k='err_'+principle;
-        if(obsForm.otherText)obsForm.otherText[k]='';
-        const id='other-input-err-'+principle;
-        const inp=document.getElementById(id);if(inp)inp.value='';
-      }
     });
   }
   applyFormToUI();
