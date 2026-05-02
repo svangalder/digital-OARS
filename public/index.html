@@ -49,7 +49,6 @@
     .nav-btn{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);border-radius:8px;padding:6px 11px;font-family:'Sora',sans-serif;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;min-height:44px;min-width:44px;position:relative;}
     .nav-btn:hover{background:rgba(255,255,255,.1);color:white;}
     .nav-btn:active{background:rgba(255,255,255,.15);}
-    /* Groups nav badge — appears once any students are flagged */
     .nav-badge{
       position:absolute;top:-4px;right:-4px;
       background:var(--accent);color:white;
@@ -89,7 +88,6 @@
     .auth-error{font-size:12px;color:var(--red);margin-top:6px;display:none;line-height:1.55;background:#fdf1ee;border-left:3px solid var(--red);padding:9px 12px;border-radius:6px;}
     .auth-success{font-size:12px;color:var(--green);margin-top:6px;display:none;}
 
-    /* ── LANDING — privacy-forward, calmer copy ── */
     .auth-card#landingPanel{max-width:440px;}
     .landing-hero{
       background:linear-gradient(135deg,var(--paper) 0%,var(--accent-light) 100%);
@@ -114,7 +112,6 @@
     }
     .landing-privacy-link:hover{color:var(--accent);text-decoration-color:var(--accent);}
 
-    /* PIN-help expandable note (replaces the scary lockout warning) */
     .pin-help{
       background:var(--blue-light);border-radius:var(--radius);
       padding:11px 13px;margin-bottom:14px;
@@ -130,7 +127,6 @@
     .pin-help-body{display:none;margin-top:7px;padding-top:8px;border-top:1px dashed rgba(42,90,138,.3);}
     .pin-help-body.open{display:block;}
 
-    /* ══ APP TOP BAR ══ */
     .top-bar{padding:6px 14px;background:var(--paper-2);border-bottom:1px solid var(--paper-3);display:flex;align-items:center;justify-content:space-between;gap:8px;}
     .top-bar.hidden{display:none;}
     .teacher-pill{font-size:10px;font-weight:700;letter-spacing:.05em;padding:3px 9px;border-radius:20px;background:var(--paper-3);color:var(--ink-3);}
@@ -138,7 +134,6 @@
     .top-bar-link{font-size:11px;font-weight:600;color:var(--blue);background:none;border:none;cursor:pointer;font-family:'Sora',sans-serif;padding:8px 4px;min-height:44px;}
     .top-bar-link:hover{text-decoration:underline;}
 
-    /* DEMO BANNER — pinned at top during demo session */
     .demo-banner{
       background:linear-gradient(to right,var(--accent-light),#fff5ed);
       border-bottom:1.5px solid var(--accent-2);
@@ -157,7 +152,6 @@
     }
     .demo-banner-cta:hover{background:var(--accent);}
 
-    /* BACKUP REMINDER BANNER — appears 7 days after last export */
     .backup-banner{
       background:linear-gradient(to right,var(--amber-light),#fff8eb);
       border-bottom:1.5px solid var(--amber);
@@ -182,7 +176,6 @@
     }
     .backup-banner-dismiss:hover{color:var(--ink-2);}
 
-    /* Welcome / How-to */
     .welcome-modal{max-width:480px;}
     .welcome-lead{font-size:14px;color:var(--ink-2);line-height:1.65;margin-bottom:18px;font-family:'DM Serif Display',serif;font-style:italic;}
     .welcome-steps{display:flex;flex-direction:column;gap:14px;margin-bottom:14px;}
@@ -195,14 +188,12 @@
     .welcome-tip{background:var(--paper);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:10px 12px;font-size:12px;color:var(--ink-2);line-height:1.6;}
     .welcome-tip strong{color:var(--ink);}
 
-    /* ══ ROSTER ADD ══ */
     .roster-add{padding:10px 14px;background:white;border-bottom:1px solid var(--paper-3);}
     .roster-add-row{display:flex;gap:8px;}
     .roster-add input{flex:1;font-family:'Sora',sans-serif;font-size:15px;border:1.5px solid var(--paper-3);border-radius:var(--radius);padding:10px 13px;background:var(--paper);color:var(--ink);transition:border-color .15s;}
     .roster-add input:focus{outline:none;border-color:var(--accent);background:white;}
     .roster-add input::placeholder{color:var(--ink-4);}
     .btn-add{background:var(--accent);color:white;border:none;border-radius:var(--radius);padding:10px 16px;font-family:'Sora',sans-serif;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;min-height:44px;}
-    /* Bulk-add affordance */
     .roster-bulk-toggle{
       display:inline-block;margin-top:7px;padding:5px 0;
       background:none;border:none;
@@ -235,7 +226,6 @@
       padding:10px 14px;
     }
 
-    /* Toolbar — just the View toggle */
     .board-toolbar{padding:6px 12px 2px;display:flex;align-items:center;justify-content:flex-end;gap:8px;}
     .settings-btn{background:transparent;border:1px solid var(--paper-3);color:var(--ink-3);border-radius:8px;padding:5px 10px;font-family:'Sora',sans-serif;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0;min-height:44px;}
     .settings-btn:hover{border-color:var(--accent);color:var(--accent);}
@@ -253,7 +243,6 @@
     .board-divider-warn{color:var(--accent);}
     .board-divider-warn .board-section-count{color:var(--accent);background:var(--accent-light);}
 
-    /* ── STUDENT CARD — compact by default, expandable ── */
     .board-card{background:white;border:1.5px solid var(--paper-3);border-radius:var(--radius-lg);padding:13px 14px 11px;margin-bottom:10px;cursor:pointer;transition:border-color .15s,box-shadow .15s;position:relative;overflow:hidden;}
     .board-card:active{transform:scale(.99);}
     .board-card:hover{border-color:var(--ink-4);box-shadow:0 2px 10px rgba(0,0,0,.04);}
@@ -268,7 +257,6 @@
     .bc-stale-dot{position:absolute;top:-3px;right:-3px;width:11px;height:11px;border-radius:50%;background:var(--accent);border:2px solid white;animation:bc-pulse 2.4s infinite;}
     @keyframes bc-pulse{0%,100%{box-shadow:0 0 0 0 rgba(200,90,42,.5);}50%{box-shadow:0 0 0 5px rgba(200,90,42,0);}}
 
-    /* Expand chevron — replaces the inline tracks display by default */
     .bc-expand-btn{
       flex-shrink:0;background:transparent;border:1px solid var(--paper-3);
       color:var(--ink-3);border-radius:8px;
@@ -287,7 +275,6 @@
       line-height:1;letter-spacing:.01em;
     }
 
-    /* Tracks caption — sits above the three tracks, frames meaning */
     .bc-tracks-caption{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
       flex-wrap:wrap;
@@ -300,11 +287,9 @@
     .bc-tile-legend-item{display:inline-flex;align-items:center;gap:5px;}
     .bc-tile-legend-item .tile{cursor:default;}
 
-    /* The expanded zone (tracks + trajectory) — hidden until expand */
     .bc-expanded{display:none;margin-top:11px;}
     .bc-expanded.open{display:block;}
 
-    /* Three principle tracks (in expanded zone) */
     .bc-tracks{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:11px;}
     .track{background:var(--paper);border-radius:9px;padding:7px 8px 6px;min-width:0;position:relative;}
     .track-seq{background:linear-gradient(to bottom,#f0f6fc 0%,var(--paper) 100%);}
@@ -326,7 +311,6 @@
     .tile-empty::after{content:"";}
     .tile-more{font-size:9px;color:var(--ink-3);font-family:'DM Serif Display',serif;font-style:italic;margin-left:1px;}
 
-    /* Trajectory pin */
     .bc-trajectory{padding:8px 4px 4px;border-top:1px dashed var(--paper-3);cursor:pointer;-webkit-tap-highlight-color:transparent;}
     .traj-label-btn{display:inline-flex;align-items:center;gap:5px;padding:0 0 7px 0;font-family:'Sora',sans-serif;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);transition:color .12s;}
     .bc-trajectory:hover .traj-label-btn,.bc-trajectory:active .traj-label-btn{color:var(--accent);}
@@ -342,10 +326,10 @@
     .traj-caption{position:absolute;transform:translateX(-50%);font-family:'DM Serif Display',serif;font-style:italic;font-size:11px;color:var(--accent);white-space:nowrap;line-height:1;}
     .traj-caption.at-start{transform:none;}
     .traj-caption.at-end{transform:translateX(-100%);}
+    .traj-caption-why{font-style:normal;font-size:10px;opacity:.6;cursor:help;}
     .bc-trajectory.collapsed .traj-path-wrap{display:none;}
     .bc-trajectory.collapsed{padding-bottom:6px;}
 
-    /* Empty card placeholder */
     .bc-empty-nudge{
       padding:10px 4px 8px;
       font-size:12px;color:var(--ink-4);font-style:italic;
@@ -364,7 +348,6 @@
     .empty-state p{font-size:13px;line-height:1.7;}
     .spacer{height:70px;}
 
-    /* SETTINGS MODAL */
     .settings-group{margin-bottom:18px;}
     .settings-group:last-child{margin-bottom:0;}
     .settings-group-title{font-family:'DM Serif Display',serif;font-size:14px;color:var(--ink);margin-bottom:4px;}
@@ -377,7 +360,6 @@
     .view-mode-option.active .view-mode-label{color:var(--accent);}
     .view-mode-hint{font-size:10px;color:var(--ink-4);line-height:1.3;}
 
-    /* First-run hint + groups teaser */
     .first-run-hint,.groups-teaser{margin:14px 12px 4px;background:linear-gradient(to right,#fffaf0,white);border:1.5px dashed var(--accent-2);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;gap:12px;}
     .groups-teaser{background:linear-gradient(to right,#eef6ff,white);border-color:#9bbfdc;}
     .first-run-hint-emoji,.groups-teaser-emoji{font-size:22px;flex-shrink:0;line-height:1;}
@@ -394,7 +376,6 @@
     }
     .groups-teaser-cta:hover{background:#1d4264;}
 
-    /* HEAT MAP VIEW */
     .heatmap-wrap{padding:6px 12px 14px;}
     .heatmap-header{display:grid;grid-template-columns:minmax(110px,1.4fr) 1fr 1fr 1fr;gap:6px;padding:8px 4px 10px;align-items:end;}
     .heatmap-h-name{font-family:'Sora',sans-serif;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-4);}
@@ -445,7 +426,6 @@
 
     .obs-scroll{padding:12px 12px 0;overflow-y:auto;}
 
-    /* "Saved" pill — flashes after each save */
     .saved-pill{
       position:fixed;top:calc(52px + var(--sat) + 8px);left:50%;
       transform:translateX(-50%) translateY(-8px);
@@ -468,7 +448,6 @@
     .size-chip-label{font-size:9px;color:var(--ink-4);margin-top:2px;letter-spacing:.03em;}
     .size-chip.selected .size-chip-label{color:rgba(255,255,255,.6);}
 
-    /* Principle cards */
     .principle-card{background:white;border:1.5px solid var(--paper-3);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:10px;}
     .pc-head{padding:11px 14px 0;display:flex;align-items:center;gap:8px;}
     .pc-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
@@ -497,6 +476,7 @@
     .tap-correct.on .tap-correct-label{color:var(--green-dark);}
 
     .tap-errors{display:flex;flex-direction:column;}
+    .tap-errors-label{padding:5px 12px 3px;font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-4);}
     .tap-error{
       padding:9px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;
       background:var(--paper);border-bottom:1px solid var(--paper-3);
@@ -513,13 +493,13 @@
 
     .pc-unset-hint{padding:7px 14px 9px;font-size:11px;color:var(--ink-4);font-style:italic;text-align:center;border-top:1px solid var(--paper-3);}
     .pc-unset-hint.hidden{display:none;}
+    .pc-clarifying-note{padding:6px 14px 9px;font-size:11px;color:var(--ink-3);line-height:1.5;border-top:1px solid var(--paper-3);background:var(--paper);}
 
     .other-input{display:none;width:100%;margin-top:8px;font-family:'Sora',sans-serif;font-size:13px;border:1.5px solid var(--paper-3);border-radius:8px;padding:7px 10px;background:var(--paper);color:var(--ink);transition:border-color .15s;box-sizing:border-box;}
     .other-input:focus{outline:none;border-color:var(--accent);background:white;}
     .other-input::placeholder{color:var(--ink-4);}
     .other-input.open{display:block;}
 
-    /* "More details" toggle — collapses arrangement + setup-by + free-text fields */
     .more-details-toggle{
       width:100%;background:transparent;
       border:1px dashed var(--paper-3);
@@ -538,7 +518,6 @@
     .more-details-panel{display:none;margin-bottom:10px;}
     .more-details-panel.open{display:block;}
 
-    /* Strategy section */
     .strat-section{background:white;border:1.5px solid var(--paper-3);border-radius:var(--radius);padding:11px 12px;margin-bottom:8px;}
     .strat-label{display:block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-4);margin-bottom:4px;}
     .strat-help{font-size:11px;color:var(--ink-4);line-height:1.4;margin-bottom:8px;}
@@ -550,7 +529,6 @@
     .sc-setup.on{background:#eef4f9;border-color:var(--seq);color:var(--seq);}
     .sc:active{transform:scale(.96);}
 
-    /* Note */
     .note-toggle{width:100%;background:white;border:2px solid var(--paper-3);border-radius:var(--radius);padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:10px;font-size:13px;font-weight:600;color:var(--ink-3);-webkit-tap-highlight-color:transparent;min-height:44px;}
     .note-toggle-icon{font-size:11px;transition:transform .2s;color:var(--ink-4);}
     .note-toggle-icon.open{transform:rotate(180deg);}
@@ -564,7 +542,6 @@
     @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(200,90,42,.4);}50%{box-shadow:0 0 0 7px rgba(200,90,42,0);}}
     .note-wrap-inner{position:relative;}
 
-    /* History */
     .history-section{margin-bottom:10px;}
     .history-toggle{width:100%;background:white;border:2px solid var(--paper-3);border-radius:var(--radius);padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);-webkit-tap-highlight-color:transparent;min-height:44px;}
     .history-body{display:none;background:white;border:2px solid var(--paper-3);border-top:none;border-radius:0 0 var(--radius) var(--radius);overflow:hidden;}
@@ -583,11 +560,9 @@
     .obs-size-tag{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;background:var(--paper-2);color:var(--ink-3);}
     .obs-note-text{font-size:11px;color:var(--ink-3);font-style:italic;margin-top:3px;}
 
-    /* Edit banner */
     .edit-banner{margin-bottom:10px;padding:10px 14px;background:#fff8e6;border:2px solid var(--amber);border-radius:var(--radius);font-size:12px;color:var(--amber);font-weight:600;display:flex;align-items:center;justify-content:space-between;}
     .edit-cancel-btn{background:transparent;border:1px solid var(--amber);color:var(--amber);border-radius:6px;padding:4px 10px;font-family:'Sora',sans-serif;font-size:11px;cursor:pointer;min-height:44px;}
 
-    /* Empty-save warning */
     .empty-save-warn{
       margin-bottom:10px;padding:10px 14px;
       background:var(--accent-light);border:1.5px solid var(--accent-2);
@@ -597,7 +572,6 @@
     }
     .empty-save-warn.show{display:block;}
 
-    /* Save bar — single primary action */
     .save-bar{
       padding:10px 12px;padding-bottom:calc(10px + var(--sab));
       background:white;border-top:2px solid var(--paper-3);
@@ -623,7 +597,6 @@
     .obs-scroll.slide-left{opacity:0;transform:translateX(-20px);}
     .obs-scroll.slide-right{opacity:0;transform:translateX(20px);}
 
-    /* GROUPS VIEW */
     .groups-intro{margin:12px 12px 0;background:white;border:1.5px solid var(--paper-3);border-radius:var(--radius-lg);padding:14px;position:relative;}
     .groups-intro-title{font-family:'DM Serif Display',serif;font-size:16px;margin-bottom:4px;}
     .groups-intro-body{font-size:12px;color:var(--ink-3);line-height:1.7;}
@@ -668,7 +641,6 @@
     .gs-tag{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;line-height:1.4;}
     .gs-tag-pattern{background:var(--accent-light);color:var(--accent);}
 
-    /* STUDENT SUMMARY MODAL */
     .student-modal{max-width:500px;width:100%;}
     .student-modal-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:22px;background:var(--paper-2);color:var(--ink-2);border:1.5px solid var(--paper-3);flex-shrink:0;}
     .student-modal-meta{font-size:11px;color:var(--ink-4);margin-top:2px;}
@@ -689,7 +661,6 @@
     .student-modal-obs-btn:hover{background:var(--accent);}
     .student-modal-obs-btn:active{transform:scale(.98);}
 
-    /* Class overview */
     .cv-table{width:100%;border-collapse:collapse;}
     .cv-table th{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:8px 10px;background:var(--paper-2);border-bottom:2px solid var(--paper-3);text-align:center;color:var(--ink-3);}
     .cv-table th:first-child{text-align:left;}
@@ -701,7 +672,6 @@
     .cv-check-no{background:var(--paper-2);color:var(--ink-4);}
     .cv-check-none{background:var(--paper-2);color:var(--ink-4);font-size:10px;}
 
-    /* Trajectories */
     .traj-intro{background:white;border:1.5px solid var(--paper-3);border-radius:var(--radius-lg);padding:14px;margin:12px 12px 0;}
     .traj-intro-title{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:5px;}
     .traj-intro-body{font-size:13px;color:var(--ink-2);line-height:1.7;}
@@ -731,7 +701,6 @@
     .traj-context-box{background:var(--blue-light);border-radius:var(--radius);padding:10px 12px;font-size:12px;color:var(--blue);line-height:1.7;}
     .citation-card{background:white;border:1.5px solid var(--paper-3);border-radius:var(--radius);padding:12px 14px;margin:0 12px 12px;font-size:12px;color:var(--ink-3);line-height:1.7;}
 
-    /* Custom dialog */
     .dialog-backdrop{display:none;position:fixed;inset:0;background:rgba(26,23,20,.5);z-index:500;align-items:center;justify-content:center;padding:20px;}
     .dialog-backdrop.open{display:flex;}
     .dialog-box{background:white;border-radius:var(--radius-lg);max-width:340px;width:100%;padding:22px 20px 16px;box-shadow:0 8px 40px rgba(0,0,0,.18);}
@@ -749,7 +718,6 @@
     .dialog-btn-danger{background:var(--red);color:white;}
     .dialog-btn-danger:hover{background:#a83225;}
 
-    /* PII modal + general modal */
     .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(26,23,20,.45);z-index:200;align-items:center;justify-content:center;padding:16px;}
     .modal-backdrop.open{display:flex;}
     .modal{background:white;border-radius:var(--radius-lg);max-width:480px;width:100%;max-height:88vh;overflow-y:auto;}
@@ -759,7 +727,6 @@
     .modal-body{padding:16px 16px 20px;}
     .modal-foot-sticky{position:sticky;bottom:0;background:white;padding:12px 16px 16px;border-top:1px solid var(--paper-3);box-shadow:0 -8px 12px -8px rgba(26,23,20,.08);}
 
-    /* Toast */
     .toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--ink);color:white;font-family:'Sora',sans-serif;font-size:13px;font-weight:500;padding:10px 18px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:300;letter-spacing:.01em;max-width:90vw;text-align:center;}
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
@@ -820,7 +787,7 @@
   <div id="authScreen">
     <div class="auth-screen">
 
-      <!-- LANDING — privacy-forward, calmer copy -->
+      <!-- LANDING -->
       <div class="auth-card" id="landingPanel">
         <div class="auth-logo">Digital Observational Assessment</div>
         <div class="auth-sub">Kindergarten counting</div>
@@ -833,7 +800,7 @@
         </div>
 
         <div class="landing-features">
-          <div class="landing-feat"><span class="landing-feat-num">1</span><span class="landing-feat-text"><strong>Observe.</strong> Tap a student, mark what you saw, move on.</span></div>
+          <div class="landing-feat"><span class="landing-feat-num">1</span><span class="landing-feat-text"><strong>Observe.</strong> Tap a student and mark what you saw.</span></div>
           <div class="landing-feat"><span class="landing-feat-num">2</span><span class="landing-feat-text"><strong>See patterns.</strong> Spot who needs which kind of practice.</span></div>
           <div class="landing-feat"><span class="landing-feat-num">3</span><span class="landing-feat-text"><strong>Group &amp; teach.</strong> Get small-group suggestions from your data.</span></div>
         </div>
@@ -864,7 +831,7 @@
         <button class="auth-link" onclick="showPanel('landingPanel')">← Back</button>
       </div>
 
-      <!-- SETUP — softer privacy framing -->
+      <!-- SETUP -->
       <div class="auth-card" id="setupPanel" style="display:none;">
         <div class="auth-logo">New Classroom</div>
         <div class="auth-sub">Set up your account</div>
@@ -892,7 +859,6 @@
         <div class="auth-error" id="setupError"></div>
         <div class="auth-success" id="setupSuccess"></div>
 
-        <!-- Friendlier PIN explanation: lead with backup, not loss -->
         <div class="pin-help">
           <strong>Your PIN is the encryption key.</strong> It stays only with you, so we can't reset it.
           <button class="pin-help-toggle" onclick="togglePinHelp()" id="pinHelpBtn">What does that mean? →</button>
@@ -930,14 +896,12 @@
         </div>
       </div>
 
-      <!-- DEMO BANNER -->
       <div class="demo-banner" id="demoBanner" style="display:none;">
         <div class="demo-banner-icon">👋</div>
         <div class="demo-banner-text"><strong>You're in the demo</strong> — sample data, nothing saved. Your real classroom would be encrypted on this device.</div>
         <button class="demo-banner-cta" onclick="exitDemoToSetup()">Start a real classroom</button>
       </div>
 
-      <!-- BACKUP REMINDER -->
       <div class="backup-banner" id="backupBanner" style="display:none;">
         <div class="backup-banner-icon">💾</div>
         <div class="backup-banner-text"><strong>It's been a week since your last backup.</strong> Your data is safest when you have a copy.</div>
@@ -993,7 +957,6 @@
         </div>
       </div>
 
-      <!-- "Saved" pill — flashes briefly after each save -->
       <div class="saved-pill" id="savedPill">Saved</div>
 
       <div id="obsScrollArea" class="obs-scroll">
@@ -1005,6 +968,9 @@
         <div class="empty-save-warn" id="emptySaveWarn">
           Tap at least one principle (✓ correct or one of the error chips) before saving.
         </div>
+        <div class="empty-save-warn" id="sizeWarn">
+          Select a collection size before saving.
+        </div>
 
         <div class="size-row">
           <div class="size-chip" id="size-1-10" onclick="selectSize('1-10')"><div class="size-chip-num">1–10</div><div class="size-chip-label">objects</div></div>
@@ -1012,8 +978,6 @@
           <div class="size-chip" id="size-21-50" onclick="selectSize('21-50')"><div class="size-chip-num">21–50</div><div class="size-chip-label">objects</div></div>
           <div class="size-chip" id="size-51+" onclick="selectSize('51+')"><div class="size-chip-num">51+</div><div class="size-chip-label">objects</div></div>
         </div>
-
-        <div class="principles-help">What did you see? Tap to mark each principle.</div>
 
         <!-- SEQUENCE -->
         <div class="principle-card" id="card-sequence">
@@ -1027,12 +991,15 @@
               <div class="tap-correct-icon">✓</div>
               <div class="tap-correct-label">Yes — in order</div>
             </div>
-            <div class="tap-errors">
+            <div class="tap-errors"><div class="tap-errors-label">Select all that apply</div>
               <div class="tap-error" id="bh-skips_numbers" onclick="toggleBehaviorError('skips_numbers','sequence')">
                 <div class="tap-error-dot"></div><div class="tap-error-label">Skipped numbers</div>
               </div>
               <div class="tap-error" id="bh-repeats_numbers" onclick="toggleBehaviorError('repeats_numbers','sequence')">
                 <div class="tap-error-dot"></div><div class="tap-error-label">Repeated numbers</div>
+              </div>
+              <div class="tap-error" id="bh-wrong_number_word" onclick="toggleBehaviorError('wrong_number_word','sequence')">
+                <div class="tap-error-dot"></div><div class="tap-error-label">Wrong number word</div>
               </div>
             </div>
           </div>
@@ -1052,7 +1019,7 @@
               <div class="tap-correct-icon">✓</div>
               <div class="tap-correct-label">Yes — one per object</div>
             </div>
-            <div class="tap-errors">
+            <div class="tap-errors"><div class="tap-errors-label">Select all that apply</div>
               <div class="tap-error" id="bh-loses_track" onclick="toggleBehaviorError('loses_track','correspondence')">
                 <div class="tap-error-dot"></div><div class="tap-error-label">Lost track</div>
               </div>
@@ -1077,17 +1044,17 @@
               <div class="tap-correct-icon">✓</div>
               <div class="tap-correct-label">Yes — knew the total</div>
             </div>
-            <div class="tap-errors">
+            <div class="tap-errors"><div class="tap-errors-label">Select all that apply</div>
               <div class="tap-error" id="bh-counts_again" onclick="toggleBehaviorError('counts_again','cardinality')">
                 <div class="tap-error-dot"></div><div class="tap-error-label">Recounted to answer</div>
               </div>
             </div>
           </div>
           <div class="pc-unset-hint" id="pc-hint-cardinality">Nothing tapped yet — skip if you didn't focus on this today.</div>
+          <div class="pc-clarifying-note">Note: cardinality can still be correct even if the total is wrong due to sequence errors — what matters is whether the student knew the last number said was the answer.</div>
           <div style="display:none;"><button id="bh-correct-cardinality"></button></div>
         </div>
 
-        <!-- MORE DETAILS — collapsed by default. Holds arrangement, setup-by, and "something else" inputs. -->
         <button class="more-details-toggle" id="moreDetailsToggle" onclick="toggleMoreDetails()">
           <span><span id="moreDetailsLabel">+ More details</span> <span style="font-weight:400;color:var(--ink-4);font-style:italic;">(arrangement, setup)</span></span>
           <span class="chev">▼</span>
@@ -1135,7 +1102,6 @@
         <div style="height:100px;"></div>
       </div>
 
-      <!-- Save bar — single primary button -->
       <div class="save-bar">
         <button class="next-btn" onclick="saveObs(true)">Save &amp; next student →</button>
         <button class="save-stay-link" onclick="saveObs(false)">Save and stay on this student</button>
@@ -1508,16 +1474,16 @@ function dlgConfirm(message, title, okLabel, okDanger) { return _dialog({ title:
 function dlgPrompt(message, defaultValue, title) { return _dialog({ title: title || 'Enter', message, inputValue: defaultValue || '', okLabel: 'Save', cancelLabel: 'Cancel' }); }
 
 /* ══════════════════════════════════════
-   CONSTANTS — UNCHANGED
+   CONSTANTS
 ══════════════════════════════════════ */
 const TRAJECTORIES=[
-  {level:1,name:"Reciter",description:"Says number words in sequence (with some support), but cannot yet reliably match to objects when counting",indicators:["Chants or recites number words in order","May not start at 1, or may skip numbers","Does not coordinate number words with pointing/touching objects"],teachingFocus:"Help child point to and touch each object while saying numbers in order",context:"This is typically the foundation. All children benefit from repeated chanting and singing of number sequences."},
-  {level:2,name:"Corresponder",description:"Matches number words to objects but may not understand that the last number means 'how many'",indicators:["Touches or points to each object as they count","Says one number word for each object","May recount to answer 'how many?' instead of knowing the last number"],teachingFocus:"Ask 'how many?' immediately after counting—emphasize that the last number tells the amount",context:"Children often spend significant time here. Some work on Corresponder and Counter Small skills in parallel."},
-  {level:3,name:"Counter (Small)",description:"Counts small collections accurately with one-to-one correspondence and understands cardinality",indicators:["Counts 5–10 objects with accuracy","Knows the last number said tells 'how many'","Can count again to verify the total"],teachingFocus:"Organize objects in different ways; introduce larger collections; practice counting backward",context:"A significant milestone. Children often develop these skills with familiar contexts before managing mixed piles."},
-  {level:4,name:"Counter (To 20)",description:"Counts larger collections accurately, often using organization strategies",indicators:["Counts 10–20+ objects accurately","Organizes objects to avoid losing track","Demonstrates cardinality with larger sets"],teachingFocus:"Introduce tens and ones language; explore skip counting; practice flexible counting",context:"While developing Counter (To 20), children may simultaneously begin Counter Backward."},
-  {level:5,name:"Counter Backward",description:"Counts backward from 10 to 1",indicators:["Counts backward from 10: '10, 9, 8…'","Can count backward when removing objects","Understands reverse order of number sequence"],teachingFocus:"Use countdown games; practice removal counting with manipulatives",context:"Often develops alongside Counter (To 20). Both show growth in number sequence flexibility."},
-  {level:6,name:"Counter from N",description:"Counts from numbers other than 1",indicators:["When asked to count from 6 to 8, counts '6, 7, 8'","Answers 'what comes before 7?' with 'six'","Can count on or backward from any number"],teachingFocus:"Practice 'what comes next' and 'what comes before' games",context:"Often develops in parallel with Skip Counter skills."},
-  {level:7,name:"Skip Counter",description:"Skip counts by tens up to 100 with understanding",indicators:["Counts '10, 20, 30… 100'","Understands 'thirty means 3 tens'","Counts groups efficiently"],teachingFocus:"Use activities with groups of 10; emphasize place value",context:"Some children show early signs while solidifying other skills."}
+  {level:1,name:"Reciter",description:"Says number words in sequence but <strong>cannot yet reliably match words to objects</strong> — the verbal sequence and the physical counting act are not yet coordinated",indicators:["Chants or recites number words in order","May skip or repeat numbers, especially above 5","Points while counting but without keeping one-to-one correspondence"],teachingFocus:"Help child slow down and point to each object while saying one number word at a time",context:"<strong>This is typically the foundation.</strong> All children benefit from repeated chanting and singing of number sequences."},
+  {level:2,name:"Corresponder",description:"Says one number word for each object (<strong>one-to-one correspondence</strong>), but <strong>may not yet understand that the last number said tells 'how many'</strong>",indicators:["Touches or points to each object as they count","Says one number word per object, at least for small groups","May recount when asked 'how many?' instead of giving the last number said"],teachingFocus:"After counting, immediately ask 'how many?' and gesture to the whole group — emphasize that the last number said is the answer",context:"Children often spend significant time here. <strong>Some work on Corresponder and Counter (Small) skills in parallel.</strong>"},
+  {level:3,name:"Counter (Small)",description:"Accurately counts small collections <strong>up to about 5 objects</strong> and <strong>understands cardinality</strong> — knows the last number said tells how many",indicators:["Counts up to 5 objects accurately with one-to-one correspondence","Immediately answers 'how many?' with the last number said — no recounting needed","Beginning to extend these skills to slightly larger collections"],teachingFocus:"Gesture around the whole group after counting and repeat the total — 'One, two, three, four, five… FIVE!' Introduce slightly larger collections",context:"<strong>A significant milestone.</strong> The cardinal principle is now understood for small sets. Counter (10) extends this to collections up to 10."},
+  {level:4,name:"Counter (10)",description:"Accurately counts collections <strong>up to 10 objects</strong> with one-to-one correspondence and cardinality",indicators:["Counts up to 10 objects accurately","Answers 'how many?' correctly without recounting","May begin to tell the number just before or after, but counts up from 1 to do so"],teachingFocus:"Introduce larger collections; ask 'what comes after 6?' to build number sequence flexibility",context:"<strong>Counter (Small) and Counter (10) are the two key cardinality milestones</strong> for kindergarten. Children may work on collections of 6–10 over considerable time before this is solid."},
+  {level:5,name:"Counter Backward",description:"<strong>Counts backward from 10</strong>, verbally or when removing objects one at a time",indicators:["Counts backward: '10, 9, 8, 7, 6, 5, 4, 3, 2, 1'","Can count backward while removing objects from a group","Understands the reverse order of the number sequence"],teachingFocus:"Use countdown games and 'blast off' activities; practice removal counting with manipulatives",context:"<strong>Often develops alongside Counter (10).</strong> Both show growth in number sequence flexibility."},
+  {level:6,name:"Counter from N",description:"<strong>Counts forward or backward starting from any number</strong>, not just from 1; immediately knows the number just before or after",indicators:["Asked to count from 6 to 8, says '6, 7, 8'","Immediately answers 'what comes just before 7?' with 'six'","Does not need to start from 1 to find neighbors"],teachingFocus:"Practice 'what comes next?' and 'what comes before?' games without counting from 1",context:"<strong>Often develops in parallel with Counter Backward.</strong> Both reflect a more flexible, bidirectional understanding of the number sequence."},
+  {level:7,name:"Skip Counter",description:"<strong>Skip counts by tens up to 100</strong> with understanding — knows that 'thirty means 3 tens'",indicators:["Counts '10, 20, 30… 100'","Counts groups of 10 objects and counts those groups by tens","Understands that skip counting reflects groups, not just a verbal pattern"],teachingFocus:"Use activities with groups of 10; emphasize that thirty means 3 tens and fifty means 5 tens",context:"<strong>Connects counting to place value and early multiplication.</strong> Some children show early signs while still solidifying Counter from N."}
 ];
 const TRAJ_COLORS=[{num:'#a06020',bg:'#fef3e2'},{num:'#2a5a8a',bg:'#e8f0f8'},{num:'#2a7a4b',bg:'#e8f5ee'},{num:'#6b3a9a',bg:'#f2eaff'},{num:'#c85a2a',bg:'#fdf0ea'},{num:'#2a7a72',bg:'#e8f5f3'},{num:'#7a2a6b',bg:'#fceaf8'}];
 
@@ -1530,15 +1496,16 @@ const GROUP_CONFIG=[
    try:['Gather 20 cubes.','Connect 5 cubes. How many? Do you need to count the cubes again? (No.) Say, Five, then count two more. The last number you said is 7. There are 7 cubes.']}
 ];
 
-const ERROR_PRINCIPLE={skips_numbers:'sequence',repeats_numbers:'sequence',loses_track:'correspondence',double_counts:'correspondence',counts_again:'cardinality',other_sequence:'sequence',other_correspondence:'correspondence',other_cardinality:'cardinality'};
+const ERROR_PRINCIPLE={skips_numbers:'sequence',repeats_numbers:'sequence',wrong_number_word:'sequence',loses_track:'correspondence',double_counts:'correspondence',counts_again:'cardinality',other_sequence:'sequence',other_correspondence:'correspondence',other_cardinality:'cardinality'};
+const ERROR_LABELS={skips_numbers:'Skipped numbers',repeats_numbers:'Repeated numbers',wrong_number_word:'Wrong number word',loses_track:'Lost track',double_counts:'Double counted',counts_again:'Recounted to answer',other_sequence:'Other (sequence)',other_correspondence:'Other (correspondence)',other_cardinality:'Other (cardinality)'};
 const ERRORS_BY_PRINCIPLE={
-  sequence:['skips_numbers','repeats_numbers','other_sequence'],
+  sequence:['skips_numbers','repeats_numbers','wrong_number_word','other_sequence'],
   correspondence:['loses_track','double_counts','other_correspondence'],
   cardinality:['counts_again','other_cardinality']
 };
 
 /* ══════════════════════════════════════
-   CRYPTO — UNCHANGED
+   CRYPTO
 ══════════════════════════════════════ */
 const PBKDF2_ITERS=250000;
 const AUTH_INFO='dba-verifier-v1';
@@ -1576,7 +1543,7 @@ async function decryptJson(blob,key){
 async function legacyHashPin(pin,salt){const e=new TextEncoder();const d=e.encode(salt+':'+pin);const h=await crypto.subtle.digest('SHA-256',d);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('');}
 
 /* ══════════════════════════════════════
-   AUTH — UNCHANGED
+   AUTH
 ══════════════════════════════════════ */
 let currentTeacher=null;
 let encryptionKey=null;
@@ -1683,7 +1650,6 @@ function startDemo(){
   document.getElementById('teacherPill').textContent='DEMO · sample data';
   const pillEl=document.getElementById('headerCodePill');
   if(pillEl){pillEl.textContent='DEMO';pillEl.style.display='inline-block';}
-  // Show pinned demo banner
   const demoBanner=document.getElementById('demoBanner');
   if(demoBanner)demoBanner.style.display='flex';
   updateTopBarVisibility();
@@ -1692,7 +1658,6 @@ function startDemo(){
 }
 
 function exitDemoToSetup(){
-  // Drop demo and route to setup panel directly
   encryptionKey=null;currentTeacher=null;
   state={students:[],observations:{},groupOverrides:{}};
   sectionCollapsed={};
@@ -1734,13 +1699,13 @@ let editingObsIdx=null;
 let obsFromGroups=false;
 let unsavedChanges=false;
 let syncTimeout=null;
-let expandedCards = new Set(); // tracks which student cards are expanded on the roster
+let expandedCards = new Set();
 
 function freshObsForm(){
   return{
     size:null,
     principleState:{sequence:null,correspondence:null,cardinality:null},
-    errors:{skips_numbers:false,repeats_numbers:false,loses_track:false,double_counts:false,counts_again:false,other_sequence:false,other_correspondence:false,other_cardinality:false},
+    errors:{skips_numbers:false,repeats_numbers:false,wrong_number_word:false,loses_track:false,double_counts:false,counts_again:false,other_sequence:false,other_correspondence:false,other_cardinality:false},
     strategies:{line:false,groups:false,scattered:false,other:false,setupStudent:false,setupTeacher:false},
     otherText:{err_sequence:'',err_correspondence:'',err_cardinality:'',strat:''}
   };
@@ -1823,11 +1788,9 @@ function updateBackupBanner() {
   const banner = document.getElementById('backupBanner');
   if (!banner) return;
   if (currentTeacher?.demo) { banner.style.display = 'none'; return; }
-  // Don't nag a fresh classroom — wait until they've recorded at least one obs
   const totalObs = Object.values(state.observations || {}).reduce((sum, r) => sum + (r?.history?.length || 0), 0);
   if (totalObs === 0) { banner.style.display = 'none'; return; }
   ensureFirstUseTs();
-  // If user dismissed banner, respect snooze
   if (state.backupBannerSnoozeUntil && Date.now() < new Date(state.backupBannerSnoozeUntil).getTime()) {
     banner.style.display = 'none'; return;
   }
@@ -1838,7 +1801,6 @@ function updateBackupBanner() {
 }
 
 function dismissBackupBanner() {
-  // Snooze for another 7 days
   const snoozeUntil = new Date(Date.now() + BACKUP_REMINDER_DAYS * 24 * 60 * 60 * 1000).toISOString();
   state.backupBannerSnoozeUntil = snoozeUntil;
   scheduleSave();
@@ -1846,7 +1808,7 @@ function dismissBackupBanner() {
 }
 
 /* ══════════════════════════════════════
-   ROSTER — sorting math UNCHANGED
+   ROSTER
 ══════════════════════════════════════ */
 const ONE_DAY=24*60*60*1000;
 const STALE_DAYS=3;
@@ -1887,7 +1849,6 @@ function addStudent(){
   input.value='';scheduleSave();renderRoster();
 }
 
-/* Bulk-add: paste list of names, one per line */
 function toggleBulkAdd() {
   const panel = document.getElementById('bulkAddPanel');
   const open = panel.classList.toggle('open');
@@ -1983,7 +1944,7 @@ function renderSettingsModal(){
 }
 
 /* ══════════════════════════════════════
-   TRAJECTORY INFERENCE — UNCHANGED
+   TRAJECTORY INFERENCE
 ══════════════════════════════════════ */
 function inferTrajectoryLevel(obs){
   if(!obs||!obs.length)return 0;
@@ -1992,15 +1953,42 @@ function inferTrajectoryLevel(obs){
   const seqOk=o=>principleStateOf(o,'sequence')==='correct';
   const corrOk=o=>principleStateOf(o,'correspondence')==='correct';
   const cardOk=o=>principleStateOf(o,'cardinality')==='correct';
+  // Level 4: Counter (10) — all three correct on a collection of 11 or more objects
   if(has(o=>seqOk(o)&&corrOk(o)&&cardOk(o)&&sizeIs(o,['11-20','21-50','51+'])))return 4;
-  if(has(o=>seqOk(o)&&corrOk(o)&&cardOk(o)&&sizeIs(o,['1-10'])))return 3;
-  if(has(o=>corrOk(o)))return 2;
+  // Level 3: Counter (Small) — all three correct on any collection (app's 1-10 band can't distinguish ~5 from ~10)
+  if(has(o=>seqOk(o)&&corrOk(o)&&cardOk(o)))return 3;
+  // Level 2: Corresponder — correspondence correct, OR cardinality correct (cardinality implies correspondence was present)
+  if(has(o=>corrOk(o)||cardOk(o)))return 2;
+  // Level 1: Reciter — any sequence observation (correct or error)
   if(has(o=>principleStateOf(o,'sequence')==='correct'||principleStateOf(o,'sequence')==='error'))return 1;
   return 0;
 }
 
+function inferTrajectoryReason(obs){
+  if(!obs||!obs.length)return null;
+  const has=(pred)=>obs.some(pred);
+  const sizeIs=(o,sizes)=>sizes.includes(o.collectionSize);
+  const seqOk=o=>principleStateOf(o,'sequence')==='correct';
+  const corrOk=o=>principleStateOf(o,'correspondence')==='correct';
+  const cardOk=o=>principleStateOf(o,'cardinality')==='correct';
+  if(has(o=>seqOk(o)&&corrOk(o)&&cardOk(o)&&sizeIs(o,['11-20','21-50','51+'])))
+    return 'Observed: sequence, correspondence, and cardinality all correct on a collection of 11 or more objects.';
+  if(has(o=>seqOk(o)&&corrOk(o)&&cardOk(o)&&sizeIs(o,['1-10'])))
+    return 'Observed: sequence, correspondence, and cardinality all correct on a 1–10 collection. Could be Counter (Small) or Counter (10) — the app\'s collection sizes don\'t distinguish 1–5 from 6–10. Use a larger collection to confirm.';
+  if(has(o=>seqOk(o)&&corrOk(o)&&cardOk(o)))
+    return 'Observed: sequence, correspondence, and cardinality all correct, but no collection size was recorded. Tap the collection size next time to get a more precise level.';
+  if(has(o=>corrOk(o)||cardOk(o)))
+    return has(o=>corrOk(o))
+      ? 'Observed: one-to-one correspondence correct. No observation yet showing cardinality understood.'
+      : 'Observed: cardinality correct (student knew the last number said is the total). Placed at Corresponder — sequence or correspondence errors noted but cardinality implies this level or above.';
+  if(has(o=>principleStateOf(o,'sequence')==='correct'||principleStateOf(o,'sequence')==='error'))
+    return 'Observed: number word sequence attempted. No observation yet showing one-to-one correspondence.';
+  return null;
+}
+
+
 /* ══════════════════════════════════════
-   ROSTER RENDER — compact cards, expandable
+   ROSTER RENDER
 ══════════════════════════════════════ */
 let sectionCollapsed={};
 function isSectionCollapsed(priority,studentCount){
@@ -2030,7 +2018,6 @@ function updateTopBarVisibility(){
   bar.classList.toggle('hidden', hasStudents && seenHint);
 }
 
-/* Update the Groups badge in the header */
 function updateGroupsBadge() {
   const badge = document.getElementById('navGroupsBadge');
   if (!badge) return;
@@ -2050,7 +2037,6 @@ function updateGroupsBadge() {
 function shouldShowGroupsTeaser() {
   if (currentTeacher?.demo) return false;
   if (state.hasSeenGroupsTeaser) return false;
-  // Show when at least 3 students have observations AND at least 1 student is flagged
   const studentsWithObs = state.students.filter(s => (state.observations[s.id]?.history || []).length > 0).length;
   if (studentsWithObs < 3) return false;
   const anyFlagged = state.students.some(s => calcNeeds(s.id).length > 0);
@@ -2077,7 +2063,6 @@ function renderRoster(){
       hintHtml=`<div class="first-run-hint"><span class="first-run-hint-emoji">👇</span><span class="first-run-hint-text"><strong>Tap a student card</strong> to record what you saw.</span><button class="first-run-hint-dismiss" onclick="dismissFirstObsHint()" title="Dismiss">✕</button></div>`;
     }
   }
-  // Groups teaser — surfaces the killer feature once data exists
   if (shouldShowGroupsTeaser()) {
     hintHtml += `<div class="groups-teaser"><span class="groups-teaser-emoji">✨</span><span class="groups-teaser-text"><strong>You have enough data to group your kids.</strong> See suggestions based on what you've observed.</span><button class="groups-teaser-cta" onclick="openGroupsFromTeaser()">Open Groups →</button><button class="first-run-hint-dismiss" onclick="dismissGroupsTeaser()" title="Dismiss">✕</button></div>`;
   }
@@ -2131,7 +2116,6 @@ function renderStudentCardHtml(s,p){
   const showStaleDot=p===1;
   const obsCountText=obs.length===0?'Tap to record first observation':obs.length===1?'1 observation':`${obs.length} observations`;
 
-  // Empty card — no compact summary, no expand
   if(!hasAnyObs){
     return`<div class="${cardClasses.join(' ')}" onclick="openObserve('${s.id}')">
       <div class="bc-top">
@@ -2145,7 +2129,6 @@ function renderStudentCardHtml(s,p){
     </div>`;
   }
 
-  // Last-seen text
   const lastObs = obs[obs.length-1];
   const lastDate = new Date(lastObs.timestamp);
   const daysSince = Math.floor((Date.now() - lastDate.getTime()) / ONE_DAY);
@@ -2155,7 +2138,6 @@ function renderStudentCardHtml(s,p){
   else if (daysSince < 7) lastSeenText = `Seen ${daysSince} days ago`;
   else lastSeenText = `Seen ${lastDate.toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
 
-  // ── Expanded zone (tracks + trajectory) — only rendered when expanded ──
   let expandedHtml = '';
   if (isExpanded) {
     const tracksHtml=['sequence','correspondence','cardinality'].map(k=>{
@@ -2167,7 +2149,6 @@ function renderStudentCardHtml(s,p){
       const labels={sequence:['Sequence','seq'],correspondence:['Correspondence','corr'],cardinality:['Cardinality','card']};
       const [lbl,suffix]=labels[k];
       const countText=total===0?'—':`${correct}/${total}`;
-      // If no data for this principle, show explanatory text instead of hollow tiles
       let tilesContent;
       if (attempts.length === 0) {
         tilesContent = `<span class="track-empty-text">no data yet</span>`;
@@ -2199,7 +2180,9 @@ function renderStudentCardHtml(s,p){
       const captionPct=((level-1)/6)*100;
       let alignCls='';
       if(level===1)alignCls=' at-start';else if(level===7)alignCls=' at-end';
-      const captionHtml=`<div class="traj-caption-row"><span class="traj-caption${alignCls}" style="left:${captionPct.toFixed(2)}%">${escapeHtml(TRAJECTORIES[level-1].name)}</span></div>`;
+      const reason=inferTrajectoryReason(obs);
+      const reasonAttr=reason?` title="${escapeHtml('Why this level? '+reason)}"`:'';
+      const captionHtml=`<div class="traj-caption-row"><span class="traj-caption${alignCls}" style="left:${captionPct.toFixed(2)}%"${reasonAttr}>${escapeHtml(TRAJECTORIES[level-1].name)}${reason?'<span class="traj-caption-why"> ⓘ</span>':''}</span></div>`;
       pathHtml=`<div class="traj-path-wrap"><div class="traj-path">${stepsHtml}</div>${captionHtml}</div>`;
     }
     const trajCls=trajCollapsed?'bc-trajectory collapsed':'bc-trajectory';
@@ -2291,7 +2274,6 @@ function showToast(message,duration=2400){
   _toastTimer=setTimeout(()=>{el.classList.remove('show');},duration);
 }
 
-/* "Saved" pill — flashes at top of obs view */
 function flashSavedPill() {
   const pill = document.getElementById('savedPill');
   if (!pill) return;
@@ -2366,7 +2348,6 @@ function resetObsForm(){
   document.getElementById('noteToggleLabel').textContent='+ Add note (optional)';
   document.getElementById('noteToggleIcon').classList.remove('open');
   document.getElementById('noteExpand').classList.remove('open');
-  // Collapse More Details by default each time
   const mdt=document.getElementById('moreDetailsToggle');
   const mdp=document.getElementById('moreDetailsPanel');
   if(mdt)mdt.classList.remove('open');
@@ -2390,7 +2371,6 @@ function applyFormToUI(){
     const el=document.getElementById('s-'+strat);
     if(el)el.classList.toggle('on',!!obsForm.strategies[strat]);
   });
-  // Other-text fields under More Details
   if(obsForm.otherText){
     const stratInp=document.getElementById('other-input-strat');
     if(stratInp){
@@ -2403,7 +2383,6 @@ function applyFormToUI(){
       if(inp)inp.value=obsForm.otherText[k]||'';
     });
   }
-  // Auto-open More Details if any of its fields are populated
   const mdHasContent=Object.values(obsForm.strategies).some(v=>v)
     || (obsForm.otherText && (obsForm.otherText.strat||obsForm.otherText.err_sequence||obsForm.otherText.err_correspondence||obsForm.otherText.err_cardinality))
     || obsForm.errors.other_sequence||obsForm.errors.other_correspondence||obsForm.errors.other_cardinality;
@@ -2416,18 +2395,15 @@ function applyFormToUI(){
 function setOtherText(field,val){
   if(!obsForm.otherText)obsForm.otherText={};
   obsForm.otherText[field]=val;
-  // Hide warn the moment user takes any action
   document.getElementById('emptySaveWarn').classList.remove('show');
 }
 
 function setBehaviorCorrect(principle){
-  // Toggle: tap again to clear
   const cur=obsForm.principleState[principle];
   if(cur==='correct'){
     obsForm.principleState[principle]=null;
   } else {
     obsForm.principleState[principle]='correct';
-    // Clear any errors for this principle
     ERRORS_BY_PRINCIPLE[principle].forEach(err=>{
       obsForm.errors[err]=false;
     });
@@ -2439,11 +2415,9 @@ function setBehaviorCorrect(principle){
 function toggleBehaviorError(err,principle){
   const principleNow=obsForm.principleState[principle];
   if(principleNow==='correct'){
-    // Switching from correct → error
     obsForm.principleState[principle]='error';
   }
   obsForm.errors[err]=!obsForm.errors[err];
-  // If any error in this principle is set, mark the principle as 'error'
   const anyErr=ERRORS_BY_PRINCIPLE[principle].some(e=>obsForm.errors[e]);
   if(anyErr){
     obsForm.principleState[principle]='error';
@@ -2460,6 +2434,7 @@ function selectSize(size){
     document.getElementById(id).classList.toggle('selected',id==='size-'+size);
   });
   document.getElementById('emptySaveWarn').classList.remove('show');
+  document.getElementById('sizeWarn').classList.remove('show');
 }
 
 function toggleStrat(key){
@@ -2495,24 +2470,23 @@ function toggleMoreDetails(){
 }
 
 /* ══════════════════════════════════════
-   SAVE — math UNCHANGED, adds empty-save guard + saved-pill flash
+   SAVE
 ══════════════════════════════════════ */
 function saveObs(andNext){
-  // Empty-save guard: require at least a principle-state OR an error chip OR a size to save
   const noPrinciple = !obsForm.principleState.sequence && !obsForm.principleState.correspondence && !obsForm.principleState.cardinality;
   const noErrors = !Object.values(obsForm.errors).some(v=>v);
-  const noSize = !obsForm.size;
-  // Soft empty: if no principle AND no errors → reject
   if (noPrinciple && noErrors) {
     document.getElementById('emptySaveWarn').classList.add('show');
     return;
   }
-  // Build observation — schema UNCHANGED so existing math works as-is
+  if (!obsForm.size) {
+    document.getElementById('sizeWarn').classList.add('show');
+    return;
+  }
   const obsRecord = {
     timestamp: new Date().toISOString(),
     collectionSize: obsForm.size,
     principleState: { ...obsForm.principleState },
-    // legacy boolean shape — preserved for any old readers
     principles: {
       sequence: obsForm.principleState.sequence === 'correct',
       correspondence: obsForm.principleState.correspondence === 'correct',
@@ -2530,23 +2504,27 @@ function saveObs(andNext){
     document.getElementById('editBanner').style.display='none';
   } else {
     state.observations[selectedStudentId].history.push(obsRecord);
+    // Clear manual 'out' overrides on new observations so the student
+    // re-qualifies for groups if the new data warrants it
+    if(state.groupOverrides[selectedStudentId]){
+      Object.keys(state.groupOverrides[selectedStudentId]).forEach(k=>{
+        if(state.groupOverrides[selectedStudentId][k]==='out')
+          delete state.groupOverrides[selectedStudentId][k];
+      });
+    }
   }
   scheduleSave();
   flashSavedPill();
-  // First-obs hint dismiss
   if (!state.hasSeenFirstObsHint) { state.hasSeenFirstObsHint = true; }
   if (andNext) {
     const sorted=getSortedStudents();
     const idx=sorted.findIndex(s=>s.id===selectedStudentId);
     if (idx >= 0 && idx < sorted.length-1) {
-      // Brief pause so the saved pill is visible
       setTimeout(()=>{ openObserve(sorted[idx+1].id); }, 280);
     } else {
-      // No more students — return to roster
       setTimeout(()=>{ goBackFromObs(); }, 280);
     }
   } else {
-    // Stay on this student — just refresh the form & history
     resetObsForm();
     applyFormToUI();
     renderHistory();
@@ -2567,6 +2545,7 @@ function editObs(idx){
     errors: {
       skips_numbers: !!obs.errors?.skips_numbers,
       repeats_numbers: !!obs.errors?.repeats_numbers,
+      wrong_number_word: !!obs.errors?.wrong_number_word,
       loses_track: !!obs.errors?.loses_track,
       double_counts: !!obs.errors?.double_counts,
       counts_again: !!obs.errors?.counts_again,
@@ -2645,17 +2624,15 @@ function renderHistory(){
     if(o.collectionSize)tags.push(`<span class="obs-size-tag">${escapeHtml(o.collectionSize)}</span>`);
     Object.entries(o.errors||{}).forEach(([k,v])=>{
       if(!v)return;
-      const labels={skips_numbers:'skipped',repeats_numbers:'repeated',loses_track:'lost track',double_counts:'double counted',counts_again:'recounted',other_sequence:'other (seq)',other_correspondence:'other (corr)',other_cardinality:'other (card)'};
+      const labels=ERROR_LABELS;
       tags.push(`<span class="obs-tag-amber">${escapeHtml(labels[k]||k)}</span>`);
     });
     return`<div class="obs-item"><div class="obs-item-header"><span class="obs-date">${escapeHtml(dateStr)}</span><div class="obs-item-actions"><button class="obs-btn" onclick="editObs(${realIdx})">Edit</button><button class="obs-btn" onclick="deleteObs(${realIdx})">Delete</button></div></div><div class="obs-tags">${tags.join('')}</div>${o.note?`<div class="obs-note-text">"${escapeHtml(o.note)}"</div>`:''}</div>`;
   }).join('');
 }
 
-/* principleStateOf — UNCHANGED. Reads either new shape (principleState) or legacy (principles + errors). */
 function principleStateOf(obs,key){
   if(obs.principleState&&obs.principleState[key]!==undefined)return obs.principleState[key];
-  // Legacy fallback
   const wasCorrect=!!obs.principles?.[key];
   const errorsForKey=ERRORS_BY_PRINCIPLE[key]||[];
   const hasError=errorsForKey.some(e=>obs.errors&&obs.errors[e]);
@@ -2665,7 +2642,7 @@ function principleStateOf(obs,key){
 }
 
 /* ══════════════════════════════════════
-   GROUPS — math UNCHANGED
+   GROUPS
 ══════════════════════════════════════ */
 function calcNeeds(studentId){
   const obs=state.observations[studentId]?.history||[];
@@ -2688,17 +2665,8 @@ function calcNeeds(studentId){
   ['sequence','correspondence','cardinality'].forEach(k=>{
     if(overrides[k]==='out')return;
     const c=counts[k];
-    const errorRate=c.withSignal?(c.error/c.withSignal):0;
-    if(c.error>=1 && errorRate>0.5){
-      needs.push(k);return;
-    }
-    // Also check: error chips for that principle in last 3
-    const last3=obs.slice(-3);
-    const errKeys=ERRORS_BY_PRINCIPLE[k];
-    const errChipHits=last3.filter(o=>errKeys.some(e=>o.errors&&o.errors[e])).length;
-    if(errChipHits>=2)needs.push(k);
+    if(c.error>=1)needs.push(k);
   });
-  // Manual additions
   Object.entries(overrides).forEach(([k,v])=>{
     if(v==='in'&&!needs.includes(k))needs.push(k);
   });
@@ -2711,12 +2679,10 @@ async function removeFromGroup(studentId,principle){
   scheduleSave();renderGroups();updateGroupsBadge();
 }
 
-/* buildContextTags — UNCHANGED. Returns small context labels for a student in a group. */
 function buildContextTags(studentId,principle){
   const obs=state.observations[studentId]?.history||[];
   if(obs.length<3)return[];
   const tags=[];
-  // Size context
   const small=obs.filter(o=>o.collectionSize==='1-10');
   const large=obs.filter(o=>['11-20','21-50','51+'].includes(o.collectionSize));
   if(small.length>=2&&large.length>=2){
@@ -2725,7 +2691,6 @@ function buildContextTags(studentId,principle){
     if(smallErr<=0.3&&largeErr>=0.6)tags.push({text:'larger sets only',cls:'gs-tag-pattern'});
     if(smallErr>=0.6&&largeErr<=0.3)tags.push({text:'small sets too',cls:'gs-tag-pattern'});
   }
-  // Arrangement context
   const arrangedKeys=['line','groups'];
   const messyKeys=['scattered'];
   const arranged=obs.filter(o=>o.strategies&&arrangedKeys.some(k=>o.strategies[k]));
@@ -2757,11 +2722,26 @@ function renderGroups(){
         const obs=state.observations[s.id]?.history||[];
         const ctx=buildContextTags(s.id,cfg.key);
         const ctxHtml=ctx.length?`<div class="gs-context-tags">${ctx.map(t=>`<span class="gs-tag ${t.cls}">${escapeHtml(t.text)}</span>`).join('')}</div>`:'';
+        // Most recent obs with an error for this principle
+        const errKeys=ERRORS_BY_PRINCIPLE[cfg.key];
+        const lastErrObs=[...obs].reverse().find(o=>
+          principleStateOf(o,cfg.key)==='error' ||
+          errKeys.some(e=>o.errors&&o.errors[e])
+        );
+        const recentErrors=lastErrObs
+          ?errKeys.filter(e=>lastErrObs.errors&&lastErrObs.errors[e]).map(e=>ERROR_LABELS[e])
+          :[];
+        const recentSize=lastErrObs?.collectionSize||obs[obs.length-1]?.collectionSize||null;
+        const metaParts=[];
+        if(recentErrors.length)metaParts.push(recentErrors.join(', '));
+        else if(lastErrObs)metaParts.push('Error observed');
+        if(recentSize)metaParts.push(recentSize+' objects');
+        const metaText=metaParts.length?metaParts.join(' · '):`${obs.length} obs`;
         return`<div class="group-student" onclick="openStudentModal('${s.id}')">
           <div class="gs-avatar ${cfg.avatarClass}">${initialChar}</div>
           <div class="gs-info">
             <div class="gs-name">${safeName}</div>
-            <div class="gs-meta">${obs.length} obs</div>
+            <div class="gs-meta">${escapeHtml(metaText)}</div>
             ${ctxHtml}
           </div>
           <button class="gs-remove" onclick="event.stopPropagation();removeFromGroup('${s.id}','${cfg.key}')" title="Remove from this group">remove</button>
@@ -2830,7 +2810,6 @@ function closeStudentModal(e){
 }
 
 function printGroups(){
-  // Open synchronously to avoid popup blockers
   const w=window.open('','_blank');
   if(!w){dlgAlert('Please allow popups to print groups.');return;}
   const studentsByPrinciple={sequence:[],correspondence:[],cardinality:[]};
@@ -2902,10 +2881,10 @@ function showTrajDetail(i){
   document.getElementById('trajDetailTitle').textContent='Level '+t.level+': '+t.name;
   const indicators=t.indicators.map(x=>'<li>'+escapeHtml(x)+'</li>').join('');
   document.getElementById('trajDetailContent').innerHTML=
-    '<div class="traj-section"><div class="traj-section-label">Description</div><p>'+escapeHtml(t.description)+'</p></div>'+
+    '<div class="traj-section"><div class="traj-section-label">Description</div><p>'+t.description+'</p></div>'+
     '<div class="traj-section"><div class="traj-section-label">What you might see</div><ul class="traj-indicators">'+indicators+'</ul></div>'+
     '<div class="traj-section"><div class="traj-section-label">Teaching focus</div><div class="traj-teaching-box">'+escapeHtml(t.teachingFocus)+'</div></div>'+
-    (t.context?'<div class="traj-section"><div class="traj-section-label">Context</div><div class="traj-context-box">'+escapeHtml(t.context)+'</div></div>':'');
+    (t.context?'<div class="traj-section"><div class="traj-section-label">Context</div><div class="traj-context-box">'+t.context+'</div></div>':'');
   document.getElementById('trajDetailsPanel').classList.add('visible');
   document.getElementById('trajDetailsPanel').scrollIntoView({behavior:'smooth',block:'center'});
 }
@@ -2915,7 +2894,7 @@ function closeTrajDetail(){document.getElementById('trajDetailsPanel').classList
 function openTrajFromGroup(level){showView('trajectoriesView');setTimeout(()=>showTrajDetail(level),100);}
 
 /* ══════════════════════════════════════
-   STT — UNCHANGED (privacy consent flow preserved)
+   STT
 ══════════════════════════════════════ */
 let sttRecognition=null;
 let sttListening=false;
@@ -2969,7 +2948,6 @@ function startStt(){
       if(e.error==='not-allowed'){
         dlgAlert('Microphone permission denied. To dictate, allow microphone access in your browser settings.');
       } else if(e.error==='no-speech'){
-        // silent — user just didn't say anything
       } else {
         dlgAlert('Speech recognition error: '+e.error);
       }
@@ -2986,7 +2964,7 @@ function startStt(){
       }
     };
   }
-  try{sttRecognition.start();}catch(e){/* already started */}
+  try{sttRecognition.start();}catch(e){}
 }
 
 /* ══════════════════════════════════════
@@ -2998,7 +2976,6 @@ function initSwipeGestures(){
   let startX=0,startY=0,active=false;
   obs.addEventListener('touchstart',e=>{
     const t=e.touches[0];
-    // 20px left-edge guard for back-swipe
     if(t.clientX<20){active=false;return;}
     startX=t.clientX;startY=t.clientY;active=true;
   },{passive:true});
@@ -3033,11 +3010,9 @@ function showView(id){
   window.scrollTo(0,0);
 }
 
-/* PII modal */
 function openPiiModal(){document.getElementById('piiModalBackdrop').classList.add('open');}
 function closePiiModal(e){if(e&&e.target!==document.getElementById('piiModalBackdrop'))return;document.getElementById('piiModalBackdrop').classList.remove('open');}
 
-/* Welcome / How-to */
 function maybeShowWelcome(){
   if(state.hasSeenWelcome)return;
   document.getElementById('welcomeModalBackdrop').classList.add('open');
@@ -3066,7 +3041,7 @@ document.addEventListener('keydown',e=>{
 });
 
 /* ══════════════════════════════════════
-   EXPORT — CSV format UNCHANGED. Sets lastExportTs to clear backup banner.
+   EXPORT
 ══════════════════════════════════════ */
 function exportData(){
   if(currentTeacher?.demo){dlgAlert('Demo data isn\u2019t saved or exportable. Create a real classroom to use Export.');return;}
@@ -3095,7 +3070,6 @@ function exportData(){
   a.download='observations-'+(currentTeacher.code||'classroom')+'-'+new Date().toISOString().slice(0,10)+'.csv';
   document.body.appendChild(a);a.click();document.body.removeChild(a);
   URL.revokeObjectURL(url);
-  // Mark export time so backup banner clears
   state.lastExportTs=new Date().toISOString();
   state.backupBannerSnoozeUntil=null;
   scheduleSave();
