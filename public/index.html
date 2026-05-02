@@ -29,7 +29,7 @@
       --sar: env(safe-area-inset-right, 0px);
     }
     *{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:'Sora',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;-webkit-text-size-adjust:100%;}
+    body{font-family:'Sora',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;min-height:100dvh;-webkit-text-size-adjust:100%;}
     button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
     #app{max-width:640px;margin:0 auto;}
     .view{display:none;}.view.active{display:block;}
@@ -61,7 +61,7 @@
     .header-code-pill{font-size:10px;font-weight:700;letter-spacing:.05em;padding:3px 9px;border-radius:20px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.6);white-space:nowrap;align-self:center;flex-shrink:0;display:none;}
 
     /* ══ AUTH ══ */
-    .auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--paper);}
+    .auth-screen{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--paper);}
     .auth-card{background:white;border:1px solid var(--paper-3);border-radius:var(--radius-lg);padding:28px 22px;max-width:380px;width:100%;box-shadow:0 4px 20px rgba(0,0,0,.06);}
     .auth-logo{font-family:'DM Serif Display',serif;font-size:20px;color:var(--ink);margin-bottom:3px;line-height:1.2;}
     .auth-sub{font-size:11px;color:var(--ink-4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px;}
@@ -424,7 +424,7 @@
     .obs-arr:hover{background:rgba(255,255,255,.1);color:white;}
     .obs-arr:disabled{opacity:.2;cursor:default;}
 
-    .obs-scroll{padding:12px 12px 0;overflow-y:auto;}
+    .obs-scroll{padding:12px 12px 0;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 
     .saved-pill{
       position:fixed;top:calc(52px + var(--sat) + 8px);left:50%;
@@ -495,7 +495,7 @@
     .pc-unset-hint.hidden{display:none;}
     .pc-clarifying-note{padding:6px 14px 9px;font-size:11px;color:var(--ink-3);line-height:1.5;border-top:1px solid var(--paper-3);background:var(--paper);}
 
-    .other-input{display:none;width:100%;margin-top:8px;font-family:'Sora',sans-serif;font-size:13px;border:1.5px solid var(--paper-3);border-radius:8px;padding:7px 10px;background:var(--paper);color:var(--ink);transition:border-color .15s;box-sizing:border-box;}
+    .other-input{display:none;width:100%;margin-top:8px;font-family:'Sora',sans-serif;font-size:16px;border:1.5px solid var(--paper-3);border-radius:8px;padding:7px 10px;background:var(--paper);color:var(--ink);transition:border-color .15s;box-sizing:border-box;}
     .other-input:focus{outline:none;border-color:var(--accent);background:white;}
     .other-input::placeholder{color:var(--ink-4);}
     .other-input.open{display:block;}
@@ -534,7 +534,7 @@
     .note-toggle-icon.open{transform:rotate(180deg);}
     .note-expand{display:none;margin-bottom:10px;background:white;border:2px solid var(--accent);border-radius:var(--radius);overflow:hidden;}
     .note-expand.open{display:block;}
-    .note-textarea{width:100%;font-family:'Sora',sans-serif;font-size:14px;border:none;padding:12px 42px 12px 14px;min-height:76px;resize:none;background:white;color:var(--ink);line-height:1.7;}
+    .note-textarea{width:100%;font-family:'Sora',sans-serif;font-size:16px;border:none;padding:12px 42px 12px 14px;min-height:76px;resize:none;background:white;color:var(--ink);line-height:1.7;}
     .note-textarea:focus{outline:none;}
     .stt-btn{position:absolute;bottom:10px;right:10px;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--paper-3);background:white;color:var(--ink-4);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;font-family:'Sora',sans-serif;transition:all .2s;}
     .stt-btn:hover{border-color:var(--accent);color:var(--accent);}
@@ -640,6 +640,9 @@
     .gs-context-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
     .gs-tag{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;line-height:1.4;}
     .gs-tag-pattern{background:var(--accent-light);color:var(--accent);}
+    .gs-tag-arrangement{background:var(--paper-2);color:var(--ink-3);}
+    .gs-tag-note{background:#eef4ff;color:#3060b0;}
+    .gs-note{font-size:11px;color:var(--ink-3);font-style:italic;margin-top:4px;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
     .student-modal{max-width:500px;width:100%;}
     .student-modal-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:22px;background:var(--paper-2);color:var(--ink-2);border:1.5px solid var(--paper-3);flex-shrink:0;}
@@ -720,7 +723,7 @@
 
     .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(26,23,20,.45);z-index:200;align-items:center;justify-content:center;padding:16px;}
     .modal-backdrop.open{display:flex;}
-    .modal{background:white;border-radius:var(--radius-lg);max-width:480px;width:100%;max-height:88vh;overflow-y:auto;}
+    .modal{background:white;border-radius:var(--radius-lg);max-width:480px;width:100%;max-height:88vh;max-height:88dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
     .modal-head{padding:15px 16px 13px;border-bottom:1px solid var(--paper-3);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:white;}
     .modal-title{font-family:'DM Serif Display',serif;font-size:18px;}
     .modal-close{background:transparent;border:1px solid var(--paper-3);color:var(--ink-4);border-radius:6px;padding:5px 11px;font-family:'Sora',sans-serif;font-size:11px;cursor:pointer;min-height:44px;}
@@ -737,7 +740,7 @@
     .pii-highlight{background:var(--green-light);border-left:3px solid var(--green);border-radius:0 6px 6px 0;padding:9px 12px;font-size:12px;color:var(--green);line-height:1.7;margin-top:7px;}
     .pii-warn{background:var(--amber-light);border-left:3px solid var(--amber);border-radius:0 6px 6px 0;padding:9px 12px;font-size:12px;color:var(--amber);line-height:1.7;margin-top:7px;}
 
-    .privacy-footer{position:fixed;bottom:0;left:0;right:0;z-index:40;display:flex;justify-content:center;pointer-events:none;}
+    .privacy-footer{position:fixed;bottom:0;left:0;right:0;z-index:40;display:flex;justify-content:center;pointer-events:none;padding-bottom:var(--sab);}
     .privacy-footer-inner{max-width:640px;width:100%;padding:8px 14px;display:flex;justify-content:flex-end;pointer-events:none;}
     .privacy-btn{pointer-events:auto;background:white;border:1px solid var(--paper-3);border-radius:20px;padding:5px 12px;font-family:'Sora',sans-serif;font-size:11px;font-weight:600;color:var(--ink-3);cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.08);min-height:44px;}
 
@@ -817,7 +820,7 @@
         <div class="auth-logo">Sign in</div>
         <div class="auth-sub">Welcome back</div>
         <div class="auth-label">Classroom code</div>
-        <input class="auth-input" id="loginCode" placeholder="e.g. JONES-K2" maxlength="20" autocomplete="username" onkeydown="if(event.key==='Enter')document.getElementById('pinDigit0').focus()"/>
+        <input class="auth-input" id="loginCode" placeholder="e.g. JONES-K2" maxlength="20" autocomplete="username" autocorrect="off" autocapitalize="characters" onkeydown="if(event.key==='Enter')document.getElementById('pinDigit0').focus()"/>
         <div class="auth-label">4-digit PIN</div>
         <div class="auth-pin-row">
           <input class="auth-pin-digit" id="pinDigit0" type="tel" inputmode="numeric" maxlength="1" autocomplete="off" onkeydown="pinKeydown(0,event)" oninput="pinInput(0,event,'pinDigit')"/>
@@ -837,7 +840,7 @@
         <div class="auth-sub">Set up your account</div>
 
         <div class="auth-label">Choose a classroom code</div>
-        <input class="auth-input" id="setupCode" placeholder="e.g. SMITH-AM" maxlength="20" autocomplete="username"/>
+        <input class="auth-input" id="setupCode" placeholder="e.g. SMITH-AM" maxlength="20" autocomplete="username" autocorrect="off" autocapitalize="characters"/>
         <div style="font-size:11px;color:var(--ink-4);margin:-8px 0 12px;">Letters and numbers only.</div>
 
         <div class="auth-label">Choose a 4-digit PIN</div>
@@ -1286,7 +1289,7 @@
   <div class="dialog-box" id="dialogBox">
     <div class="dialog-title" id="dialogTitle"></div>
     <div class="dialog-message" id="dialogMessage"></div>
-    <input class="dialog-input" id="dialogInput" type="text" style="display:none;"/>
+    <input class="dialog-input" id="dialogInput" type="text" autocorrect="off" autocapitalize="words" style="display:none;"/>
     <div class="dialog-actions" id="dialogActions"></div>
   </div>
 </div>
@@ -2644,6 +2647,31 @@ function principleStateOf(obs,key){
 /* ══════════════════════════════════════
    GROUPS
 ══════════════════════════════════════ */
+async function extractNoteTags(note, studentId, obsIdx){
+  if(!note||!note.trim())return;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:200,
+        system:`You extract short instructional tags from a kindergarten teacher's observation note about a student counting objects. Return ONLY a JSON array of 1–4 short tags (2–4 words each) that would be useful for a teacher planning a small group counting lesson. Focus on: what the student did physically, whether they needed support, attention/focus, or any notable behavior. If the note contains nothing instructionally useful, return []. No explanation, no markdown, just the JSON array.`,
+        messages:[{role:'user',content:`Note: "${note}"`}]
+      })
+    });
+    const data=await res.json();
+    const text=(data.content||[]).map(b=>b.text||'').join('').trim();
+    const tags=JSON.parse(text.replace(/```json|```/g,'').trim());
+    if(!Array.isArray(tags))return;
+    const history=state.observations[studentId]?.history;
+    if(!history||!history[obsIdx])return;
+    history[obsIdx].noteTags=tags;
+    scheduleSave();
+    if(document.getElementById('groupsGrid')?.offsetParent!==null)renderGroups();
+  }catch(e){/* silent fail — tags are non-critical */}
+}
+
 function calcNeeds(studentId){
   const obs=state.observations[studentId]?.history||[];
   if(!obs.length)return[];
@@ -2721,7 +2749,6 @@ function renderGroups(){
         const safeName=escapeHtml(s.name);
         const obs=state.observations[s.id]?.history||[];
         const ctx=buildContextTags(s.id,cfg.key);
-        const ctxHtml=ctx.length?`<div class="gs-context-tags">${ctx.map(t=>`<span class="gs-tag ${t.cls}">${escapeHtml(t.text)}</span>`).join('')}</div>`:'';
         // Most recent obs with an error for this principle
         const errKeys=ERRORS_BY_PRINCIPLE[cfg.key];
         const lastErrObs=[...obs].reverse().find(o=>
@@ -2737,12 +2764,21 @@ function renderGroups(){
         else if(lastErrObs)metaParts.push('Error observed');
         if(recentSize)metaParts.push(recentSize+' objects');
         const metaText=metaParts.length?metaParts.join(' · '):`${obs.length} obs`;
+        // Most recent obs for note + arrangement
+        const lastObs=obs[obs.length-1];
+        const arrangementLabels={line:'Lined up',groups:'In groups',scattered:'Scattered'};
+        const arrangements=lastObs?Object.entries(arrangementLabels)
+          .filter(([k])=>lastObs.strategies&&lastObs.strategies[k])
+          .map(([,v])=>v):[];
+        if(lastObs?.strategies?.other&&lastObs.otherText?.strat)arrangements.push(lastObs.otherText.strat);
+        const note=lastObs?.note||'';
         return`<div class="group-student" onclick="openStudentModal('${s.id}')">
           <div class="gs-avatar ${cfg.avatarClass}">${initialChar}</div>
           <div class="gs-info">
             <div class="gs-name">${safeName}</div>
             <div class="gs-meta">${escapeHtml(metaText)}</div>
-            ${ctxHtml}
+            ${arrangements.length?`<div class="gs-context-tags">${arrangements.map(a=>`<span class="gs-tag gs-tag-arrangement">${escapeHtml(a)}</span>`).join('')}</div>`:''}
+            ${note?`<div class="gs-note">"${escapeHtml(note)}"</div>`:''}
           </div>
           <button class="gs-remove" onclick="event.stopPropagation();removeFromGroup('${s.id}','${cfg.key}')" title="Remove from this group">remove</button>
         </div>`;
