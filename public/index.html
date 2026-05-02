@@ -597,10 +597,11 @@
     .obs-scroll.slide-left{opacity:0;transform:translateX(-20px);}
     .obs-scroll.slide-right{opacity:0;transform:translateX(20px);}
 
-    .groups-intro{margin:12px 12px 0;background:white;border:1.5px solid var(--paper-3);border-radius:var(--radius-lg);padding:14px;position:relative;}
+    .groups-intro{margin:12px 12px 0;background:white;border:1.5px solid var(--paper-3);border-radius:var(--radius-lg);padding:14px;display:flex;align-items:flex-start;gap:10px;}
+    .groups-intro-text{flex:1;min-width:0;}
     .groups-intro-title{font-family:'DM Serif Display',serif;font-size:16px;margin-bottom:4px;}
     .groups-intro-body{font-size:12px;color:var(--ink-3);line-height:1.7;}
-    .groups-print-btn{position:absolute;top:11px;right:12px;background:var(--paper);border:1px solid var(--paper-3);color:var(--ink-3);border-radius:7px;padding:5px 11px;font-family:'Sora',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .12s;min-height:44px;}
+    .groups-print-btn{flex-shrink:0;background:var(--paper);border:1px solid var(--paper-3);color:var(--ink-3);border-radius:7px;padding:5px 11px;font-family:'Sora',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .12s;min-height:44px;}
     .groups-print-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
     .groups-grid{padding:12px;}
     .group-card{background:white;border:1.5px solid var(--paper-3);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:10px;}
@@ -1121,8 +1122,10 @@
         </div>
       </div>
       <div class="groups-intro">
-        <div class="groups-intro-title">Responding to the Data</div>
-        <div class="groups-intro-body">Groups come from your observations — a student can appear in more than one. Start with whichever need feels most urgent.</div>
+        <div class="groups-intro-text">
+          <div class="groups-intro-title">Responding to the Data</div>
+          <div class="groups-intro-body">Groups come from your observations — a student can appear in more than one. Start with whichever need feels most urgent.</div>
+        </div>
         <button class="groups-print-btn" onclick="printGroups()" title="Print these groups">⎙ Print</button>
       </div>
       <div class="groups-grid" id="groupsGrid"></div>
@@ -2248,18 +2251,19 @@ function renderHeatMapHtml(students){
       const rowClasses=['heatmap-row'];if(p===1)rowClasses.push('stale');if(p===0)rowClasses.push('never');
       const showStaleDot=p===1;const initialChar=escapeHtml(s.name[0].toUpperCase());const safeName=escapeHtml(s.name);
       const cellsHtml=['sequence','correspondence','cardinality'].map(k=>{
-        const correct=obs.filter(o=>principleStateOf(o,k)==='correct').length;
-        const error=obs.filter(o=>principleStateOf(o,k)==='error').length;
+        const lastFive=obs.slice(-5);
+        const correct=lastFive.filter(o=>principleStateOf(o,k)==='correct').length;
+        const error=lastFive.filter(o=>principleStateOf(o,k)==='error').length;
         const total=correct+error;
         if(total===0)return`<div class="heatmap-cell heatmap-cell-empty"><div class="heatmap-cell-frac">—</div><div class="heatmap-cell-rate">no data</div></div>`;
-        const style=heatCellStyle(correct,error);const ratePct=Math.round((correct/total)*100);
-        return`<div class="heatmap-cell" style="background:${style.bg};color:${style.text};"><div class="heatmap-cell-frac">${correct}/${total}</div><div class="heatmap-cell-rate">${ratePct}%</div></div>`;
+        const style=heatCellStyle(correct,error);
+        return`<div class="heatmap-cell" style="background:${style.bg};color:${style.text};"><div class="heatmap-cell-frac">${correct}/${total}</div></div>`;
       }).join('');
       html+=`<div class="${rowClasses.join(' ')}" onclick="openObserve('${s.id}')"><div class="heatmap-name"><div class="heatmap-avatar">${initialChar}${showStaleDot?'<span class="bc-stale-dot"></span>':''}</div><div class="heatmap-name-text">${safeName}</div></div>${cellsHtml}</div>`;
     });
     html+=`</div></div>`;
   });
-  html+=`<div class="heatmap-legend"><span>Mostly errors</span><span class="heatmap-legend-swatches"><span class="heatmap-legend-sw" style="background:hsl(8,75%,72%)"></span><span class="heatmap-legend-sw" style="background:hsl(35,75%,72%)"></span><span class="heatmap-legend-sw" style="background:hsl(80,75%,72%)"></span><span class="heatmap-legend-sw" style="background:hsl(140,75%,72%)"></span></span><span>Mostly correct</span><span style="margin-left:6px;">· Color intensity = number of tries</span></div></div>`;
+  html+=`<div class="heatmap-legend"><span>Mostly errors</span><span class="heatmap-legend-swatches"><span class="heatmap-legend-sw" style="background:hsl(8,75%,72%)"></span><span class="heatmap-legend-sw" style="background:hsl(35,75%,72%)"></span><span class="heatmap-legend-sw" style="background:hsl(80,75%,72%)"></span><span class="heatmap-legend-sw" style="background:hsl(140,75%,72%)"></span></span><span>Mostly correct</span><span style="margin-left:6px;opacity:.7;">· Last 5 observations · correct / times tapped</span></div></div>`;
   return html;
 }
 
