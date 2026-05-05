@@ -52,10 +52,11 @@
     .nav-badge{
       position:absolute;top:-4px;right:-4px;
       background:var(--accent);color:white;
-      font-size:9px;font-weight:700;letter-spacing:0;
+      font-size:11px;font-weight:700;letter-spacing:0;
       min-width:18px;height:18px;border-radius:9px;
       padding:0 5px;display:none;align-items:center;justify-content:center;
       border:2px solid var(--ink);box-shadow:0 0 0 1px rgba(255,255,255,.1);
+      line-height:1;
     }
     .nav-badge.show{display:flex;}
     .header-code-pill{font-size:10px;font-weight:700;letter-spacing:.05em;padding:3px 9px;border-radius:20px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.6);white-space:nowrap;align-self:center;flex-shrink:0;display:none;}
@@ -243,7 +244,7 @@
     .board-divider-warn{color:var(--accent);}
     .board-divider-warn .board-section-count{color:var(--accent);background:var(--accent-light);}
 
-    .board-card{background:white;border:1.5px solid var(--paper-3);border-radius:var(--radius-lg);padding:13px 14px 11px;margin-bottom:10px;cursor:pointer;transition:border-color .15s,box-shadow .15s;position:relative;overflow:hidden;}
+    .board-card{background:white;border:1.5px solid var(--paper-3);border-radius:var(--radius-lg);padding:13px 14px 11px;margin-bottom:10px;cursor:pointer;transition:border-color .15s,box-shadow .15s;position:relative;overflow:visible;}
     .board-card:active{transform:scale(.99);}
     .board-card:hover{border-color:var(--ink-4);box-shadow:0 2px 10px rgba(0,0,0,.04);}
     .board-card.stale{border-color:#d9c8a8;background:#fffdf6;}
@@ -257,6 +258,7 @@
     .bc-stale-dot{position:absolute;top:-3px;right:-3px;width:11px;height:11px;border-radius:50%;background:var(--accent);border:2px solid white;animation:bc-pulse 2.4s infinite;}
     @keyframes bc-pulse{0%,100%{box-shadow:0 0 0 0 rgba(200,90,42,.5);}50%{box-shadow:0 0 0 5px rgba(200,90,42,0);}}
 
+    .bc-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
     .bc-expand-btn{
       flex-shrink:0;background:transparent;border:1px solid var(--paper-3);
       color:var(--ink-3);border-radius:8px;
@@ -268,6 +270,37 @@
     .bc-expand-btn:hover{border-color:var(--accent);color:var(--accent);}
     .bc-expand-btn .chev{font-size:8px;transition:transform .2s;}
     .bc-expand-btn.open .chev{transform:rotate(180deg);}
+
+    .bc-menu-wrap{position:relative;flex-shrink:0;}
+    .bc-menu-btn{
+      background:transparent;border:1px solid var(--paper-3);
+      color:var(--ink-3);border-radius:8px;
+      width:36px;height:36px;
+      font-family:'Sora',sans-serif;font-size:18px;font-weight:700;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;
+      transition:all .12s;line-height:1;letter-spacing:1px;
+      min-width:44px;min-height:44px;
+    }
+    .bc-menu-btn:hover{border-color:var(--accent);color:var(--accent);}
+    .bc-menu-dropdown{
+      position:absolute;top:calc(100% + 4px);right:0;
+      background:white;border:1.5px solid var(--paper-3);
+      border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.12);
+      z-index:30;min-width:140px;overflow:hidden;
+      display:none;
+    }
+    .bc-menu-dropdown.open{display:block;}
+    .bc-menu-item{
+      display:block;width:100%;text-align:left;
+      background:transparent;border:none;
+      padding:11px 14px;font-family:'Sora',sans-serif;font-size:13px;font-weight:500;
+      color:var(--ink-2);cursor:pointer;min-height:44px;
+      border-bottom:1px solid var(--paper-3);
+    }
+    .bc-menu-item:last-child{border-bottom:none;}
+    .bc-menu-item:hover{background:var(--paper);}
+    .bc-menu-item-danger{color:var(--red);}
+    .bc-menu-item-danger:hover{background:var(--red-light);}
 
     .track-empty-text{
       font-family:'DM Serif Display',serif;font-style:italic;
@@ -319,8 +352,8 @@
     .traj-path-wrap{position:relative;padding-bottom:18px;}
     .traj-path{display:flex;align-items:center;justify-content:space-between;position:relative;height:22px;padding:0 5px;}
     .traj-path::before{content:"";position:absolute;top:50%;left:5px;right:5px;height:1.5px;background:repeating-linear-gradient(to right,var(--paper-3) 0 3px,transparent 3px 6px);transform:translateY(-50%);z-index:0;}
-    .traj-step{width:9px;height:9px;border-radius:50%;background:var(--paper-2);border:1.5px solid var(--paper-3);position:relative;z-index:1;flex-shrink:0;cursor:help;}
-    .traj-step.reached{background:var(--ink-3);border-color:var(--ink-3);cursor:help;}
+    .traj-step{width:9px;height:9px;border-radius:50%;background:var(--paper-2);border:1.5px solid var(--paper-3);position:relative;z-index:1;flex-shrink:0;cursor:pointer;}
+    .traj-step.reached{background:var(--ink-3);border-color:var(--ink-3);cursor:pointer;}
     .traj-step.current{width:14px;height:14px;background:var(--accent);border:2px solid white;box-shadow:0 0 0 1.5px var(--accent),0 1px 3px rgba(200,90,42,.3);}
     .traj-caption-row{position:absolute;top:24px;left:5px;right:5px;height:14px;}
     .traj-caption{position:absolute;transform:translateX(-50%);font-family:'DM Serif Display',serif;font-style:italic;font-size:11px;color:var(--accent);white-space:nowrap;line-height:1;}
@@ -360,21 +393,12 @@
     .view-mode-option.active .view-mode-label{color:var(--accent);}
     .view-mode-hint{font-size:10px;color:var(--ink-4);line-height:1.3;}
 
-    .first-run-hint,.groups-teaser{margin:14px 12px 4px;background:linear-gradient(to right,#fffaf0,white);border:1.5px dashed var(--accent-2);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;gap:12px;}
-    .groups-teaser{background:linear-gradient(to right,#eef6ff,white);border-color:#9bbfdc;}
-    .first-run-hint-emoji,.groups-teaser-emoji{font-size:22px;flex-shrink:0;line-height:1;}
-    .first-run-hint-text,.groups-teaser-text{font-size:13px;color:var(--ink-2);line-height:1.5;flex:1;}
+    .first-run-hint{margin:14px 12px 4px;background:linear-gradient(to right,#fffaf0,white);border:1.5px dashed var(--accent-2);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;gap:12px;}
+    .first-run-hint-emoji{font-size:22px;flex-shrink:0;line-height:1;}
+    .first-run-hint-text{font-size:13px;color:var(--ink-2);line-height:1.5;flex:1;}
     .first-run-hint-text strong{font-family:'DM Serif Display',serif;font-weight:400;font-style:italic;color:var(--accent);font-size:14px;}
-    .groups-teaser-text strong{font-family:'DM Serif Display',serif;font-weight:400;font-style:italic;color:var(--blue);font-size:14px;}
     .first-run-hint-dismiss{background:transparent;border:none;color:var(--ink-4);font-family:'Sora',sans-serif;font-size:12px;cursor:pointer;padding:4px 8px;flex-shrink:0;border-radius:6px;min-height:44px;min-width:44px;}
     .first-run-hint-dismiss:hover{background:var(--paper-2);color:var(--ink-3);}
-    .groups-teaser-cta{
-      flex-shrink:0;background:var(--blue);color:white;
-      border:none;border-radius:7px;
-      padding:8px 13px;font-family:'Sora',sans-serif;font-size:11px;font-weight:600;
-      cursor:pointer;min-height:44px;
-    }
-    .groups-teaser-cta:hover{background:#1d4264;}
 
     .heatmap-wrap{padding:6px 12px 14px;}
     .heatmap-intro{background:white;border:1.5px solid var(--paper-3);border-radius:var(--radius-lg);margin-bottom:14px;overflow:hidden;}
@@ -425,8 +449,9 @@
     .obs-back:hover{color:white;}
     .obs-student-name-wrap{flex:1;display:flex;align-items:center;gap:6px;min-width:0;}
     .obs-student-name{font-family:'DM Serif Display',serif;font-size:18px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-    .obs-name-edit{background:transparent;border:none;color:var(--ink-4);font-size:13px;cursor:pointer;padding:4px 7px;border-radius:5px;line-height:1;flex-shrink:0;transition:background .12s,color .12s;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;}
-    .obs-name-edit:hover{background:var(--paper-2);color:var(--accent);}
+    .obs-name-edit{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.85);font-size:11px;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;padding:5px 9px;border-radius:6px;line-height:1;flex-shrink:0;transition:all .12s;min-height:44px;display:inline-flex;align-items:center;gap:4px;letter-spacing:.02em;}
+    .obs-name-edit:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.4);color:white;}
+    .obs-name-edit-icon{font-size:12px;line-height:1;}
     .obs-nav-arrows{display:flex;gap:0;}
     .obs-arr{background:transparent;border:none;color:rgba(255,255,255,.6);font-size:24px;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;}
     .obs-arr:hover{background:rgba(255,255,255,.1);color:white;}
@@ -448,7 +473,29 @@
     .saved-pill::before{content:"✓ ";font-weight:700;}
     .saved-pill.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
+    .size-section-label{
+      display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+      font-family:'Sora',sans-serif;font-size:11px;font-weight:700;
+      letter-spacing:.06em;text-transform:uppercase;
+      color:var(--ink-2);margin-bottom:2px;
+    }
+    .size-required-badge{
+      font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+      background:var(--accent-light);color:var(--accent);
+      padding:2px 7px;border-radius:10px;
+    }
+    .size-section-help{
+      font-size:11px;color:var(--ink-4);margin-bottom:8px;font-style:italic;
+    }
     .size-row{display:flex;gap:6px;margin-bottom:12px;}
+    .size-row.needs-attention{
+      animation:size-pulse 1.4s ease-in-out 2;
+      border-radius:12px;
+    }
+    @keyframes size-pulse{
+      0%,100%{box-shadow:0 0 0 0 rgba(200,90,42,0);}
+      50%{box-shadow:0 0 0 4px rgba(200,90,42,.2);}
+    }
     .size-chip{flex:1;background:white;border:2px solid var(--paper-3);border-radius:10px;padding:9px 4px;text-align:center;cursor:pointer;transition:all .12s;-webkit-tap-highlight-color:transparent;min-height:44px;}
     .size-chip:active{transform:scale(.94);}
     .size-chip.selected{border-color:var(--ink);background:var(--ink);color:white;}
@@ -512,17 +559,27 @@
       width:100%;background:transparent;
       border:1px dashed var(--paper-3);
       border-radius:var(--radius);
-      padding:10px 14px;margin-bottom:10px;
+      padding:11px 14px;margin-bottom:10px;
       display:flex;align-items:center;justify-content:space-between;
       cursor:pointer;-webkit-tap-highlight-color:transparent;
-      font-family:'Sora',sans-serif;font-size:12px;font-weight:600;
+      font-family:'Sora',sans-serif;font-size:12px;
       color:var(--ink-3);min-height:44px;
-      transition:border-color .12s,color .12s;
+      transition:border-color .12s,color .12s,background .12s;
+      gap:10px;
     }
     .more-details-toggle:hover{border-color:var(--accent-2);color:var(--accent);}
-    .more-details-toggle .chev{font-size:10px;transition:transform .2s;}
+    .more-details-label{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left;flex:1;min-width:0;}
+    .more-details-label-main{font-weight:600;display:flex;align-items:center;gap:7px;}
+    .more-details-optional-tag{
+      font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+      background:var(--paper-2);color:var(--ink-4);
+      padding:2px 7px;border-radius:9px;
+    }
+    .more-details-sub{font-size:10.5px;color:var(--ink-4);font-style:italic;font-weight:400;}
+    .more-details-toggle .chev{font-size:10px;transition:transform .2s;flex-shrink:0;}
     .more-details-toggle.open .chev{transform:rotate(180deg);}
     .more-details-toggle.open{border-color:var(--accent-2);color:var(--accent);background:var(--accent-light);}
+    .more-details-toggle.open .more-details-optional-tag{background:white;color:var(--accent);}
     .more-details-panel{display:none;margin-bottom:10px;}
     .more-details-panel.open{display:block;}
 
@@ -627,7 +684,7 @@
     .badge-corr{background:var(--corr-light);color:var(--corr);}
     .badge-card{background:var(--card-light);color:var(--card-color);}
     .badge-zero{background:var(--paper-3);color:var(--ink-4);}
-    .group-student{padding:10px 14px;border-bottom:1px solid var(--paper-3);cursor:pointer;display:flex;align-items:center;gap:10px;min-height:44px;}
+    .group-student{padding:10px 14px;border-bottom:1px solid var(--paper-3);cursor:pointer;display:flex;align-items:flex-start;gap:10px;min-height:44px;}
     .group-student:last-of-type{border-bottom:none;}
     .group-student:active{background:var(--paper);}
     .gs-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:13px;flex-shrink:0;}
@@ -636,7 +693,6 @@
     .gs-av-card{background:var(--card-light);color:var(--card-color);}
     .gs-name{font-size:13px;font-weight:600;flex:1;}
     .gs-meta{font-size:11px;color:var(--ink-4);}
-    .gs-remove{background:transparent;border:1px solid var(--paper-3);color:var(--ink-4);border-radius:6px;padding:4px 8px;font-family:'Sora',sans-serif;font-size:10px;font-weight:600;cursor:pointer;flex-shrink:0;min-height:44px;}
     .group-empty{padding:14px;font-size:12px;color:var(--ink-4);font-style:italic;}
     .group-try-toggle{padding:10px 14px;background:var(--paper);border-top:1px solid var(--paper-3);cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:600;color:var(--ink-3);min-height:44px;}
     .group-try-body{display:none;padding:12px 14px;border-top:1px solid var(--paper-3);background:var(--paper);}
@@ -645,13 +701,11 @@
     .group-try-bullet{display:flex;gap:6px;margin-top:5px;font-size:12px;color:var(--ink-2);line-height:1.6;}
     .group-try-bullet::before{content:"▶";font-size:8px;color:var(--ink-4);flex-shrink:0;margin-top:3px;}
 
-    .gs-info{flex:1;min-width:0;}
-    .gs-context-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
-    .gs-tag{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;line-height:1.4;}
-    .gs-tag-pattern{background:var(--accent-light);color:var(--accent);}
-    .gs-tag-arrangement{background:var(--paper-2);color:var(--ink-3);}
-    .gs-tag-note{background:#eef4ff;color:#3060b0;}
-    .gs-note{font-size:11px;color:var(--ink-3);font-style:italic;margin-top:4px;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .gs-info{flex:1;min-width:0;padding-top:4px;}
+    .gs-context-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:3px;font-size:10.5px;color:var(--ink-4);font-style:italic;line-height:1.5;}
+    .gs-tag{padding:0;background:transparent;border-radius:0;}
+    .gs-tag + .gs-tag::before{content:"·";color:var(--ink-4);margin-right:8px;margin-left:-4px;font-style:normal;}
+    .gs-note{font-size:11px;color:var(--ink-3);font-style:italic;margin-top:4px;line-height:1.5;}
 
     .student-modal{max-width:500px;width:100%;}
     .student-modal-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:22px;background:var(--paper-2);color:var(--ink-2);border:1.5px solid var(--paper-3);flex-shrink:0;}
@@ -717,7 +771,7 @@
     .dialog-backdrop.open{display:flex;}
     .dialog-box{background:white;border-radius:var(--radius-lg);max-width:340px;width:100%;padding:22px 20px 16px;box-shadow:0 8px 40px rgba(0,0,0,.18);}
     .dialog-title{font-family:'DM Serif Display',serif;font-size:18px;color:var(--ink);margin-bottom:8px;}
-    .dialog-message{font-size:13px;color:var(--ink-2);line-height:1.7;margin-bottom:18px;}
+    .dialog-message{font-size:13px;color:var(--ink-2);line-height:1.7;margin-bottom:18px;white-space:pre-line;}
     .dialog-input{width:100%;font-family:'Sora',sans-serif;font-size:15px;border:1.5px solid var(--paper-3);border-radius:var(--radius);padding:11px 13px;background:var(--paper);color:var(--ink);margin-bottom:14px;transition:border-color .15s;}
     .dialog-input:focus{outline:none;border-color:var(--accent);background:white;}
     .dialog-input::placeholder{color:var(--ink-4);}
@@ -899,7 +953,7 @@
         </div>
         <span class="header-code-pill" id="headerCodePill"></span>
         <div class="header-nav">
-          <button class="nav-btn" onclick="showView('groupsView')" id="navGroupsBtn">
+          <button class="nav-btn" onclick="showView('groupsView')" id="navGroupsBtn" title="Small-group suggestions based on your latest observations">
             Groups<span class="nav-badge" id="navGroupsBadge"></span>
           </button>
           <button class="nav-btn" onclick="showView('trajectoriesView')">Trajectory</button>
@@ -935,8 +989,8 @@
         </div>
         <button class="roster-bulk-toggle" onclick="toggleBulkAdd()" id="bulkToggle">+ Add several at once</button>
         <div class="roster-bulk-panel" id="bulkAddPanel">
-          <div class="roster-bulk-help">Paste or type one name per line. First names only — last names aren't stored.</div>
-          <textarea class="roster-bulk-textarea" id="bulkAddTextarea" placeholder="Aaliyah&#10;Ben&#10;Cleo&#10;Dimitri…"></textarea>
+          <div class="roster-bulk-help">Paste or type one name per line. First names only — last names aren't stored. <strong>Tip:</strong> if two students share a first name, add a last initial (e.g. "Ben S.").</div>
+          <textarea class="roster-bulk-textarea" id="bulkAddTextarea" placeholder="Aaliyah&#10;Ben S.&#10;Ben T.&#10;Cleo&#10;Dimitri…"></textarea>
           <div class="roster-bulk-actions">
             <button class="roster-bulk-btn roster-bulk-btn-cancel" onclick="toggleBulkAdd()">Cancel</button>
             <button class="roster-bulk-btn" onclick="addStudentsBulk()">Add all</button>
@@ -945,7 +999,7 @@
       </div>
 
       <div class="board-toolbar">
-        <button class="settings-btn" onclick="openSettingsModal()">⚙ View</button>
+        <button class="settings-btn" onclick="openSettingsModal()" title="Switch between card view and class heat-map view">⚙ View</button>
       </div>
       <div class="board-list" id="rosterList"></div>
       <div class="author-credit">
@@ -961,7 +1015,7 @@
         <button class="obs-back" onclick="goBackFromObs()">← <span id="obsBackLabel">Roster</span></button>
         <div class="obs-student-name-wrap">
           <div class="obs-student-name" id="obsStudentName"></div>
-          <button class="obs-name-edit" onclick="renameStudent(selectedStudentId)" title="Edit name">✎</button>
+          <button class="obs-name-edit" onclick="renameStudent(selectedStudentId)" title="Edit name"><span class="obs-name-edit-icon">✎</span> Edit</button>
         </div>
         <div class="obs-nav-arrows">
           <button class="obs-arr" id="obsPrevBtn" onclick="navigateObs(-1)" title="Previous">‹</button>
@@ -981,14 +1035,21 @@
           Tap at least one principle (✓ correct or one of the error chips) before saving.
         </div>
         <div class="empty-save-warn" id="sizeWarn">
-          Select a collection size before saving.
+          Please choose a collection size at the top before saving.
         </div>
 
-        <div class="size-row">
-          <div class="size-chip" id="size-1-10" onclick="selectSize('1-10')"><div class="size-chip-num">1–10</div><div class="size-chip-label">objects</div></div>
-          <div class="size-chip" id="size-11-20" onclick="selectSize('11-20')"><div class="size-chip-num">11–20</div><div class="size-chip-label">objects</div></div>
-          <div class="size-chip" id="size-21-50" onclick="selectSize('21-50')"><div class="size-chip-num">21–50</div><div class="size-chip-label">objects</div></div>
-          <div class="size-chip" id="size-51+" onclick="selectSize('51+')"><div class="size-chip-num">51+</div><div class="size-chip-label">objects</div></div>
+        <div class="size-section" id="sizeSection">
+          <div class="size-section-label">
+            <span>Size of collection counted</span>
+            <span class="size-required-badge">Required</span>
+          </div>
+          <div class="size-section-help">Tap one to start the observation.</div>
+          <div class="size-row" id="sizeRow">
+            <div class="size-chip" id="size-1-10" onclick="selectSize('1-10')"><div class="size-chip-num">1–10</div><div class="size-chip-label">objects</div></div>
+            <div class="size-chip" id="size-11-20" onclick="selectSize('11-20')"><div class="size-chip-num">11–20</div><div class="size-chip-label">objects</div></div>
+            <div class="size-chip" id="size-21-50" onclick="selectSize('21-50')"><div class="size-chip-num">21–50</div><div class="size-chip-label">objects</div></div>
+            <div class="size-chip" id="size-51+" onclick="selectSize('51+')"><div class="size-chip-num">51+</div><div class="size-chip-label">objects</div></div>
+          </div>
         </div>
 
         <!-- SEQUENCE -->
@@ -1003,7 +1064,7 @@
               <div class="tap-correct-icon">✓</div>
               <div class="tap-correct-label">Yes — in order</div>
             </div>
-            <div class="tap-errors"><div class="tap-errors-label">Select all that apply</div>
+            <div class="tap-errors"><div class="tap-errors-label">Errors — select all that apply</div>
               <div class="tap-error" id="bh-skips_numbers" onclick="toggleBehaviorError('skips_numbers','sequence')">
                 <div class="tap-error-dot"></div><div class="tap-error-label">Skipped numbers</div>
               </div>
@@ -1031,7 +1092,7 @@
               <div class="tap-correct-icon">✓</div>
               <div class="tap-correct-label">Yes — one per object</div>
             </div>
-            <div class="tap-errors"><div class="tap-errors-label">Select all that apply</div>
+            <div class="tap-errors"><div class="tap-errors-label">Errors — select all that apply</div>
               <div class="tap-error" id="bh-loses_track" onclick="toggleBehaviorError('loses_track','correspondence')">
                 <div class="tap-error-dot"></div><div class="tap-error-label">Lost track</div>
               </div>
@@ -1056,7 +1117,7 @@
               <div class="tap-correct-icon">✓</div>
               <div class="tap-correct-label">Yes — knew the total</div>
             </div>
-            <div class="tap-errors"><div class="tap-errors-label">Select all that apply</div>
+            <div class="tap-errors"><div class="tap-errors-label">Errors — select all that apply</div>
               <div class="tap-error" id="bh-counts_again" onclick="toggleBehaviorError('counts_again','cardinality')">
                 <div class="tap-error-dot"></div><div class="tap-error-label">Recounted to answer</div>
               </div>
@@ -1068,7 +1129,13 @@
         </div>
 
         <button class="more-details-toggle" id="moreDetailsToggle" onclick="toggleMoreDetails()">
-          <span><span id="moreDetailsLabel">+ More details</span> <span style="font-weight:400;color:var(--ink-4);font-style:italic;">(arrangement, setup)</span></span>
+          <span class="more-details-label">
+            <span class="more-details-label-main">
+              <span id="moreDetailsLabel">+ More details</span>
+              <span class="more-details-optional-tag">Optional</span>
+            </span>
+            <span class="more-details-sub">Arrangement &amp; setup — only if useful</span>
+          </span>
           <span class="chev">▼</span>
         </button>
         <div class="more-details-panel" id="moreDetailsPanel">
@@ -1132,7 +1199,7 @@
       <div class="groups-intro">
         <div class="groups-intro-text">
           <div class="groups-intro-title">Responding to the Data</div>
-          <div class="groups-intro-body">Groups come from your observations — a student can appear in more than one. Start with whichever need feels most urgent.</div>
+          <div class="groups-intro-body">Groups are based on each student's <strong>most recent observation</strong> — a student can appear in more than one. To remove a student from a group, simply record a new observation showing the skill is now correct. Groups update automatically.</div>
         </div>
         <button class="groups-print-btn" onclick="printGroups()" title="Print these groups">⎙ Print</button>
       </div>
@@ -1192,7 +1259,7 @@
     </div>
     <div class="modal-body">
       <div class="settings-group">
-        <div class="settings-group-help">How students appear on the home screen.</div>
+        <div class="settings-group-help">Choose how students appear on the home screen. Switch any time.</div>
         <div class="view-mode-toggle" id="viewModeToggle"></div>
       </div>
     </div>
@@ -1227,7 +1294,7 @@
           <div class="welcome-step-num">3</div>
           <div class="welcome-step-body">
             <div class="welcome-step-title">See patterns and group students</div>
-            <p>The home screen shows each student at a glance. The <em>Groups</em> tab suggests small-group practice based on what you've observed.</p>
+            <p>The home screen shows each student at a glance. The <em>Groups</em> tab suggests small-group practice based on each student's most recent observation.</p>
           </div>
         </div>
       </div>
@@ -1255,36 +1322,43 @@
           <div class="welcome-step-num">1</div>
           <div class="welcome-step-body">
             <div class="welcome-step-title">Add students</div>
-            <p>Type each name and tap "+ Add" — or tap "+ Add several at once" to paste a list (one per line).</p>
+            <p>Type each name and tap "+ Add" — or tap "+ Add several at once" to paste a list (one per line). If two students share a first name, add a last initial (e.g. "Ben S.").</p>
           </div>
         </div>
         <div class="welcome-step">
           <div class="welcome-step-num">2</div>
           <div class="welcome-step-body">
-            <div class="welcome-step-title">Record observations</div>
-            <p>Tap a student to open their card. Pick the collection size, then for each of the three counting principles tap <em>Yes</em> (correct) or one of the error chips. Save and move to the next student.</p>
-            <p style="margin-top:6px;"><strong>The three principles:</strong> <em>Number Word Sequence</em> — saying numbers in order. <em>One-to-One Correspondence</em> — one number word per object. <em>Cardinality</em> — knowing the last number said is the total.</p>
+            <div class="welcome-step-title">Edit or delete a student</div>
+            <p>Tap the <strong>⋯</strong> menu on any student card to rename or delete them.</p>
           </div>
         </div>
         <div class="welcome-step">
           <div class="welcome-step-num">3</div>
           <div class="welcome-step-body">
-            <div class="welcome-step-title">Use "More details" only when you want to</div>
-            <p>Most observations only need size + principles. Tap <em>More details</em> if you want to record arrangement (lined up / scattered), who set up the objects, or describe an unusual error. These extras help the Groups tab find sharper patterns over time.</p>
+            <div class="welcome-step-title">Record observations</div>
+            <p>Tap a student to open their card. <strong>Pick the collection size first</strong> (it's required), then for each of the three counting principles tap <em>Yes</em> (correct) or one of the error chips. Save and move to the next student.</p>
+            <p style="margin-top:6px;"><strong>The three principles:</strong> <em>Number Word Sequence</em> — saying numbers in order. <em>One-to-One Correspondence</em> — one number word per object. <em>Cardinality</em> — knowing the last number said is the total.</p>
           </div>
         </div>
         <div class="welcome-step">
           <div class="welcome-step-num">4</div>
           <div class="welcome-step-body">
-            <div class="welcome-step-title">Read the home screen</div>
-            <p>Each compact card shows the student name, last-seen date, and a quick three-dot summary. Tap the chevron to expand the full tracks and trajectory.</p>
+            <div class="welcome-step-title">Use "More details" only when you want to</div>
+            <p>Most observations only need size + principles. Tap <em>More details</em> if you want to record arrangement (lined up / scattered) or who set up the objects. These extras help the Groups tab find sharper patterns over time.</p>
           </div>
         </div>
         <div class="welcome-step">
           <div class="welcome-step-num">5</div>
           <div class="welcome-step-body">
             <div class="welcome-step-title">Group &amp; teach</div>
-            <p>The <em>Groups</em> tab suggests small groups of students who'd benefit from the same kind of practice, based on the errors you've observed.</p>
+            <p>The <em>Groups</em> tab suggests small groups of students who'd benefit from the same kind of practice, based on each student's <strong>most recent observation</strong>. To remove a student from a group, just record a new observation showing the skill is now correct — groups update automatically.</p>
+          </div>
+        </div>
+        <div class="welcome-step">
+          <div class="welcome-step-num">6</div>
+          <div class="welcome-step-body">
+            <div class="welcome-step-title">Switch the home view</div>
+            <p>Tap <strong>⚙ View</strong> on the home screen to switch between detailed cards and a compact class heat map.</p>
           </div>
         </div>
       </div>
@@ -1622,7 +1696,7 @@ async function attemptSetup(){
   const verifier=await deriveVerifier(pin,authSalt);
   localStorage.setItem(getAuthKey(code),JSON.stringify({authSalt,encSalt,verifier,created:new Date().toISOString()}));
   const tmpKey=await deriveEncryptionKey(pin,encSalt);
-  const emptyBlob=await encryptJson({students:[],observations:{},groupOverrides:{}},tmpKey);
+  const emptyBlob=await encryptJson({students:[],observations:{}},tmpKey);
   localStorage.setItem(getDataKey(code),emptyBlob);
   okEl.textContent=`Classroom "${code}" created! Signing you in…`;okEl.style.display='block';
   document.getElementById('loginCode').value=code;
@@ -1650,7 +1724,7 @@ function buildDemoState(){
     'demo-5':{history:[obs(0,1,'1-10','error',null,null,{repeats_numbers:true}),obs(0,2,'1-10','correct',null,null,{})]},
     'demo-6':{history:[obs(0,1,'1-10','correct','correct','error',{counts_again:true}),obs(0,2,'1-10','correct','error','error',{loses_track:true,counts_again:true}),obs(0,3,'1-10','correct','error',null,{loses_track:true})]}
   };
-  return{students,observations,groupOverrides:{},settings:{viewMode:'cards'},hasSeenWelcome:true};
+  return{students,observations,settings:{viewMode:'cards'},hasSeenWelcome:true};
 }
 
 function startDemo(){
@@ -1673,7 +1747,7 @@ function startDemo(){
 
 function exitDemoToSetup(){
   encryptionKey=null;currentTeacher=null;
-  state={students:[],observations:{},groupOverrides:{}};
+  state={students:[],observations:{}};
   sectionCollapsed={};
   document.getElementById('mainApp').style.display='none';
   document.getElementById('privacyFooter').style.display='none';
@@ -1690,7 +1764,7 @@ async function signOut(){
   if(!isDemoSession&&unsavedChanges){saveState();unsavedChanges=false;clearTimeout(syncTimeout);}
   encryptionKey=null;
   sttConsentGranted=false;
-  currentTeacher=null;state={students:[],observations:{},groupOverrides:{}};
+  currentTeacher=null;state={students:[],observations:{}};
   sectionCollapsed={};
   ['pinDigit','setupPin','setupPinC'].forEach(p => clearPinInputs(p));
   document.getElementById('loginError').style.display='none';
@@ -1707,13 +1781,14 @@ async function signOut(){
 /* ══════════════════════════════════════
    STATE
 ══════════════════════════════════════ */
-let state={students:[],observations:{},groupOverrides:{}};
+let state={students:[],observations:{}};
 let selectedStudentId=null;
 let editingObsIdx=null;
 let obsFromGroups=false;
 let unsavedChanges=false;
 let syncTimeout=null;
 let expandedCards = new Set();
+let openCardMenuId = null;
 
 function freshObsForm(){
   return{
@@ -1734,7 +1809,8 @@ async function loadStateEncrypted(){
     const decrypted=await decryptJson(raw,encryptionKey);
     state=decrypted;
     state.students.forEach(s=>{if(!state.observations[s.id])state.observations[s.id]={history:[]};});
-    if(!state.groupOverrides)state.groupOverrides={};
+    // groupOverrides removed — groups now computed purely from latest observation
+    delete state.groupOverrides;
   }catch(e){
     throw new Error('decrypt-failed');
   }
@@ -1782,6 +1858,16 @@ window.addEventListener('beforeunload',e=>{
 window.addEventListener('pagehide',()=>{if(unsavedChanges){saveState();unsavedChanges=false;}});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&unsavedChanges){saveState();unsavedChanges=false;}});
 
+/* Close any open card menu when tapping outside it */
+document.addEventListener('click',(e)=>{
+  if(openCardMenuId===null)return;
+  const menuEl=document.getElementById('bc-menu-'+openCardMenuId);
+  const btnEl=document.getElementById('bc-menu-btn-'+openCardMenuId);
+  if(menuEl&&!menuEl.contains(e.target)&&btnEl&&!btnEl.contains(e.target)){
+    closeCardMenu();
+  }
+},true);
+
 /* ══════════════════════════════════════
    BACKUP REMINDER
 ══════════════════════════════════════ */
@@ -1822,623 +1908,655 @@ function dismissBackupBanner() {
 }
 
 /* ══════════════════════════════════════
-   ROSTER
+   STUDENTS
 ══════════════════════════════════════ */
-const ONE_DAY=24*60*60*1000;
-const STALE_DAYS=3;
-
 function studentPriority(s){
-  const obs=state.observations[s.id]?.history||[];
-  if(!obs.length)return 0;
-  const lastMs=new Date(obs[obs.length-1].timestamp).getTime();
-  return(Date.now()-lastMs>=STALE_DAYS*ONE_DAY)?1:2;
+  const h=state.observations[s.id]?.history||[];
+  if(h.length===0)return{section:1,never:true};
+  const latest=h[h.length-1];
+  const ageDays=(Date.now()-new Date(latest.timestamp).getTime())/(1000*60*60*24);
+  if(ageDays>=2)return{section:1,age:ageDays};
+  return{section:2,age:ageDays};
 }
+
 function getSortedStudents(){
   return state.students.slice().sort((a,b)=>{
     const pa=studentPriority(a),pb=studentPriority(b);
-    if(pa!==pb)return pa-pb;
-    if(pa===2)return a.name.localeCompare(b.name);
-    if(pa===1){
-      const aCount=(state.observations[a.id]?.history||[]).length;
-      const bCount=(state.observations[b.id]?.history||[]).length;
-      if(aCount!==bCount)return aCount-bCount;
-      const aLast=(state.observations[a.id]?.history||[]).slice(-1)[0];
-      const bLast=(state.observations[b.id]?.history||[]).slice(-1)[0];
-      const aMs=aLast?new Date(aLast.timestamp).getTime():0;
-      const bMs=bLast?new Date(bLast.timestamp).getTime():0;
-      if(aMs!==bMs)return aMs-bMs;
-      return a.name.localeCompare(b.name);
+    if(pa.section!==pb.section)return pa.section-pb.section;
+    if(pa.section===1){
+      // Never-observed first, then oldest first
+      if(pa.never&&!pb.never)return -1;
+      if(pb.never&&!pa.never)return 1;
+      return(pb.age||0)-(pa.age||0);
     }
-    return a.name.localeCompare(b.name);
+    // Section 2: most recent first
+    return(pa.age||0)-(pb.age||0);
   });
 }
 
-function addStudent(){
-  const input=document.getElementById('newStudentInput');const name=input.value.trim();if(!name)return;
+async function addStudent(){
+  const inp=document.getElementById('newStudentInput');
+  const name=inp.value.trim();
+  if(!name)return;
+  if(name.length>40){await dlgAlert('Please use a shorter first name (under 40 characters).','Name too long');return;}
   if(state.students.some(s=>s.name.toLowerCase()===name.toLowerCase())){
-    dlgAlert(`A student named "${name}" already exists.`);return;
-  }
-  const s={id:Date.now().toString()+Math.random().toString(36).slice(2,6),name};
-  state.students.push(s);state.observations[s.id]={history:[]};
-  input.value='';scheduleSave();renderRoster();
-}
-
-function toggleBulkAdd() {
-  const panel = document.getElementById('bulkAddPanel');
-  const open = panel.classList.toggle('open');
-  if (open) {
-    setTimeout(() => document.getElementById('bulkAddTextarea').focus(), 100);
-  } else {
-    document.getElementById('bulkAddTextarea').value = '';
-  }
-}
-
-async function addStudentsBulk() {
-  const textarea = document.getElementById('bulkAddTextarea');
-  const lines = textarea.value.split('\n').map(l => l.trim()).filter(Boolean);
-  if (lines.length === 0) {
-    await dlgAlert('Type or paste at least one name.', 'Nothing to add');
+    await dlgAlert('A student with that name already exists. If two students share a first name, add a last initial — e.g. "Ben S." and "Ben T."','Duplicate name');
     return;
   }
-  const existing = new Set(state.students.map(s => s.name.toLowerCase()));
-  const added = [];
-  const skipped = [];
-  for (const name of lines) {
-    if (name.length > 40) { skipped.push(name + ' (too long)'); continue; }
-    if (existing.has(name.toLowerCase())) { skipped.push(name + ' (duplicate)'); continue; }
-    existing.add(name.toLowerCase());
-    const s = { id: Date.now().toString() + Math.random().toString(36).slice(2,6), name };
-    state.students.push(s);
-    state.observations[s.id] = { history: [] };
+  const id='s_'+Date.now()+'_'+Math.random().toString(36).slice(2,8);
+  state.students.push({id,name});
+  state.observations[id]={history:[]};
+  scheduleSave();
+  inp.value='';
+  renderRoster();
+}
+
+function toggleBulkAdd(){
+  const panel=document.getElementById('bulkAddPanel');
+  const btn=document.getElementById('bulkToggle');
+  const open=panel.classList.toggle('open');
+  btn.textContent=open?'– Hide bulk add':'+ Add several at once';
+  if(open)setTimeout(()=>document.getElementById('bulkAddTextarea').focus(),60);
+}
+async function addStudentsBulk(){
+  const ta=document.getElementById('bulkAddTextarea');
+  const raw=ta.value;
+  const lines=raw.split('\n').map(l=>l.trim()).filter(l=>l.length>0);
+  if(lines.length===0){await dlgAlert('Enter at least one name (one per line).','No names entered');return;}
+  const added=[];const skipped=[];const tooLong=[];
+  const existingLower=new Set(state.students.map(s=>s.name.toLowerCase()));
+  for(const name of lines){
+    if(name.length>40){tooLong.push(name);continue;}
+    const lower=name.toLowerCase();
+    if(existingLower.has(lower)){skipped.push(name);continue;}
+    existingLower.add(lower);
+    const id='s_'+Date.now()+'_'+Math.random().toString(36).slice(2,8)+'_'+added.length;
+    state.students.push({id,name});
+    state.observations[id]={history:[]};
     added.push(name);
   }
-  if (added.length > 0) {
-    scheduleSave();
-    renderRoster();
-    textarea.value = '';
-    toggleBulkAdd();
-    let msg = `Added ${added.length} student${added.length === 1 ? '' : 's'}.`;
-    if (skipped.length > 0) msg += `\n\nSkipped: ${skipped.join(', ')}`;
-    showToast(msg);
-  } else {
-    await dlgAlert('No new students were added.\n\nSkipped: ' + skipped.join(', '), 'Nothing added');
-  }
+  if(added.length>0)scheduleSave();
+  ta.value='';toggleBulkAdd();renderRoster();
+  let msg=`Added ${added.length} student${added.length===1?'':'s'}.`;
+  if(skipped.length>0)msg+=` Skipped ${skipped.length} duplicate${skipped.length===1?'':'s'}: ${skipped.slice(0,3).join(', ')}${skipped.length>3?'…':''}. (Tip: add a last initial — e.g. "Ben S." — to distinguish students with the same first name.)`;
+  if(tooLong.length>0)msg+=` Skipped ${tooLong.length} too-long name${tooLong.length===1?'':'s'}.`;
+  await dlgAlert(msg,'Bulk add');
 }
 
 async function deleteStudent(id){
-  const s=state.students.find(x=>x.id===id);
-  const confirmed=await dlgConfirm(
-    `Delete ${s?s.name:'this student'} and all their observations? This cannot be undone.`,
-    'Delete student', 'Delete', true
-  );
-  if(!confirmed)return;
-  state.students=state.students.filter(s=>s.id!==id);delete state.observations[id];delete state.groupOverrides[id];
-  expandedCards.delete(id);
+  closeCardMenu();
+  const s=state.students.find(x=>x.id===id);if(!s)return;
+  const histLen=state.observations[id]?.history?.length||0;
+  const msg=`Delete ${s.name}? This will also remove ${histLen} observation${histLen===1?'':'s'}. This cannot be undone.`;
+  const ok=await dlgConfirm(msg,'Delete student','Delete',true);
+  if(!ok)return;
+  state.students=state.students.filter(x=>x.id!==id);
+  delete state.observations[id];
   scheduleSave();renderRoster();
 }
 
 async function renameStudent(id){
+  closeCardMenu();
   const s=state.students.find(x=>x.id===id);if(!s)return;
-  const newName=await dlgPrompt('Enter new name for this student:', s.name, 'Edit student name');
+  const newName=await dlgPrompt('Enter a new first name for this student.',s.name,'Edit name');
   if(newName===null)return;
   const trimmed=newName.trim();
-  if(!trimmed){dlgAlert('Name cannot be empty.');return;}
-  if(trimmed.length>40){dlgAlert('Name is too long (max 40 characters).');return;}
-  const dup=state.students.some(x=>x.id!==id&&x.name.toLowerCase()===trimmed.toLowerCase());
-  if(dup){
-    const proceed=await dlgConfirm(`Another student is already named "${trimmed}". Use this name anyway?`,'Duplicate name','Use anyway');
-    if(!proceed)return;
+  if(!trimmed){await dlgAlert('Name cannot be blank.','Edit name');return;}
+  if(trimmed.length>40){await dlgAlert('Please use a shorter first name (under 40 characters).','Name too long');return;}
+  if(state.students.some(x=>x.id!==id&&x.name.toLowerCase()===trimmed.toLowerCase())){
+    await dlgAlert('Another student already has that name. Try adding a last initial — e.g. "Ben S."','Duplicate name');return;
   }
   s.name=trimmed;
-  scheduleSave();renderRoster();
-  if(selectedStudentId===id){const el=document.getElementById('obsStudentName');if(el)el.textContent=trimmed;}
+  scheduleSave();
+  renderRoster();
+  if(selectedStudentId===id&&document.getElementById('observeView').classList.contains('active')){
+    document.getElementById('obsStudentName').textContent=trimmed;
+  }
+}
+
+function toggleCardMenu(id,ev){
+  if(ev){ev.stopPropagation();}
+  const menu=document.getElementById('bc-menu-'+id);
+  if(!menu)return;
+  if(openCardMenuId===id){
+    closeCardMenu();
+    return;
+  }
+  closeCardMenu();
+  menu.classList.add('open');
+  openCardMenuId=id;
+}
+function closeCardMenu(){
+  if(openCardMenuId===null)return;
+  const menu=document.getElementById('bc-menu-'+openCardMenuId);
+  if(menu)menu.classList.remove('open');
+  openCardMenuId=null;
 }
 
 /* ══════════════════════════════════════
    SETTINGS
 ══════════════════════════════════════ */
-const DEFAULT_SETTINGS={viewMode:'cards'};
-
-function getSettings(){
-  if(!state.settings)state.settings=JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
-  if(!state.settings.viewMode)state.settings.viewMode=DEFAULT_SETTINGS.viewMode;
-  delete state.settings.sizes;delete state.settings.errorChips;
-  return state.settings;
-}
-function setViewMode(mode){const s=getSettings();s.viewMode=mode;scheduleSave();renderSettingsModal();renderRoster();}
+function getSettings(){state.settings=state.settings||{};if(!state.settings.viewMode)state.settings.viewMode='cards';return state.settings;}
+function setViewMode(mode){const s=getSettings();s.viewMode=mode;scheduleSave();renderRoster();renderSettingsModal();}
 function openSettingsModal(){renderSettingsModal();document.getElementById('settingsModalBackdrop').classList.add('open');}
-function closeSettingsModal(e){if(e&&e.target!==document.getElementById('settingsModalBackdrop'))return;document.getElementById('settingsModalBackdrop').classList.remove('open');}
+function closeSettingsModal(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('settingsModalBackdrop').classList.remove('open');}
 function renderSettingsModal(){
   const s=getSettings();
-  const modes=[{key:'cards',label:'Individual cards',hint:'Detailed board for each student'},{key:'heatmap',label:'Class heat map',hint:'Compact grid — see the whole class at once'}];
-  document.getElementById('viewModeToggle').innerHTML=modes.map(m=>{
-    const active=s.viewMode===m.key;
-    return`<button class="view-mode-option ${active?'active':''}" onclick="setViewMode('${m.key}')"><span class="view-mode-label">${escapeHtml(m.label)}</span><span class="view-mode-hint">${escapeHtml(m.hint)}</span></button>`;
-  }).join('');
+  const html=`
+    <button class="view-mode-option ${s.viewMode==='cards'?'active':''}" onclick="setViewMode('cards')">
+      <div class="view-mode-label">Roster</div>
+      <div class="view-mode-hint">Trajectory + recent results per student</div>
+    </button>
+    <button class="view-mode-option ${s.viewMode==='heatmap'?'active':''}" onclick="setViewMode('heatmap')">
+      <div class="view-mode-label">Class Heat Map</div>
+      <div class="view-mode-hint">Compact view of every student at a glance</div>
+    </button>
+  `;
+  document.getElementById('viewModeToggle').innerHTML=html;
 }
 
 /* ══════════════════════════════════════
    TRAJECTORY INFERENCE
 ══════════════════════════════════════ */
-function inferTrajectoryLevel(obs){
-  if(!obs||!obs.length)return 0;
-  const has=(pred)=>obs.some(pred);
-  const sizeIs=(o,sizes)=>sizes.includes(o.collectionSize);
-  const seqOk=o=>principleStateOf(o,'sequence')==='correct';
-  const corrOk=o=>principleStateOf(o,'correspondence')==='correct';
-  const cardOk=o=>principleStateOf(o,'cardinality')==='correct';
-  // Level 4: Counter (10) — all three correct on a collection of 11 or more objects
-  if(has(o=>seqOk(o)&&corrOk(o)&&cardOk(o)&&sizeIs(o,['11-20','21-50','51+'])))return 4;
-  // Level 3: Counter (Small) — all three correct on any collection (app's 1-10 band can't distinguish ~5 from ~10)
-  if(has(o=>seqOk(o)&&corrOk(o)&&cardOk(o)))return 3;
-  // Level 2: Corresponder — correspondence correct, OR cardinality correct (cardinality implies correspondence was present)
-  if(has(o=>corrOk(o)||cardOk(o)))return 2;
-  // Level 1: Reciter — any sequence observation (correct or error)
-  if(has(o=>principleStateOf(o,'sequence')==='correct'||principleStateOf(o,'sequence')==='error'))return 1;
-  return 0;
+function inferTrajectoryLevel(student) {
+  const history = state.observations[student.id]?.history || [];
+  if (history.length === 0) return null;
+  const recent = history.slice(-5);
+  const seqGood = recent.filter(o => principleStateOf(o, 'sequence') === 'correct').length;
+  const corrGood = recent.filter(o => principleStateOf(o, 'correspondence') === 'correct').length;
+  const cardGood = recent.filter(o => principleStateOf(o, 'cardinality') === 'correct').length;
+  const seqGoodRatio = seqGood / recent.length;
+  const corrGoodRatio = corrGood / recent.length;
+  const cardGoodRatio = cardGood / recent.length;
+  const sizes = recent.map(o => o.collectionSize).filter(Boolean);
+  const hasLargeSet = sizes.some(s => s === '11-20' || s === '21-50' || s === '51+');
+  const hasMediumSet = sizes.some(s => s === '11-20');
+  const hasLargeSetSuccess = recent.some(o =>
+    (o.collectionSize === '11-20' || o.collectionSize === '21-50' || o.collectionSize === '51+') &&
+    principleStateOf(o, 'cardinality') === 'correct'
+  );
+  if (corrGoodRatio < 0.4) return 1;
+  if (cardGoodRatio < 0.5) return 2;
+  if (cardGoodRatio >= 0.6 && !hasMediumSet) return 3;
+  if (hasLargeSetSuccess && cardGoodRatio >= 0.7) return 4;
+  return 3;
 }
-
-function inferTrajectoryReason(obs){
-  if(!obs||!obs.length)return null;
-  const has=(pred)=>obs.some(pred);
-  const sizeIs=(o,sizes)=>sizes.includes(o.collectionSize);
-  const seqOk=o=>principleStateOf(o,'sequence')==='correct';
-  const corrOk=o=>principleStateOf(o,'correspondence')==='correct';
-  const cardOk=o=>principleStateOf(o,'cardinality')==='correct';
-  if(has(o=>seqOk(o)&&corrOk(o)&&cardOk(o)&&sizeIs(o,['11-20','21-50','51+'])))
-    return 'Observed: sequence, correspondence, and cardinality all correct on a collection of 11 or more objects.';
-  if(has(o=>seqOk(o)&&corrOk(o)&&cardOk(o)&&sizeIs(o,['1-10'])))
-    return 'Observed: sequence, correspondence, and cardinality all correct on a 1–10 collection. Could be Counter (Small) or Counter (10) — the app\'s collection sizes don\'t distinguish 1–5 from 6–10. Use a larger collection to confirm.';
-  if(has(o=>seqOk(o)&&corrOk(o)&&cardOk(o)))
-    return 'Observed: sequence, correspondence, and cardinality all correct, but no collection size was recorded. Tap the collection size next time to get a more precise level.';
-  if(has(o=>corrOk(o)||cardOk(o)))
-    return has(o=>corrOk(o))
-      ? 'Observed: one-to-one correspondence correct. No observation yet showing cardinality understood.'
-      : 'Observed: cardinality correct (student knew the last number said is the total). Placed at Corresponder — sequence or correspondence errors noted but cardinality implies this level or above.';
-  if(has(o=>principleStateOf(o,'sequence')==='correct'||principleStateOf(o,'sequence')==='error'))
-    return 'Observed: number word sequence attempted. No observation yet showing one-to-one correspondence.';
-  return null;
+function inferTrajectoryReason(student, level) {
+  const history = state.observations[student.id]?.history || [];
+  if (history.length === 0) return '';
+  const recent = history.slice(-5);
+  const cardGood = recent.filter(o => principleStateOf(o, 'cardinality') === 'correct').length;
+  const corrGood = recent.filter(o => principleStateOf(o, 'correspondence') === 'correct').length;
+  const cardGoodRatio = cardGood / recent.length;
+  const corrGoodRatio = corrGood / recent.length;
+  const hasMediumSet = recent.some(o => o.collectionSize === '11-20');
+  const hasLargeSetSuccess = recent.some(o =>
+    (o.collectionSize === '11-20' || o.collectionSize === '21-50') &&
+    principleStateOf(o, 'cardinality') === 'correct'
+  );
+  if (level === 1) return `Counting words said, but only ${Math.round(corrGoodRatio*100)}% one-to-one match in last ${recent.length} obs.`;
+  if (level === 2) return `One-to-one mostly works, but cardinal answer correct only ${Math.round(cardGoodRatio*100)}% of the time.`;
+  if (level === 3) {
+    if (!hasMediumSet) return `Solid with small collections; not yet observed with 11–20.`;
+    return `Cardinality reliable for small sets.`;
+  }
+  if (level === 4) return hasLargeSetSuccess ? `Cardinality holds with collections of 11+.` : `Strong on small sets.`;
+  return '';
 }
-
 
 /* ══════════════════════════════════════
    ROSTER RENDER
 ══════════════════════════════════════ */
-let sectionCollapsed={};
-function isSectionCollapsed(priority,studentCount){
-  if(sectionCollapsed[priority]!==undefined)return sectionCollapsed[priority];
-  if(priority===0)return studentCount>5;
-  if(priority===1)return false;
-  if(priority===2)return studentCount>4;
-  return false;
+let sectionCollapsed = {};
+function isSectionCollapsed(key){
+  if (!(key in sectionCollapsed)) {
+    sectionCollapsed[key] = false;
+  }
+  return sectionCollapsed[key];
 }
-function toggleSection(priority){
-  const cur=sectionCollapsed[priority];
-  if(cur===undefined){const count=state.students.filter(s=>studentPriority(s)===priority).length;sectionCollapsed[priority]=!cur;}
-  else{sectionCollapsed[priority]=!cur;}
+function toggleSection(key){
+  sectionCollapsed[key] = !isSectionCollapsed(key);
   renderRoster();
 }
 
-function lastNObservationsForPrinciple(obs,key,n=5){
-  const allStates=obs.map(o=>principleStateOf(o,key)).filter(x=>x==='correct'||x==='error');
-  return allStates.slice(-n);
+function lastNObservationsForPrinciple(student, principle, n){
+  const history = state.observations[student.id]?.history || [];
+  const filtered = history.filter(obs => principleStateOf(obs, principle) !== null);
+  return filtered.slice(-n);
 }
 
-function updateTopBarVisibility(){
-  const bar=document.getElementById('rosterTopBar');
-  if(!bar)return;
-  const hasStudents=state.students&&state.students.length>0;
-  const seenHint=state.hasSeenFirstObsHint||state.hasSeenObsTip;
-  bar.classList.toggle('hidden', hasStudents && seenHint);
+function updateTopBarVisibility() {
+  const tb = document.getElementById('rosterTopBar');
+  if (!tb) return;
+  if (currentTeacher?.demo) {
+    tb.classList.add('hidden');
+    return;
+  }
+  tb.classList.remove('hidden');
 }
 
-function updateGroupsBadge() {
+function updateGroupsBadge(){
   const badge = document.getElementById('navGroupsBadge');
   if (!badge) return;
   let totalFlagged = 0;
-  for (const s of state.students) {
+  state.students.forEach(s => {
     const needs = calcNeeds(s.id);
-    totalFlagged += needs.length > 0 ? 1 : 0;
-  }
+    if (needs.length > 0) totalFlagged++;
+  });
   if (totalFlagged > 0) {
-    badge.textContent = totalFlagged > 99 ? '99+' : String(totalFlagged);
+    badge.textContent = '!';
     badge.classList.add('show');
   } else {
+    badge.textContent = '';
     badge.classList.remove('show');
   }
 }
 
-function shouldShowGroupsTeaser() {
-  if (currentTeacher?.demo) return false;
-  if (state.hasSeenGroupsTeaser) return false;
-  const studentsWithObs = state.students.filter(s => (state.observations[s.id]?.history || []).length > 0).length;
-  if (studentsWithObs < 3) return false;
-  const anyFlagged = state.students.some(s => calcNeeds(s.id).length > 0);
-  return anyFlagged;
-}
-
-function dismissGroupsTeaser() { state.hasSeenGroupsTeaser = true; scheduleSave(); renderRoster(); }
-function openGroupsFromTeaser() { state.hasSeenGroupsTeaser = true; scheduleSave(); showView('groupsView'); }
-
 function renderRoster(){
+  closeCardMenu();
   const list=document.getElementById('rosterList');
-  const students=getSortedStudents();
-  const mode=getSettings().viewMode;
-  updateTopBarVisibility();
+  const settings=getSettings();
+  const sorted=getSortedStudents();
+  if(state.students.length===0){
+    list.innerHTML=`<div class="empty-state"><div class="empty-icon">∅</div><p>No students yet.<br>Add your first student above to begin.</p></div>`;
+    updateGroupsBadge();
+    return;
+  }
+
+  let firstRunHintHtml = '';
+  if (state.students.length > 0 && state.students.every(s => (state.observations[s.id]?.history?.length || 0) === 0) && !state.firstObsHintDismissed && !currentTeacher?.demo) {
+    firstRunHintHtml = `
+      <div class="first-run-hint">
+        <div class="first-run-hint-emoji">👇</div>
+        <div class="first-run-hint-text">Tap any student to record your <strong>first observation</strong>.</div>
+        <button class="first-run-hint-dismiss" onclick="dismissFirstObsHint()" title="Hide">×</button>
+      </div>
+    `;
+  }
+  if (settings.viewMode === 'heatmap') {
+    list.innerHTML = firstRunHintHtml + renderHeatMapHtml(sorted);
+    updateGroupsBadge();
+    return;
+  }
+  list.innerHTML = firstRunHintHtml + renderCardsHtml(sorted);
   updateGroupsBadge();
-  updateBackupBanner();
-  if(!students.length){
-    list.innerHTML=`<div class="empty-state"><div class="empty-icon">𝟏𝟐𝟑</div><p>No students yet.<br>Type a name above and tap <strong style="color:var(--accent);">+ Add</strong> to begin.<br><span style="font-size:11px;color:var(--ink-4);">Or tap <em>Add several at once</em> to paste a list.</span></p></div>`;return;
-  }
-  let hintHtml='';
-  if(students.length>=1&&!state.hasSeenFirstObsHint&&!currentTeacher?.demo){
-    const totalObs=Object.values(state.observations||{}).reduce((sum,r)=>sum+(r?.history?.length||0),0);
-    if (totalObs === 0) {
-      hintHtml=`<div class="first-run-hint"><span class="first-run-hint-emoji">👇</span><span class="first-run-hint-text"><strong>Tap a student card</strong> to record what you saw.</span><button class="first-run-hint-dismiss" onclick="dismissFirstObsHint()" title="Dismiss">✕</button></div>`;
-    }
-  }
-  if (shouldShowGroupsTeaser()) {
-    hintHtml += `<div class="groups-teaser"><span class="groups-teaser-emoji">✨</span><span class="groups-teaser-text"><strong>You have enough data to group your kids.</strong> See suggestions based on what you've observed.</span><button class="groups-teaser-cta" onclick="openGroupsFromTeaser()">Open Groups →</button><button class="first-run-hint-dismiss" onclick="dismissGroupsTeaser()" title="Dismiss">✕</button></div>`;
-  }
-  if(mode==='heatmap'){list.innerHTML=hintHtml+renderHeatMapHtml(students);}
-  else{list.innerHTML=hintHtml+renderCardsHtml(students);}
 }
 
-function dismissFirstObsHint(){state.hasSeenFirstObsHint=true;scheduleSave();renderRoster();}
-function dismissObsTip(){state.hasSeenObsTip=true;scheduleSave();renderRoster();}
+function dismissFirstObsHint(){state.firstObsHintDismissed=true;scheduleSave();renderRoster();}
+function dismissObsTip(){state.obsTipSeen=true;scheduleSave();renderRoster();}
 
 function renderCardsHtml(students){
-  const groups={0:[],1:[],2:[]};
-  students.forEach(s=>{groups[studentPriority(s)].push(s);});
-  const sectionMeta={0:{label:'Not observed yet',cls:''},1:{label:'Check in soon',cls:'board-divider-warn'},2:{label:'Seen recently',cls:''}};
+  const groups={1:[],2:[]};
+  students.forEach(s=>{const p=studentPriority(s);groups[p.section].push({s,p});});
   let html='';
-  [0,1,2].forEach(p=>{
-    const list=groups[p];if(!list.length)return;
-    const collapsed=isSectionCollapsed(p,list.length);
-    const meta=sectionMeta[p];
-    const chevron=`<span class="section-chevron" style="${collapsed?'':'transform:rotate(180deg);'}">▼</span>`;
-    html+=`<div class="board-section" data-section="${p}">
-      <button class="board-section-head ${meta.cls}" onclick="toggleSection(${p})">
-        <span class="board-section-label">${escapeHtml(meta.label)}</span>
-        <span class="board-section-count">${list.length}</span>
-        ${chevron}
+  const sectionMeta=[
+    {key:'checkin',title:'Check in soon',items:groups[1],warn:true},
+    {key:'recent',title:'Observed recently',items:groups[2]}
+  ];
+  sectionMeta.forEach(section=>{
+    if(section.items.length===0)return;
+    const collapsed=isSectionCollapsed(section.key);
+    html+=`<div class="board-section">
+      <button class="board-section-head ${section.warn?'board-divider-warn':''}" onclick="toggleSection('${section.key}')" aria-expanded="${!collapsed}">
+        <span class="board-section-label">${section.title}</span>
+        <span class="board-section-count">${section.items.length}</span>
+        <span class="section-chevron">${collapsed?'▶':'▼'}</span>
       </button>
-      <div class="board-section-body" ${collapsed?'style="display:none;"':''}>
-        ${list.map(s=>renderStudentCardHtml(s,p)).join('')}
-      </div>
-    </div>`;
+      <div class="board-section-body" style="${collapsed?'display:none;':''}">`;
+    section.items.forEach(({s,p})=>{html+=renderStudentCardHtml(s,p);});
+    html+=`</div></div>`;
   });
   return html;
 }
 
-function toggleCardExpand(id, ev) {
-  if (ev) ev.stopPropagation();
-  if (expandedCards.has(id)) expandedCards.delete(id);
-  else expandedCards.add(id);
+function toggleCardExpand(id, ev){
+  if(ev){ev.stopPropagation();}
+  if(expandedCards.has(id)){expandedCards.delete(id);}else{expandedCards.add(id);}
   renderRoster();
 }
 
 function renderStudentCardHtml(s,p){
-  const obs=state.observations[s.id]?.history||[];
-  const level=inferTrajectoryLevel(obs);
-  const hasAnyObs=obs.length>0;
-  const isExpanded = expandedCards.has(s.id);
+  const observed=state.observations[s.id]?.history||[];
+  const last=observed[observed.length-1];
+  const initials=s.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  let metaText='';
+  if(observed.length===0)metaText='Never observed';
+  else{
+    const ageDays=p.age||0;
+    if(ageDays<1)metaText='Today, '+new Date(last.timestamp).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
+    else if(ageDays<2)metaText='Yesterday';
+    else metaText=Math.round(ageDays)+' days ago';
+  }
+  const isCheckIn = p.section===1;
+  const isNever = !!p.never;
+  const cardClass = isNever ? 'stale never' : (isCheckIn ? 'stale' : 'fresh');
+  const showStaleDot = isCheckIn;
+  const isExpanded=expandedCards.has(s.id);
 
-  const cardClasses=['board-card'];
-  if(p===2)cardClasses.push('fresh');if(p===1)cardClasses.push('stale');if(p===0)cardClasses.push('never');
-  const safeName=escapeHtml(s.name);const initialChar=escapeHtml(s.name[0].toUpperCase());
-  const showStaleDot=p===1;
-  const obsCountText=obs.length===0?'Tap to record first observation':obs.length===1?'1 observation':`${obs.length} observations`;
+  const seqObs=lastNObservationsForPrinciple(s,'sequence',5);
+  const corrObs=lastNObservationsForPrinciple(s,'correspondence',5);
+  const cardObs=lastNObservationsForPrinciple(s,'cardinality',5);
 
-  if(!hasAnyObs){
-    return`<div class="${cardClasses.join(' ')}" onclick="openObserve('${s.id}')">
-      <div class="bc-top">
-        <div class="bc-avatar">${initialChar}</div>
-        <div style="flex:1;min-width:0;"><div class="bc-name">${safeName}</div><div class="bc-meta">${escapeHtml(obsCountText)}</div></div>
-      </div>
-      <div class="bc-empty-nudge">
-        <div class="bc-empty-nudge-dot">+</div>
-        <span>Tap to record first observation</span>
-      </div>
-    </div>`;
+  function renderTiles(obsList){
+    const display=obsList.slice(-5);
+    let tiles='';
+    display.forEach(obs=>{
+      const principle=display===seqObs?'sequence':display===corrObs?'correspondence':'cardinality';
+      const state=principleStateOf(obs,principle);
+      if(state==='correct')tiles+='<span class="tile tile-correct"></span>';
+      else if(state==='error')tiles+='<span class="tile tile-error"></span>';
+    });
+    const empty=Math.max(0,5-display.length);
+    for(let i=0;i<empty;i++)tiles+='<span class="tile tile-empty"></span>';
+    return tiles;
   }
 
-  const lastObs = obs[obs.length-1];
-  const lastDate = new Date(lastObs.timestamp);
-  const daysSince = Math.floor((Date.now() - lastDate.getTime()) / ONE_DAY);
-  let lastSeenText;
-  if (daysSince === 0) lastSeenText = 'Seen today';
-  else if (daysSince === 1) lastSeenText = 'Seen yesterday';
-  else if (daysSince < 7) lastSeenText = `Seen ${daysSince} days ago`;
-  else lastSeenText = `Seen ${lastDate.toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
+  function principleSummary(obsList,name){
+    if(obsList.length===0)return`<span class="track-empty-text">no observations of ${name}</span>`;
+    const correct=obsList.filter(o=>principleStateOf(o,name)==='correct').length;
+    return `${correct}/${obsList.length}`;
+  }
 
-  let expandedHtml = '';
-  if (isExpanded) {
-    const tracksHtml=['sequence','correspondence','cardinality'].map(k=>{
-      const lastFive=lastNObservationsForPrinciple(obs,k,5);
-      const correct=obs.filter(o=>principleStateOf(o,k)==='correct').length;
-      const error=obs.filter(o=>principleStateOf(o,k)==='error').length;
-      const total=correct+error;
-      const attempts=lastFive.filter(x=>x==='correct'||x==='error');
-      const labels={sequence:['Sequence','seq'],correspondence:['Correspondence','corr'],cardinality:['Cardinality','card']};
-      const [lbl,suffix]=labels[k];
-      const countText=total===0?'—':`${correct}/${total}`;
-      let tilesContent;
-      if (attempts.length === 0) {
-        tilesContent = `<span class="track-empty-text">no data yet</span>`;
-      } else {
-        const padded=[...attempts,...Array(Math.max(0,5-attempts.length)).fill('empty')];
-        const tilesHtml=padded.slice(0,5).map(t=>{
-          if(t==='correct')return'<span class="tile tile-correct"></span>';
-          if(t==='error')return'<span class="tile tile-error"></span>';
-          return'<span class="tile tile-empty"></span>';
-        }).join('');
-        const moreCount=attempts.length>5?attempts.length-5:0;
-        const moreHtml=moreCount>0?`<span class="tile-more">+${moreCount}</span>`:'';
-        tilesContent = tilesHtml + moreHtml;
-      }
-      return`<div class="track track-${suffix}"><div class="track-label track-label-${suffix}"><span class="track-label-name">${lbl}</span><span class="track-count">${countText}</span></div><div class="track-tiles">${tilesContent}</div></div>`;
-    }).join('');
-
-    const trajCollapsed = level===0;
-    let pathHtml='';
-    if(!trajCollapsed){
-      const stepsHtml=Array.from({length:7},(_,i)=>{
-        const num=i+1;let cls='traj-step';
-        if(num<level)cls+=' reached';
-        if(num===level)cls+=' current';
-        if(num===1)cls+=' tip-left';else if(num===7)cls+=' tip-right';
-        const stepName=TRAJECTORIES[num-1]?.name||'';
-        return`<div class="${cls}" data-step="${num}" title="Level ${num}: ${escapeHtml(stepName)}"></div>`;
-      }).join('');
-      const captionPct=((level-1)/6)*100;
-      let alignCls='';
-      if(level===1)alignCls=' at-start';else if(level===7)alignCls=' at-end';
-      const reason=inferTrajectoryReason(obs);
-      const reasonAttr=reason?` title="${escapeHtml('Why this level? '+reason)}"`:'';
-      const captionHtml=`<div class="traj-caption-row"><span class="traj-caption${alignCls}" style="left:${captionPct.toFixed(2)}%"${reasonAttr}>${escapeHtml(TRAJECTORIES[level-1].name)}${reason?'<span class="traj-caption-why"> ⓘ</span>':''}</span></div>`;
-      pathHtml=`<div class="traj-path-wrap"><div class="traj-path">${stepsHtml}</div>${captionHtml}</div>`;
+  let trajHtml='';
+  if(observed.length>0){
+    const inferredLevel=inferTrajectoryLevel(s);
+    const reason=inferTrajectoryReason(s,inferredLevel);
+    const trajCollapsed=!isExpanded;
+    let dots='';
+    for(let i=1;i<=7;i++){
+      let cls='traj-step';
+      if(i<inferredLevel)cls+=' reached';
+      else if(i===inferredLevel)cls+=' current';
+      const tName=TRAJECTORIES[i-1].name;
+      dots+=`<div class="${cls}" title="${escapeHtml(tName)}"></div>`;
     }
-    const trajCls=trajCollapsed?'bc-trajectory collapsed':'bc-trajectory';
-
-    expandedHtml = `<div class="bc-expanded open">
-      <div class="bc-tracks-caption">
-        <span class="bc-tracks-caption-label">Last 5 observations</span>
-        <span class="bc-tracks-caption-key">
-          <span class="bc-tile-legend-item"><span class="tile tile-correct"></span>correct</span>
-          <span class="bc-tile-legend-item"><span class="tile tile-error"></span>error</span>
-          <span class="bc-tile-legend-item"><span class="tile tile-empty"></span>not yet observed</span>
-        </span>
-      </div>
-      <div class="bc-tracks">${tracksHtml}</div>
-      <div class="${trajCls}" onclick="event.stopPropagation();showView('trajectoriesView')" title="Open Learning Trajectory">
-        <span class="traj-label-btn">Learning Trajectory ${trajCollapsed?'<span class="traj-label-arrow" style="opacity:.5">→</span>':'<span class="traj-label-arrow">→</span>'}</span>
-        ${pathHtml}
+    const currentName=TRAJECTORIES[inferredLevel-1]?.name||'';
+    let captionPos='left:50%;';
+    if(inferredLevel===1)captionPos='left:5px;';
+    else if(inferredLevel===7)captionPos='right:5px;left:auto;';
+    else captionPos=`left:${((inferredLevel-1)/6)*100}%;`;
+    const captionClass=inferredLevel===1?'at-start':inferredLevel===7?'at-end':'';
+    trajHtml=`<div class="bc-trajectory" onclick="event.stopPropagation();showTrajForStudent('${s.id}')">
+      <div class="traj-label-btn">trajectory: ${escapeHtml(currentName)} <span class="traj-label-arrow">→</span></div>
+      <div class="traj-path-wrap">
+        <div class="traj-path">${dots}</div>
+        <div class="traj-caption-row">
+          <div class="traj-caption ${captionClass}" style="${captionPos}">${escapeHtml(currentName)}${reason?` <span class="traj-caption-why" title="${escapeHtml(reason)}">ⓘ</span>`:''}</div>
+        </div>
       </div>
     </div>`;
   }
 
-  return`<div class="${cardClasses.join(' ')}" onclick="openObserve('${s.id}')">
-    <div class="bc-top">
-      <div class="bc-avatar">${initialChar}${showStaleDot?'<span class="bc-stale-dot"></span>':''}</div>
-      <div style="flex:1;min-width:0;"><div class="bc-name">${safeName}</div><div class="bc-meta">${escapeHtml(lastSeenText)} · ${obs.length} obs</div></div>
-      <button class="bc-expand-btn ${isExpanded?'open':''}" onclick="toggleCardExpand('${s.id}', event)" title="${isExpanded?'Hide details':'Show details'}">
-        <span>${isExpanded?'Less':'Details'}</span><span class="chev">▼</span>
-      </button>
-    </div>
-    ${expandedHtml}
-  </div>`;
-}
+  let bcContent='';
+  if(observed.length===0){
+    bcContent=`<div class="bc-empty-nudge">
+      <div class="bc-empty-nudge-dot">+</div>
+      <span>Tap to record your first observation</span>
+    </div>`;
+  } else {
+    bcContent=`
+      <div class="bc-expanded ${isExpanded?'open':''}">
+        <div class="bc-tracks-caption">
+          <span class="bc-tracks-caption-label">Last 5 observations</span>
+          <span class="bc-tracks-caption-key">
+            <span class="bc-tile-legend-item"><span class="tile tile-correct"></span> correct</span>
+            <span class="bc-tile-legend-item"><span class="tile tile-error"></span> error</span>
+            <span class="bc-tile-legend-item"><span class="tile tile-empty"></span> n/a</span>
+          </span>
+        </div>
+        <div class="bc-tracks">
+          <div class="track track-seq"><div class="track-label track-label-seq"><span class="track-label-name">Sequence</span><span class="track-count">${principleSummary(seqObs,'sequence')}</span></div><div class="track-tiles">${renderTiles(seqObs)}</div></div>
+          <div class="track track-corr"><div class="track-label track-label-corr"><span class="track-label-name">1-to-1</span><span class="track-count">${principleSummary(corrObs,'correspondence')}</span></div><div class="track-tiles">${renderTiles(corrObs)}</div></div>
+          <div class="track track-card"><div class="track-label track-label-card"><span class="track-label-name">Cardinality</span><span class="track-count">${principleSummary(cardObs,'cardinality')}</span></div><div class="track-tiles">${renderTiles(cardObs)}</div></div>
+        </div>
+        ${trajHtml}
+      </div>
+    `;
+  }
 
-/* ══════════════════════════════════════
-   HEAT MAP
-══════════════════════════════════════ */
-function heatCellStyle(correct,error){
-  const total=correct+error;if(total===0)return null;
-  const successRate=correct/total;
-  let hue;
-  if(successRate>=0.5){hue=35+(successRate-0.5)*2*(140-35);}else{hue=8+successRate*2*(35-8);}
-  const confidence=Math.min(1,total/5);
-  const lightness=92-confidence*20;const saturation=40+confidence*35;
-  const textColor=`hsl(${hue.toFixed(0)},${(saturation+10).toFixed(0)}%,${Math.max(20,lightness-50).toFixed(0)}%)`;
-  return{bg:`hsl(${hue.toFixed(0)},${saturation.toFixed(0)}%,${lightness.toFixed(0)}%)`,text:textColor};
+  return`<div class="board-card ${cardClass}" onclick="openObserve('${s.id}')">
+    <div class="bc-top">
+      <div class="bc-avatar">${initials}${showStaleDot?'<span class="bc-stale-dot" title="Time to check in"></span>':''}</div>
+      <div style="flex:1;min-width:0;">
+        <div class="bc-name">${escapeHtml(s.name)}</div>
+        <div class="bc-meta">${metaText}</div>
+      </div>
+      <div class="bc-actions">
+        ${observed.length>0?`<button class="bc-expand-btn ${isExpanded?'open':''}" onclick="toggleCardExpand('${s.id}', event)" title="Show details">
+          <span>${isExpanded?'less':'more'}</span><span class="chev">▼</span>
+        </button>`:''}
+        <div class="bc-menu-wrap">
+          <button class="bc-menu-btn" id="bc-menu-btn-${s.id}" onclick="toggleCardMenu('${s.id}', event)" title="Options">⋯</button>
+          <div class="bc-menu-dropdown" id="bc-menu-${s.id}">
+            <button class="bc-menu-item" onclick="event.stopPropagation();renameStudent('${s.id}')">Edit</button>
+            <button class="bc-menu-item bc-menu-item-danger" onclick="event.stopPropagation();deleteStudent('${s.id}')">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    ${bcContent}
+  </div>`;
 }
 
 function renderHeatMapHtml(students){
   let html=`<div class="heatmap-wrap">`;
-  html+=`<div class="heatmap-intro"><div class="heatmap-intro-header" onclick="this.parentElement.classList.toggle('open')"><p class="heatmap-intro-title">How to read this chart</p><span class="heatmap-intro-chevron">▾</span></div><div class="heatmap-intro-body-wrap"><p class="heatmap-intro-body">This table shows how each student is doing across the three counting principles — Number Word Sequence, One-to-One Correspondence, and Cardinality. Each cell shows how many times a student demonstrated the skill out of the last 5 observations where you tapped that principle. Color goes from red (mostly errors) to green (mostly demonstrated). A dash means you haven't observed that principle for this student yet.</p></div></div>`;
-  html+=`<div class="heatmap-header"><div class="heatmap-h-name">Student</div><div class="heatmap-h-col heatmap-h-col-seq">Sequence</div><div class="heatmap-h-col heatmap-h-col-corr">Correspondence</div><div class="heatmap-h-col heatmap-h-col-card">Cardinality</div></div>`;
-  const groups={0:[],1:[],2:[]};students.forEach(s=>{groups[studentPriority(s)].push(s);});
-  const sectionMeta={0:{label:'Not observed yet',cls:''},1:{label:'Check in soon',cls:'board-divider-warn'},2:{label:'Seen recently',cls:''}};
-  [0,1,2].forEach(p=>{
-    const list=groups[p];if(!list.length)return;
-    const collapsed=isSectionCollapsed(p,list.length);const meta=sectionMeta[p];
-    const chevron=`<span class="section-chevron" style="${collapsed?'':'transform:rotate(180deg);'}">▼</span>`;
-    html+=`<div class="board-section" data-section="${p}"><button class="board-section-head ${meta.cls}" onclick="toggleSection(${p})"><span class="board-section-label">${escapeHtml(meta.label)}</span><span class="board-section-count">${list.length}</span>${chevron}</button><div class="board-section-body" ${collapsed?'style="display:none;"':''}>`;
-    list.forEach(s=>{
-      const obs=state.observations[s.id]?.history||[];
-      const rowClasses=['heatmap-row'];if(p===1)rowClasses.push('stale');if(p===0)rowClasses.push('never');
-      const showStaleDot=p===1;const initialChar=escapeHtml(s.name[0].toUpperCase());const safeName=escapeHtml(s.name);
-      const cellsHtml=['sequence','correspondence','cardinality'].map(k=>{
-        const lastFive=obs.slice(-5);
-        const correct=lastFive.filter(o=>principleStateOf(o,k)==='correct').length;
-        const error=lastFive.filter(o=>principleStateOf(o,k)==='error').length;
-        const total=correct+error;
-        if(total===0)return`<div class="heatmap-cell heatmap-cell-empty"><div class="heatmap-cell-frac">—</div><div class="heatmap-cell-rate">no data</div></div>`;
-        const style=heatCellStyle(correct,error);
-        return`<div class="heatmap-cell" style="background:${style.bg};color:${style.text};"><div class="heatmap-cell-frac">${correct} of ${total}</div></div>`;
-      }).join('');
-      html+=`<div class="${rowClasses.join(' ')}" onclick="openObserve('${s.id}')"><div class="heatmap-name"><div class="heatmap-avatar">${initialChar}${showStaleDot?'<span class="bc-stale-dot"></span>':''}</div><div class="heatmap-name-text">${safeName}</div></div>${cellsHtml}</div>`;
-    });
-    html+=`</div></div>`;
+  const introOpen = !state.heatmapIntroDismissed;
+  html+=`<div class="heatmap-intro ${introOpen?'open':''}" onclick="toggleHeatmapIntro()">
+    <div class="heatmap-intro-header">
+      <span class="heatmap-intro-title">How to read this</span>
+      <span class="heatmap-intro-chevron">▼</span>
+    </div>
+    <div class="heatmap-intro-body-wrap"><div class="heatmap-intro-body">Each row is one student. Each cell shows how often they got that principle right out of their last 5 observations. Tap any row to record a new observation.</div></div>
+  </div>`;
+  html+=`<div class="heatmap-header">
+    <div class="heatmap-h-name">Student</div>
+    <div class="heatmap-h-col heatmap-h-col-seq">Sequence</div>
+    <div class="heatmap-h-col heatmap-h-col-corr">1-to-1</div>
+    <div class="heatmap-h-col heatmap-h-col-card">Cardinality</div>
+  </div>`;
+  students.forEach(s=>{
+    const observed=state.observations[s.id]?.history||[];
+    const p=studentPriority(s);
+    const initials=s.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    const seqObs=lastNObservationsForPrinciple(s,'sequence',5);
+    const corrObs=lastNObservationsForPrinciple(s,'correspondence',5);
+    const cardObs=lastNObservationsForPrinciple(s,'cardinality',5);
+    const cellHtml=(obsList,principle)=>{
+      if(obsList.length===0)return`<div class="heatmap-cell heatmap-cell-empty"><div class="heatmap-cell-frac">—</div><div class="heatmap-cell-rate">no data</div></div>`;
+      const correct=obsList.filter(o=>principleStateOf(o,principle)==='correct').length;
+      const total=obsList.length;
+      const rate=correct/total;
+      let bg,color;
+      if(rate>=0.8){bg='#cae8d3';color='#1d5c36';}
+      else if(rate>=0.5){bg='#fef3e2';color='#a06020';}
+      else{bg='#fdecea';color='#a83225';}
+      return`<div class="heatmap-cell" style="background:${bg};color:${color};"><div class="heatmap-cell-frac">${correct}/${total}</div><div class="heatmap-cell-rate">${Math.round(rate*100)}%</div></div>`;
+    };
+    const isCheckIn = p.section===1;
+    const isNever = !!p.never;
+    const rowClass = isNever ? 'stale never' : (isCheckIn ? 'stale' : '');
+    const showStaleDot = isCheckIn;
+    html+=`<div class="heatmap-row ${rowClass}" onclick="openObserve('${s.id}')">
+      <div class="heatmap-name">
+        <div class="heatmap-avatar">${initials}${showStaleDot?'<span class="bc-stale-dot"></span>':''}</div>
+        <div class="heatmap-name-text">${escapeHtml(s.name)}</div>
+      </div>
+      ${cellHtml(seqObs,'sequence')}
+      ${cellHtml(corrObs,'correspondence')}
+      ${cellHtml(cardObs,'cardinality')}
+    </div>`;
   });
-  html+=`<div class="heatmap-legend"><span>Mostly errors</span><span class="heatmap-legend-swatches"><span class="heatmap-legend-sw" style="background:hsl(8,75%,72%)"></span><span class="heatmap-legend-sw" style="background:hsl(35,75%,72%)"></span><span class="heatmap-legend-sw" style="background:hsl(80,75%,72%)"></span><span class="heatmap-legend-sw" style="background:hsl(140,75%,72%)"></span></span><span>Mostly correct</span><span style="margin-left:6px;opacity:.7;">· Last 5 observations</span></div></div>`;
+  html+=`<div class="heatmap-legend">
+    <span>Rate of correct:</span>
+    <span class="heatmap-legend-swatches">
+      <span class="heatmap-legend-sw" style="background:#fdecea;"></span>
+      <span class="heatmap-legend-sw" style="background:#fef3e2;"></span>
+      <span class="heatmap-legend-sw" style="background:#cae8d3;"></span>
+    </span>
+    <span>0% → 100%</span>
+  </div>`;
+  html+=`</div>`;
   return html;
 }
 
-function escapeHtml(str){
-  if(str==null)return'';
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-}
-
-let _toastTimer=null;
-function showToast(message,duration=2400){
-  let el=document.getElementById('toastEl');
-  if(!el){el=document.createElement('div');el.id='toastEl';el.className='toast';document.body.appendChild(el);}
-  el.textContent=message;el.classList.add('show');
-  if(_toastTimer)clearTimeout(_toastTimer);
-  _toastTimer=setTimeout(()=>{el.classList.remove('show');},duration);
-}
-
-function flashSavedPill() {
-  const pill = document.getElementById('savedPill');
-  if (!pill) return;
-  pill.classList.add('show');
-  setTimeout(() => pill.classList.remove('show'), 1200);
+function toggleHeatmapIntro(){
+  state.heatmapIntroDismissed = !state.heatmapIntroDismissed;
+  scheduleSave();
+  renderRoster();
 }
 
 /* ══════════════════════════════════════
-   OBSERVE VIEW
+   HELPERS
+══════════════════════════════════════ */
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);}
+
+function showToast(message,duration){
+  let t=document.getElementById('appToast');
+  if(!t){t=document.createElement('div');t.id='appToast';t.className='toast';document.body.appendChild(t);}
+  t.textContent=message;t.classList.add('show');
+  clearTimeout(t._toastTimer);
+  t._toastTimer=setTimeout(()=>{t.classList.remove('show');},duration||1800);
+}
+function flashSavedPill(){
+  const pill=document.getElementById('savedPill');
+  if(!pill)return;pill.classList.add('show');
+  clearTimeout(pill._timer);
+  pill._timer=setTimeout(()=>pill.classList.remove('show'),900);
+}
+
+/* ══════════════════════════════════════
+   OBSERVE
 ══════════════════════════════════════ */
 function openObserve(id){
-  selectedStudentId=id;editingObsIdx=null;
-  const s=state.students.find(x=>x.id===id);
-  if(!s)return;
-  obsForm=freshObsForm();
-  obsFromGroups=document.getElementById('groupsView').classList.contains('active');
-  document.getElementById('obsBackLabel').textContent=obsFromGroups?'Groups':'Roster';
-  document.getElementById('obsStudentName').textContent=s.name;
+  selectedStudentId=id;editingObsIdx=null;obsFromGroups=false;
+  const student=state.students.find(s=>s.id===id);
+  if(!student)return;
+  document.getElementById('obsStudentName').textContent=student.name;
+  document.getElementById('obsBackLabel').textContent='Roster';
   document.getElementById('editBanner').style.display='none';
   document.getElementById('emptySaveWarn').classList.remove('show');
+  document.getElementById('sizeWarn').classList.remove('show');
+  obsForm=freshObsForm();
   resetObsForm();
-  applyFormToUI();
-  renderHistory();
-  updateObsNav();
-  showView('observeView');
   document.getElementById('obsScrollArea').scrollTop=0;
+  showView('observeView');
+  updateObsNav();
 }
 
-function goBackFromObs(){
-  if(obsFromGroups){showView('groupsView');renderGroups();}
-  else{showView('rosterView');renderRoster();}
-}
-
+function goBackFromObs(){if(obsFromGroups){showView('groupsView');obsFromGroups=false;}else{showView('rosterView');}}
 function updateObsNav(){
   const sorted=getSortedStudents();
   const idx=sorted.findIndex(s=>s.id===selectedStudentId);
   document.getElementById('obsPrevBtn').disabled=idx<=0;
-  document.getElementById('obsNextBtn').disabled=idx<0||idx>=sorted.length-1;
+  document.getElementById('obsNextBtn').disabled=idx>=sorted.length-1;
 }
-
 function navigateObs(dir){
   const sorted=getSortedStudents();
   const idx=sorted.findIndex(s=>s.id===selectedStudentId);
-  if(idx<0)return;
-  const nextIdx=idx+dir;
-  if(nextIdx<0||nextIdx>=sorted.length)return;
-  const scroll=document.getElementById('obsScrollArea');
-  scroll.classList.add(dir>0?'slide-left':'slide-right');
+  const newIdx=idx+dir;
+  if(newIdx<0||newIdx>=sorted.length)return;
+  const next=sorted[newIdx];
+  const sa=document.getElementById('obsScrollArea');
+  sa.classList.add(dir>0?'slide-left':'slide-right');
   setTimeout(()=>{
-    openObserve(sorted[nextIdx].id);
-    scroll.classList.remove('slide-left','slide-right');
+    selectedStudentId=next.id;
+    document.getElementById('obsStudentName').textContent=next.name;
+    obsForm=freshObsForm();editingObsIdx=null;
+    document.getElementById('editBanner').style.display='none';
+    document.getElementById('emptySaveWarn').classList.remove('show');
+    document.getElementById('sizeWarn').classList.remove('show');
+    resetObsForm();
+    sa.classList.remove('slide-left','slide-right');
+    sa.scrollTop=0;
+    updateObsNav();renderHistory();
   },140);
 }
 
 function resetObsForm(){
-  obsForm=freshObsForm();
-  ['size-1-10','size-11-20','size-21-50','size-51+'].forEach(id=>document.getElementById(id).classList.remove('selected'));
+  ['1-10','11-20','21-50','51+'].forEach(s=>document.getElementById('size-'+s).classList.remove('selected'));
   ['sequence','correspondence','cardinality'].forEach(p=>{
-    const tc=document.getElementById('tap-correct-'+p);
-    if(tc)tc.classList.remove('on');
+    document.getElementById('tap-correct-'+p).classList.remove('on');
     const hint=document.getElementById('pc-hint-'+p);
     if(hint)hint.classList.remove('hidden');
   });
   document.querySelectorAll('.tap-error').forEach(el=>el.classList.remove('on'));
   document.querySelectorAll('.sc').forEach(el=>el.classList.remove('on'));
-  document.querySelectorAll('.other-input').forEach(el=>{el.value='';el.classList.remove('open');});
-  ['err_sequence','err_correspondence','err_cardinality'].forEach(k=>{
-    const inp=document.getElementById('other-input-'+k.replace('err_','err-'));
-    if(inp)inp.value='';
-  });
+  document.querySelectorAll('.other-input').forEach(el=>{el.classList.remove('open');el.value='';});
   document.getElementById('obsNote').value='';
-  document.getElementById('noteToggleLabel').textContent='+ Add note (optional)';
+  const ne=document.getElementById('noteExpand');
+  ne.classList.remove('open');
   document.getElementById('noteToggleIcon').classList.remove('open');
-  document.getElementById('noteExpand').classList.remove('open');
-  const mdt=document.getElementById('moreDetailsToggle');
-  const mdp=document.getElementById('moreDetailsPanel');
-  if(mdt)mdt.classList.remove('open');
-  if(mdp)mdp.classList.remove('open');
+  document.getElementById('noteToggleLabel').textContent='+ Add note (optional)';
+  const md=document.getElementById('moreDetailsToggle');
+  const mp=document.getElementById('moreDetailsPanel');
+  md.classList.remove('open');mp.classList.remove('open');
+  document.getElementById('moreDetailsLabel').textContent='+ More details';
+  renderHistory();
 }
 
 function applyFormToUI(){
-  if(obsForm.size){const el=document.getElementById('size-'+obsForm.size);if(el)el.classList.add('selected');}
+  ['1-10','11-20','21-50','51+'].forEach(s=>document.getElementById('size-'+s).classList.toggle('selected',obsForm.size===s));
   ['sequence','correspondence','cardinality'].forEach(p=>{
-    const state_p=obsForm.principleState[p];
-    const tc=document.getElementById('tap-correct-'+p);
+    const correctEl=document.getElementById('tap-correct-'+p);
+    correctEl.classList.toggle('on',obsForm.principleState[p]==='correct');
     const hint=document.getElementById('pc-hint-'+p);
-    if(tc)tc.classList.toggle('on',state_p==='correct');
-    if(hint)hint.classList.toggle('hidden',state_p!==null);
+    if(hint)hint.classList.toggle('hidden',obsForm.principleState[p]!==null);
   });
-  Object.keys(obsForm.errors).forEach(err=>{
-    const el=document.getElementById('bh-'+err);
-    if(el)el.classList.toggle('on',!!obsForm.errors[err]);
+  Object.keys(obsForm.errors).forEach(key=>{
+    const el=document.getElementById('bh-'+key);
+    if(el)el.classList.toggle('on',!!obsForm.errors[key]);
   });
-  Object.keys(obsForm.strategies).forEach(strat=>{
-    const el=document.getElementById('s-'+strat);
-    if(el)el.classList.toggle('on',!!obsForm.strategies[strat]);
+  Object.keys(obsForm.strategies).forEach(key=>{
+    const el=document.getElementById('s-'+key);
+    if(el)el.classList.toggle('on',!!obsForm.strategies[key]);
   });
-  if(obsForm.otherText){
-    const stratInp=document.getElementById('other-input-strat');
-    if(stratInp){
-      stratInp.value=obsForm.otherText.strat||'';
-      stratInp.classList.toggle('open',!!obsForm.strategies.other);
+  ['err_sequence','err_correspondence','err_cardinality','strat'].forEach(k=>{
+    const el=document.getElementById('other-input-'+k);
+    if(el){
+      el.value=obsForm.otherText[k]||'';
+      const principleErr={'err_sequence':'other_sequence','err_correspondence':'other_correspondence','err_cardinality':'other_cardinality'};
+      const errKey=principleErr[k];
+      const isOpen=k==='strat'?obsForm.strategies.other:obsForm.errors[errKey];
+      el.classList.toggle('open',!!isOpen);
     }
-    ['err_sequence','err_correspondence','err_cardinality'].forEach(k=>{
-      const id='other-input-'+k.replace('err_','err-');
-      const inp=document.getElementById(id);
-      if(inp)inp.value=obsForm.otherText[k]||'';
-    });
-  }
-  const mdHasContent=Object.values(obsForm.strategies).some(v=>v)
-    || (obsForm.otherText && (obsForm.otherText.strat||obsForm.otherText.err_sequence||obsForm.otherText.err_correspondence||obsForm.otherText.err_cardinality))
-    || obsForm.errors.other_sequence||obsForm.errors.other_correspondence||obsForm.errors.other_cardinality;
-  if(mdHasContent){
-    document.getElementById('moreDetailsToggle')?.classList.add('open');
-    document.getElementById('moreDetailsPanel')?.classList.add('open');
+  });
+  const md=document.getElementById('moreDetailsToggle');
+  const mp=document.getElementById('moreDetailsPanel');
+  const anyStrat=Object.values(obsForm.strategies).some(v=>v);
+  const anyOtherText=(obsForm.otherText.strat||'').length>0;
+  const shouldOpen=anyStrat||anyOtherText;
+  if(shouldOpen){
+    md.classList.add('open');mp.classList.add('open');
+    document.getElementById('moreDetailsLabel').textContent='– More details';
+  } else {
+    md.classList.remove('open');mp.classList.remove('open');
+    document.getElementById('moreDetailsLabel').textContent='+ More details';
   }
 }
 
-function setOtherText(field,val){
-  if(!obsForm.otherText)obsForm.otherText={};
-  obsForm.otherText[field]=val;
-  document.getElementById('emptySaveWarn').classList.remove('show');
-}
+function setOtherText(key,val){obsForm.otherText[key]=val;}
 
 function setBehaviorCorrect(principle){
-  const cur=obsForm.principleState[principle];
-  if(cur==='correct'){
+  if(obsForm.principleState[principle]==='correct'){
     obsForm.principleState[principle]=null;
   } else {
     obsForm.principleState[principle]='correct';
-    ERRORS_BY_PRINCIPLE[principle].forEach(err=>{
-      obsForm.errors[err]=false;
-    });
+    ERRORS_BY_PRINCIPLE[principle].forEach(k=>{obsForm.errors[k]=false;});
+    if(principle==='sequence')obsForm.otherText.err_sequence='';
+    if(principle==='correspondence')obsForm.otherText.err_correspondence='';
+    if(principle==='cardinality')obsForm.otherText.err_cardinality='';
   }
   applyFormToUI();
   document.getElementById('emptySaveWarn').classList.remove('show');
 }
 
-function toggleBehaviorError(err,principle){
-  const principleNow=obsForm.principleState[principle];
-  if(principleNow==='correct'){
+function toggleBehaviorError(key,principle){
+  obsForm.errors[key]=!obsForm.errors[key];
+  if(obsForm.errors[key]){
     obsForm.principleState[principle]='error';
-  }
-  obsForm.errors[err]=!obsForm.errors[err];
-  const anyErr=ERRORS_BY_PRINCIPLE[principle].some(e=>obsForm.errors[e]);
-  if(anyErr){
-    obsForm.principleState[principle]='error';
-  } else if(obsForm.principleState[principle]==='error'){
-    obsForm.principleState[principle]=null;
+  } else {
+    const anyErrLeft=ERRORS_BY_PRINCIPLE[principle].some(k=>obsForm.errors[k]);
+    if(!anyErrLeft&&obsForm.principleState[principle]==='error')obsForm.principleState[principle]=null;
   }
   applyFormToUI();
   document.getElementById('emptySaveWarn').classList.remove('show');
@@ -2446,680 +2564,569 @@ function toggleBehaviorError(err,principle){
 
 function selectSize(size){
   obsForm.size=size;
-  ['size-1-10','size-11-20','size-21-50','size-51+'].forEach(id=>{
-    document.getElementById(id).classList.toggle('selected',id==='size-'+size);
-  });
-  document.getElementById('emptySaveWarn').classList.remove('show');
+  applyFormToUI();
   document.getElementById('sizeWarn').classList.remove('show');
+  document.getElementById('sizeRow').classList.remove('needs-attention');
 }
 
-function toggleStrat(key){
-  obsForm.strategies[key]=!obsForm.strategies[key];
-  const el=document.getElementById('s-'+key);
-  if(el)el.classList.toggle('on',obsForm.strategies[key]);
-  if(key==='other'){
-    const inp=document.getElementById('other-input-strat');
-    if(inp){
-      inp.classList.toggle('open',obsForm.strategies.other);
-      if(obsForm.strategies.other)setTimeout(()=>inp.focus(),60);
-    }
-  }
-  document.getElementById('emptySaveWarn').classList.remove('show');
-}
-
+function toggleStrat(key){obsForm.strategies[key]=!obsForm.strategies[key];applyFormToUI();}
 function toggleNote(){
-  const exp=document.getElementById('noteExpand');
-  const icon=document.getElementById('noteToggleIcon');
-  const lbl=document.getElementById('noteToggleLabel');
-  const open=exp.classList.toggle('open');
-  icon.classList.toggle('open',open);
-  lbl.textContent=open?'Hide note':'+ Add note (optional)';
-  if(open)setTimeout(()=>document.getElementById('obsNote').focus(),120);
+  const ne=document.getElementById('noteExpand');
+  const isOpen=ne.classList.toggle('open');
+  document.getElementById('noteToggleIcon').classList.toggle('open',isOpen);
+  document.getElementById('noteToggleLabel').textContent=isOpen?'– Hide note':'+ Add note (optional)';
+  if(isOpen)setTimeout(()=>document.getElementById('obsNote').focus(),60);
 }
-
 function toggleMoreDetails(){
-  const t=document.getElementById('moreDetailsToggle');
-  const p=document.getElementById('moreDetailsPanel');
-  const open=t.classList.toggle('open');
-  p.classList.toggle('open',open);
-  document.getElementById('moreDetailsLabel').textContent = open ? '− Hide details' : '+ More details';
+  const md=document.getElementById('moreDetailsToggle');
+  const mp=document.getElementById('moreDetailsPanel');
+  const isOpen=md.classList.toggle('open');
+  mp.classList.toggle('open',isOpen);
+  document.getElementById('moreDetailsLabel').textContent=isOpen?'– More details':'+ More details';
 }
 
-/* ══════════════════════════════════════
-   SAVE
-══════════════════════════════════════ */
-function saveObs(andNext){
-  const noPrinciple = !obsForm.principleState.sequence && !obsForm.principleState.correspondence && !obsForm.principleState.cardinality;
-  const noErrors = !Object.values(obsForm.errors).some(v=>v);
-  if (noPrinciple && noErrors) {
+async function saveObs(returnToRoster){
+  const note=document.getElementById('obsNote').value.trim();
+  const anyPrinciple=Object.values(obsForm.principleState).some(v=>v!==null);
+  if(!anyPrinciple){
     document.getElementById('emptySaveWarn').classList.add('show');
+    setTimeout(()=>document.getElementById('emptySaveWarn').scrollIntoView({behavior:'smooth',block:'center'}),50);
     return;
   }
-  if (!obsForm.size) {
+  if(!obsForm.size){
     document.getElementById('sizeWarn').classList.add('show');
+    document.getElementById('sizeRow').classList.add('needs-attention');
+    setTimeout(()=>document.getElementById('sizeSection').scrollIntoView({behavior:'smooth',block:'center'}),50);
     return;
   }
-  const obsRecord = {
-    timestamp: new Date().toISOString(),
-    collectionSize: obsForm.size,
-    principleState: { ...obsForm.principleState },
-    principles: {
-      sequence: obsForm.principleState.sequence === 'correct',
-      correspondence: obsForm.principleState.correspondence === 'correct',
-      cardinality: obsForm.principleState.cardinality === 'correct'
+  const obs={
+    timestamp:new Date().toISOString(),
+    collectionSize:obsForm.size,
+    principleState:{...obsForm.principleState},
+    principles:{
+      sequence:obsForm.principleState.sequence==='correct',
+      correspondence:obsForm.principleState.correspondence==='correct',
+      cardinality:obsForm.principleState.cardinality==='correct'
     },
-    errors: { ...obsForm.errors },
-    strategies: { ...obsForm.strategies },
-    otherText: { ...(obsForm.otherText||{}) },
-    note: document.getElementById('obsNote').value.trim()
+    errors:{...obsForm.errors},
+    strategies:{...obsForm.strategies},
+    otherText:{...obsForm.otherText},
+    note
   };
-  if(!state.observations[selectedStudentId]) state.observations[selectedStudentId]={history:[]};
+  if(!state.observations[selectedStudentId])state.observations[selectedStudentId]={history:[]};
   if(editingObsIdx!==null){
-    state.observations[selectedStudentId].history[editingObsIdx]=obsRecord;
+    state.observations[selectedStudentId].history[editingObsIdx]=obs;
     editingObsIdx=null;
     document.getElementById('editBanner').style.display='none';
   } else {
-    state.observations[selectedStudentId].history.push(obsRecord);
-    // Clear manual 'out' overrides on new observations so the student
-    // re-qualifies for groups if the new data warrants it
-    if(state.groupOverrides[selectedStudentId]){
-      Object.keys(state.groupOverrides[selectedStudentId]).forEach(k=>{
-        if(state.groupOverrides[selectedStudentId][k]==='out')
-          delete state.groupOverrides[selectedStudentId][k];
-      });
-    }
+    state.observations[selectedStudentId].history.push(obs);
   }
   scheduleSave();
   flashSavedPill();
-  if (!state.hasSeenFirstObsHint) { state.hasSeenFirstObsHint = true; }
-  if (andNext) {
-    setTimeout(()=>{ goBackFromObs(); }, 280);
+  if(returnToRoster){
+    setTimeout(()=>{showView('rosterView');renderRoster();},220);
   } else {
+    obsForm=freshObsForm();
     resetObsForm();
-    applyFormToUI();
+    document.getElementById('obsScrollArea').scrollTop=0;
     renderHistory();
   }
 }
 
 function editObs(idx){
-  const obs=state.observations[selectedStudentId]?.history[idx];
-  if(!obs)return;
+  const h=state.observations[selectedStudentId]?.history||[];
+  const obs=h[idx];if(!obs)return;
   editingObsIdx=idx;
-  obsForm = {
-    size: obs.collectionSize || null,
-    principleState: {
-      sequence: obs.principleState?.sequence ?? (obs.principles?.sequence ? 'correct' : null),
-      correspondence: obs.principleState?.correspondence ?? (obs.principles?.correspondence ? 'correct' : null),
-      cardinality: obs.principleState?.cardinality ?? (obs.principles?.cardinality ? 'correct' : null)
-    },
-    errors: {
-      skips_numbers: !!obs.errors?.skips_numbers,
-      repeats_numbers: !!obs.errors?.repeats_numbers,
-      wrong_number_word: !!obs.errors?.wrong_number_word,
-      loses_track: !!obs.errors?.loses_track,
-      double_counts: !!obs.errors?.double_counts,
-      counts_again: !!obs.errors?.counts_again,
-      other_sequence: !!obs.errors?.other_sequence,
-      other_correspondence: !!obs.errors?.other_correspondence,
-      other_cardinality: !!obs.errors?.other_cardinality
-    },
-    strategies: {
-      line: !!obs.strategies?.line,
-      groups: !!obs.strategies?.groups,
-      scattered: !!obs.strategies?.scattered,
-      other: !!obs.strategies?.other,
-      setupStudent: !!obs.strategies?.setupStudent,
-      setupTeacher: !!obs.strategies?.setupTeacher
-    },
-    otherText: {
-      err_sequence: obs.otherText?.err_sequence||'',
-      err_correspondence: obs.otherText?.err_correspondence||'',
-      err_cardinality: obs.otherText?.err_cardinality||'',
-      strat: obs.otherText?.strat||''
-    }
+  document.getElementById('editBanner').style.display='flex';
+
+  // Build full obsForm from the observation
+  obsForm = freshObsForm();
+  obsForm.size = obs.collectionSize || null;
+  obsForm.principleState = {
+    sequence: obs.principleState?.sequence ?? (obs.principles?.sequence ? 'correct' : null),
+    correspondence: obs.principleState?.correspondence ?? (obs.principles?.correspondence ? 'correct' : null),
+    cardinality: obs.principleState?.cardinality ?? (obs.principles?.cardinality ? 'correct' : null)
   };
-  resetObsForm();
+  if(obs.errors){
+    Object.keys(obsForm.errors).forEach(k=>{obsForm.errors[k]=!!obs.errors[k];});
+  }
+  if(obs.strategies){
+    Object.keys(obsForm.strategies).forEach(k=>{obsForm.strategies[k]=!!obs.strategies[k];});
+  }
+  if(obs.otherText){
+    Object.keys(obsForm.otherText).forEach(k=>{obsForm.otherText[k]=obs.otherText[k]||'';});
+  }
+
+  // Apply everything to UI
   applyFormToUI();
-  document.getElementById('obsNote').value=obs.note||'';
-  if(obs.note){
+
+  // Populate note and open note panel if non-empty
+  const noteVal = obs.note || '';
+  document.getElementById('obsNote').value = noteVal;
+  if(noteVal){
     document.getElementById('noteExpand').classList.add('open');
     document.getElementById('noteToggleIcon').classList.add('open');
-    document.getElementById('noteToggleLabel').textContent='Hide note';
+    document.getElementById('noteToggleLabel').textContent='– Hide note';
+  } else {
+    document.getElementById('noteExpand').classList.remove('open');
+    document.getElementById('noteToggleIcon').classList.remove('open');
+    document.getElementById('noteToggleLabel').textContent='+ Add note (optional)';
   }
-  document.getElementById('editBanner').style.display='flex';
+
   document.getElementById('obsScrollArea').scrollTop=0;
 }
 
 function cancelEdit(){
   editingObsIdx=null;
   document.getElementById('editBanner').style.display='none';
+  obsForm=freshObsForm();
   resetObsForm();
-  applyFormToUI();
 }
 
 async function deleteObs(idx){
-  const confirmed=await dlgConfirm('Delete this observation? This cannot be undone.','Delete observation','Delete',true);
-  if(!confirmed)return;
+  const ok=await dlgConfirm('Delete this observation?','Delete observation','Delete',true);
+  if(!ok)return;
   state.observations[selectedStudentId].history.splice(idx,1);
-  scheduleSave();
-  renderHistory();
-  if(editingObsIdx===idx){cancelEdit();}
+  scheduleSave();renderHistory();
 }
 
 function toggleHistory(){
   const body=document.getElementById('historyBody');
   const chev=document.getElementById('historyChevron');
-  const open=body.classList.toggle('open');
-  if(chev)chev.style.transform=open?'rotate(180deg)':'rotate(0)';
-  if(open)renderHistory();
+  const isOpen=body.classList.toggle('open');
+  chev.style.transform=isOpen?'rotate(180deg)':'rotate(0deg)';
+  if(isOpen)renderHistory();
 }
 
 function renderHistory(){
   const body=document.getElementById('historyBody');
   if(!body)return;
-  const obs=state.observations[selectedStudentId]?.history||[];
-  if(!obs.length){body.innerHTML=`<div style="padding:14px;font-size:12px;color:var(--ink-4);font-style:italic;text-align:center;">No observations recorded yet.</div>`;return;}
-  const recent=obs.slice().reverse();
-  body.innerHTML=recent.map((o,reverseIdx)=>{
-    const realIdx=obs.length-1-reverseIdx;
-    const dt=new Date(o.timestamp);
-    const dateStr=dt.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' · '+dt.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
-    let tags=[];
+  const h=state.observations[selectedStudentId]?.history||[];
+  if(h.length===0){
+    body.innerHTML=`<div style="padding:18px 14px;font-size:12px;color:var(--ink-4);font-style:italic;text-align:center;">No prior observations.</div>`;return;
+  }
+  const sorted=h.slice().reverse();
+  body.innerHTML=sorted.map((obs,sortedIdx)=>{
+    const idx=h.length-1-sortedIdx;
+    const date=new Date(obs.timestamp);
+    const dateStr=date.toLocaleDateString([],{month:'short',day:'numeric'})+' · '+date.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
+    let tags='';
     ['sequence','correspondence','cardinality'].forEach(p=>{
-      const st=principleStateOf(o,p);
-      const labels={sequence:'Seq',correspondence:'Corr',cardinality:'Card'};
-      if(st==='correct')tags.push(`<span class="obs-tag-green">${labels[p]} ✓</span>`);
-      else if(st==='error')tags.push(`<span class="obs-tag-red">${labels[p]} ✕</span>`);
+      const st=principleStateOf(obs,p);
+      const label=p==='sequence'?'Sequence':p==='correspondence'?'1-to-1':'Cardinality';
+      if(st==='correct')tags+=`<span class="obs-tag-green">✓ ${label}</span>`;
+      else if(st==='error')tags+=`<span class="obs-tag-red">✕ ${label}</span>`;
     });
-    if(o.collectionSize)tags.push(`<span class="obs-size-tag">${escapeHtml(o.collectionSize)}</span>`);
-    Object.entries(o.errors||{}).forEach(([k,v])=>{
-      if(!v)return;
-      const labels=ERROR_LABELS;
-      tags.push(`<span class="obs-tag-amber">${escapeHtml(labels[k]||k)}</span>`);
-    });
-    return`<div class="obs-item"><div class="obs-item-header"><span class="obs-date">${escapeHtml(dateStr)}</span><div class="obs-item-actions"><button class="obs-btn" onclick="editObs(${realIdx})">Edit</button><button class="obs-btn" onclick="deleteObs(${realIdx})">Delete</button></div></div><div class="obs-tags">${tags.join('')}</div>${o.note?`<div class="obs-note-text">"${escapeHtml(o.note)}"</div>`:''}</div>`;
+    Object.keys(obs.errors||{}).forEach(k=>{if(obs.errors[k]&&ERROR_LABELS[k])tags+=`<span class="obs-tag-amber">${escapeHtml(ERROR_LABELS[k])}</span>`;});
+    const sizeTag=obs.collectionSize?`<span class="obs-size-tag">${obs.collectionSize} obj</span>`:'';
+    const noteHtml=obs.note?`<div class="obs-note-text">"${escapeHtml(obs.note)}"</div>`:'';
+    return`<div class="obs-item">
+      <div class="obs-item-header">
+        <div>
+          <div class="obs-date">${dateStr}</div>
+          ${sizeTag?'<div style="margin-top:4px;">'+sizeTag+'</div>':''}
+        </div>
+        <div class="obs-item-actions">
+          <button class="obs-btn" onclick="editObs(${idx})">Edit</button>
+          <button class="obs-btn" onclick="deleteObs(${idx})">Delete</button>
+        </div>
+      </div>
+      <div class="obs-tags">${tags}</div>
+      ${noteHtml}
+    </div>`;
   }).join('');
 }
 
-function principleStateOf(obs,key){
-  if(obs.principleState&&obs.principleState[key]!==undefined)return obs.principleState[key];
-  const wasCorrect=!!obs.principles?.[key];
-  const errorsForKey=ERRORS_BY_PRINCIPLE[key]||[];
-  const hasError=errorsForKey.some(e=>obs.errors&&obs.errors[e]);
-  if(hasError)return'error';
-  if(wasCorrect)return'correct';
+function principleStateOf(obs,principle){
+  if(obs.principleState&&obs.principleState[principle]!==undefined)return obs.principleState[principle];
+  if(obs.principles&&obs.principles[principle])return'correct';
+  if(obs.errors){const errs=ERRORS_BY_PRINCIPLE[principle];if(errs.some(k=>obs.errors[k]))return'error';}
   return null;
 }
 
 /* ══════════════════════════════════════
    GROUPS
 ══════════════════════════════════════ */
-async function extractNoteTags(note, studentId, obsIdx){
-  if(!note||!note.trim())return;
-  try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:200,
-        system:`You extract short instructional tags from a kindergarten teacher's observation note about a student counting objects. Return ONLY a JSON array of 1–4 short tags (2–4 words each) that would be useful for a teacher planning a small group counting lesson. Focus on: what the student did physically, whether they needed support, attention/focus, or any notable behavior. If the note contains nothing instructionally useful, return []. No explanation, no markdown, just the JSON array.`,
-        messages:[{role:'user',content:`Note: "${note}"`}]
-      })
-    });
-    const data=await res.json();
-    const text=(data.content||[]).map(b=>b.text||'').join('').trim();
-    const tags=JSON.parse(text.replace(/```json|```/g,'').trim());
-    if(!Array.isArray(tags))return;
-    const history=state.observations[studentId]?.history;
-    if(!history||!history[obsIdx])return;
-    history[obsIdx].noteTags=tags;
-    scheduleSave();
-    if(document.getElementById('groupsGrid')?.offsetParent!==null)renderGroups();
-  }catch(e){/* silent fail — tags are non-critical */}
-}
-
 function calcNeeds(studentId){
-  const obs=state.observations[studentId]?.history||[];
-  if(!obs.length)return[];
-  const overrides=state.groupOverrides[studentId]||{};
-  const lastN=obs.slice(-5);
-  const counts={
-    sequence:{correct:0,error:0,withSignal:0},
-    correspondence:{correct:0,error:0,withSignal:0},
-    cardinality:{correct:0,error:0,withSignal:0}
-  };
-  lastN.forEach(o=>{
-    ['sequence','correspondence','cardinality'].forEach(k=>{
-      const st=principleStateOf(o,k);
-      if(st==='correct'){counts[k].correct++;counts[k].withSignal++;}
-      else if(st==='error'){counts[k].error++;counts[k].withSignal++;}
-    });
-  });
+  const history=state.observations[studentId]?.history||[];
+  if(history.length===0)return[];
+  const latest=history[history.length-1];
   const needs=[];
-  ['sequence','correspondence','cardinality'].forEach(k=>{
-    if(overrides[k]==='out')return;
-    const c=counts[k];
-    if(c.error>=1)needs.push(k);
-  });
-  Object.entries(overrides).forEach(([k,v])=>{
-    if(v==='in'&&!needs.includes(k))needs.push(k);
+  ['sequence','correspondence','cardinality'].forEach(principle=>{
+    const st=principleStateOf(latest,principle);
+    let hasError=(st==='error');
+    if(!hasError){
+      const errKeys=ERRORS_BY_PRINCIPLE[principle]||[];
+      if(errKeys.some(k=>latest.errors&&latest.errors[k]))hasError=true;
+    }
+    if(hasError)needs.push(principle);
   });
   return needs;
 }
 
-async function removeFromGroup(studentId,principle){
-  if(!state.groupOverrides[studentId])state.groupOverrides[studentId]={};
-  state.groupOverrides[studentId][principle]='out';
-  scheduleSave();renderGroups();updateGroupsBadge();
-}
-
 function buildContextTags(studentId,principle){
-  const obs=state.observations[studentId]?.history||[];
-  if(obs.length<3)return[];
   const tags=[];
-  const small=obs.filter(o=>o.collectionSize==='1-10');
-  const large=obs.filter(o=>['11-20','21-50','51+'].includes(o.collectionSize));
-  if(small.length>=2&&large.length>=2){
-    const smallErr=small.filter(o=>principleStateOf(o,principle)==='error').length/small.length;
-    const largeErr=large.filter(o=>principleStateOf(o,principle)==='error').length/large.length;
-    if(smallErr<=0.3&&largeErr>=0.6)tags.push({text:'larger sets only',cls:'gs-tag-pattern'});
-    if(smallErr>=0.6&&largeErr<=0.3)tags.push({text:'small sets too',cls:'gs-tag-pattern'});
+  const history=state.observations[studentId]?.history||[];
+  if(history.length===0)return tags;
+  const latest=history[history.length-1];
+
+  // Errors from this principle on the latest observation
+  const errKeys=ERRORS_BY_PRINCIPLE[principle]||[];
+  errKeys.forEach(k=>{
+    if(latest.errors&&latest.errors[k]&&ERROR_LABELS[k]){
+      tags.push({type:'pattern',label:ERROR_LABELS[k]});
+    }
+  });
+
+  // Collection size from the latest observation
+  if(latest.collectionSize){
+    tags.push({type:'size',label:latest.collectionSize+' objects'});
   }
-  const arrangedKeys=['line','groups'];
-  const messyKeys=['scattered'];
-  const arranged=obs.filter(o=>o.strategies&&arrangedKeys.some(k=>o.strategies[k]));
-  const messy=obs.filter(o=>o.strategies&&messyKeys.some(k=>o.strategies[k]));
-  if(arranged.length>=2&&messy.length>=2){
-    const aErr=arranged.filter(o=>principleStateOf(o,principle)==='error').length/arranged.length;
-    const mErr=messy.filter(o=>principleStateOf(o,principle)==='error').length/messy.length;
-    if(aErr<=0.3&&mErr>=0.6)tags.push({text:'scattered only',cls:'gs-tag-pattern'});
+
+  // Arrangement from the latest observation
+  if(latest.strategies){
+    const arrLabels={line:'lined up',groups:'in groups',scattered:'scattered'};
+    Object.keys(arrLabels).forEach(k=>{
+      if(latest.strategies[k])tags.push({type:'arrangement',label:arrLabels[k]});
+    });
+    if(latest.strategies.other&&latest.otherText&&latest.otherText.strat){
+      tags.push({type:'arrangement',label:latest.otherText.strat});
+    }
+    if(latest.strategies.setupStudent)tags.push({type:'arrangement',label:'student set up'});
+    if(latest.strategies.setupTeacher)tags.push({type:'arrangement',label:'teacher set up'});
   }
+
   return tags;
 }
 
 function renderGroups(){
+  closeStudentModal();
   const grid=document.getElementById('groupsGrid');
-  const studentsByPrinciple={sequence:[],correspondence:[],cardinality:[]};
-  state.students.forEach(s=>{
-    const needs=calcNeeds(s.id);
-    needs.forEach(p=>studentsByPrinciple[p].push(s));
-  });
   let html='';
   GROUP_CONFIG.forEach(cfg=>{
-    const list=studentsByPrinciple[cfg.key];
-    const badgeCls=list.length===0?'badge-zero':cfg.badgeClass;
-    let studentsHtml=list.length===0
-      ?`<div class="group-empty">No students currently flagged for this support.</div>`
-      :list.map(s=>{
-        const initialChar=escapeHtml(s.name[0].toUpperCase());
-        const safeName=escapeHtml(s.name);
-        const obs=state.observations[s.id]?.history||[];
-        const ctx=buildContextTags(s.id,cfg.key);
-        // Most recent obs with an error for this principle
-        const errKeys=ERRORS_BY_PRINCIPLE[cfg.key];
-        const lastErrObs=[...obs].reverse().find(o=>
-          principleStateOf(o,cfg.key)==='error' ||
-          errKeys.some(e=>o.errors&&o.errors[e])
-        );
-        const recentErrors=lastErrObs
-          ?errKeys.filter(e=>lastErrObs.errors&&lastErrObs.errors[e]).map(e=>ERROR_LABELS[e])
-          :[];
-        const recentSize=lastErrObs?.collectionSize||obs[obs.length-1]?.collectionSize||null;
-        const metaParts=[];
-        if(recentErrors.length)metaParts.push(recentErrors.join(', '));
-        else if(lastErrObs)metaParts.push('Error observed');
-        if(recentSize)metaParts.push(recentSize+' objects');
-        const metaText=metaParts.length?metaParts.join(' · '):`${obs.length} obs`;
-        // Most recent obs for note + arrangement
-        const lastObs=obs[obs.length-1];
-        const arrangementLabels={line:'Lined up',groups:'In groups',scattered:'Scattered'};
-        const arrangements=lastObs?Object.entries(arrangementLabels)
-          .filter(([k])=>lastObs.strategies&&lastObs.strategies[k])
-          .map(([,v])=>v):[];
-        if(lastObs?.strategies?.other&&lastObs.otherText?.strat)arrangements.push(lastObs.otherText.strat);
-        const note=lastObs?.note||'';
-        return`<div class="group-student" onclick="openStudentModal('${s.id}')">
-          <div class="gs-avatar ${cfg.avatarClass}">${initialChar}</div>
+    let list=[];
+    state.students.forEach(s=>{
+      const needs=calcNeeds(s.id);
+      if(needs.includes(cfg.key))list.push(s);
+    });
+    list.sort((a,b)=>a.name.localeCompare(b.name));
+    const badgeClass=list.length===0?'badge-zero':cfg.badgeClass;
+    let bodyHtml='';
+    if(list.length===0){
+      bodyHtml=`<div class="group-empty">No students in this group based on their most recent observation. Nice work!</div>`;
+    } else {
+      list.forEach(s=>{
+        const initials=s.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+        const ctxTags=buildContextTags(s.id,cfg.key);
+        const tagsHtml=ctxTags.length>0?`<div class="gs-context-tags">${ctxTags.map(t=>`<span class="gs-tag gs-tag-${t.type}">${escapeHtml(t.label)}</span>`).join('')}</div>`:'';
+        const hist=state.observations[s.id]?.history||[];
+        const latest=hist[hist.length-1];
+        const noteHtml=latest&&latest.note?`<div class="gs-note">"${escapeHtml(latest.note)}"</div>`:'';
+        bodyHtml+=`<div class="group-student" onclick="openStudentModal('${s.id}')">
+          <div class="gs-avatar ${cfg.avatarClass}">${initials}</div>
           <div class="gs-info">
-            <div class="gs-name">${safeName}</div>
-            <div class="gs-meta">${escapeHtml(metaText)}</div>
-            ${arrangements.length?`<div class="gs-context-tags">${arrangements.map(a=>`<span class="gs-tag gs-tag-arrangement">${escapeHtml(a)}</span>`).join('')}</div>`:''}
-            ${note?`<div class="gs-note">"${escapeHtml(note)}"</div>`:''}
+            <div class="gs-name">${escapeHtml(s.name)}</div>
+            ${tagsHtml}
+            ${noteHtml}
           </div>
-          <button class="gs-remove" onclick="event.stopPropagation();removeFromGroup('${s.id}','${cfg.key}')" title="Remove from this group">remove</button>
         </div>`;
-      }).join('');
-    const tryBullets=cfg.try.map(t=>`<div class="group-try-bullet">${escapeHtml(t)}</div>`).join('');
+      });
+    }
     html+=`<div class="group-card">
       <div class="group-head ${cfg.headClass}">
         <div class="group-head-row">
-          <div class="group-head-title ${cfg.titleClass}">${escapeHtml(cfg.title)}</div>
-          <span class="group-badge ${badgeCls}">${list.length}</span>
+          <div class="group-head-title ${cfg.titleClass}">${cfg.title}</div>
+          <span class="group-badge ${badgeClass}">${list.length}</span>
         </div>
       </div>
-      ${studentsHtml}
-      <div class="group-try-toggle" onclick="toggleGroupTry('${cfg.key}')">
-        <span>Teaching Ideas</span>
-        <span id="group-try-chev-${cfg.key}" style="font-size:11px;color:var(--ink-4);transition:transform .2s;">▼</span>
+      ${bodyHtml}
+      <div class="group-try-toggle" onclick="toggleGroupTry('${cfg.key}')"><span>▶ Try This</span><span id="gtchev-${cfg.key}" style="font-size:9px;">▼</span></div>
+      <div class="group-try-body" id="gtbody-${cfg.key}">
+        ${cfg.try.map(t=>`<div class="group-try-bullet">${escapeHtml(t)}</div>`).join('')}
       </div>
-      <div class="group-try-body" id="group-try-body-${cfg.key}">${tryBullets}</div>
     </div>`;
   });
   grid.innerHTML=html;
 }
 
 function toggleGroupTry(key){
-  const body=document.getElementById('group-try-body-'+key);
-  const chev=document.getElementById('group-try-chev-'+key);
-  const open=body.classList.toggle('open');
-  if(chev)chev.style.transform=open?'rotate(180deg)':'rotate(0)';
+  const body=document.getElementById('gtbody-'+key);
+  const chev=document.getElementById('gtchev-'+key);
+  const isOpen=body.classList.toggle('open');
+  chev.style.transform=isOpen?'rotate(180deg)':'rotate(0deg)';
 }
 
 function openStudentModal(id){
   const s=state.students.find(x=>x.id===id);
   if(!s)return;
-  selectedStudentId=id;
-  const obs=state.observations[id]?.history||[];
-  document.getElementById('studentModalAvatar').textContent=s.name[0].toUpperCase();
+  const initials=s.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('studentModalAvatar').textContent=initials;
   document.getElementById('studentModalName').textContent=s.name;
-  document.getElementById('studentModalMeta').textContent=`${obs.length} observation${obs.length===1?'':'s'}`;
-  const histEl=document.getElementById('studentModalHistory');
-  if(!obs.length){
-    histEl.innerHTML=`<div class="smo-empty">No observations recorded yet.</div>`;
+  const hist=state.observations[s.id]?.history||[];
+  document.getElementById('studentModalMeta').textContent=hist.length===0?'No observations yet':`${hist.length} observation${hist.length===1?'':'s'}`;
+  const recent=hist.slice(-5).reverse();
+  let histHtml='';
+  if(recent.length===0){
+    histHtml=`<div class="smo-empty">No observations recorded.</div>`;
   } else {
-    const recent=obs.slice().reverse().slice(0,5);
-    histEl.innerHTML=recent.map(o=>{
-      const dt=new Date(o.timestamp);
-      const dateStr=dt.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' · '+dt.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
-      let tags=[];
+    recent.forEach(obs=>{
+      const date=new Date(obs.timestamp);
+      const dateStr=date.toLocaleDateString([],{month:'short',day:'numeric'})+' · '+date.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
+      let tags='';
       ['sequence','correspondence','cardinality'].forEach(p=>{
-        const st=principleStateOf(o,p);
-        const labels={sequence:'Seq',correspondence:'Corr',cardinality:'Card'};
-        if(st==='correct')tags.push(`<span class="obs-tag-green">${labels[p]} ✓</span>`);
-        else if(st==='error')tags.push(`<span class="obs-tag-red">${labels[p]} ✕</span>`);
+        const st=principleStateOf(obs,p);
+        const label=p==='sequence'?'Sequence':p==='correspondence'?'1-to-1':'Cardinality';
+        if(st==='correct')tags+=`<span class="obs-tag-green">✓ ${label}</span>`;
+        else if(st==='error')tags+=`<span class="obs-tag-red">✕ ${label}</span>`;
       });
-      if(o.collectionSize)tags.push(`<span class="obs-size-tag">${escapeHtml(o.collectionSize)}</span>`);
-      return`<div class="smo-item"><div class="smo-date">${escapeHtml(dateStr)}</div><div class="smo-tags">${tags.join('')}</div>${o.note?`<div class="smo-note">"${escapeHtml(o.note)}"</div>`:''}</div>`;
-    }).join('');
+      const noteHtml=obs.note?`<div class="smo-note">"${escapeHtml(obs.note)}"</div>`:'';
+      histHtml+=`<div class="smo-item">
+        <div class="smo-date">${dateStr}</div>
+        <div class="smo-tags">${tags}</div>
+        ${noteHtml}
+      </div>`;
+    });
   }
-  document.getElementById('studentModalObsBtn').onclick=()=>{closeStudentModal();openObserve(id);};
+  document.getElementById('studentModalHistory').innerHTML=histHtml;
+  document.getElementById('studentModalObsBtn').onclick=()=>{closeStudentModal();obsFromGroups=true;openObserve(id);};
   document.getElementById('studentModalBackdrop').classList.add('open');
 }
-
 function closeStudentModal(e){
-  if(e&&e.target!==document.getElementById('studentModalBackdrop'))return;
+  if(e&&e.target!==e.currentTarget)return;
   document.getElementById('studentModalBackdrop').classList.remove('open');
 }
 
 function printGroups(){
-  const w=window.open('','_blank');
-  if(!w){dlgAlert('Please allow popups to print groups.');return;}
-  const studentsByPrinciple={sequence:[],correspondence:[],cardinality:[]};
-  state.students.forEach(s=>{const needs=calcNeeds(s.id);needs.forEach(p=>studentsByPrinciple[p].push(s));});
-  let body='<h1>Small Group Suggestions</h1><p style="font-style:italic;color:#666;">Generated '+new Date().toLocaleDateString()+'</p>';
+  const win=window.open('','_blank');
+  if(!win){dlgAlert('Pop-up blocked. Please allow pop-ups for printing.','Print groups');return;}
+  const teacherCode=currentTeacher?.code||'';
+  let body=`<style>
+    body{font-family:Georgia,serif;max-width:7in;margin:.4in auto;color:#222;}
+    h1{font-size:18pt;margin:0 0 .1in;}
+    .meta{font-size:10pt;color:#888;margin-bottom:.25in;}
+    h2{font-size:13pt;margin:.25in 0 .08in;border-bottom:1.5px solid #ccc;padding-bottom:3px;}
+    .grp{page-break-inside:avoid;margin-bottom:.25in;}
+    .stu{display:inline-block;margin:0 8px 4px 0;padding:3px 10px;background:#f3eee2;border-radius:14px;font-size:11pt;}
+    .empty{font-style:italic;color:#999;font-size:11pt;}
+    .try{margin-top:6px;background:#fefae0;border-left:3px solid #c85a2a;padding:8px 12px;font-size:11pt;}
+    .try-title{font-size:9pt;font-weight:700;text-transform:uppercase;color:#888;letter-spacing:.06em;margin-bottom:4px;}
+    .try ul{margin:6px 0 0 18px;padding:0;}
+    .try li{margin:4px 0;font-size:11pt;line-height:1.55;}
+    @media print{body{margin:.4in;}}
+  </style>
+  <h1>Small Groups — Counting</h1>
+  <div class="meta">${escapeHtml(teacherCode)} · ${new Date().toLocaleDateString()}</div>`;
   GROUP_CONFIG.forEach(cfg=>{
-    const list=studentsByPrinciple[cfg.key];
-    body+='<h2 style="margin-top:24px;border-bottom:2px solid #333;padding-bottom:4px;">'+cfg.title+' ('+list.length+')</h2>';
-    if(!list.length){body+='<p><em>No students currently flagged.</em></p>';}
-    else{body+='<ul>'+list.map(s=>'<li>'+escapeHtml(s.name)+'</li>').join('')+'</ul>';}
-    body+='<p style="background:#f5f0e8;border-left:3px solid #c85a2a;padding:8px 12px;font-size:13px;"><strong>Teaching Ideas:</strong> '+cfg.try.map(t=>escapeHtml(t)).join(' ')+'</p>';
+    let list=[];
+    state.students.forEach(s=>{
+      const needs=calcNeeds(s.id);
+      if(needs.includes(cfg.key))list.push(s);
+    });
+    list.sort((a,b)=>a.name.localeCompare(b.name));
+    body+=`<div class="grp"><h2>${escapeHtml(cfg.title)} (${list.length})</h2>`;
+    if(list.length===0){
+      body+=`<div class="empty">No students currently in this group.</div>`;
+    } else {
+      body+=list.map(s=>`<span class="stu">${escapeHtml(s.name)}</span>`).join('');
+    }
+    body+=`<div class="try">
+      <div class="try-title">Teaching Ideas</div>
+      <ul>${cfg.try.map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul>
+    </div>`;
+    body+=`</div>`;
   });
-  w.document.write('<html><head><title>Small Groups</title><style>body{font-family:sans-serif;max-width:680px;margin:24px auto;padding:0 16px;color:#222;}h1{font-size:20px;}h2{font-size:15px;}li{margin:3px 0;}</style></head><body>'+body+'</body></html>');
-  w.document.close();
-  setTimeout(()=>{try{w.print();}catch(e){}},300);
+  win.document.write('<!DOCTYPE html><html><head><title>Counting Groups</title></head><body>'+body+'</body></html>');
+  win.document.close();
+  setTimeout(()=>{win.print();},400);
 }
 
 /* ══════════════════════════════════════
    CLASS OVERVIEW
 ══════════════════════════════════════ */
 function toggleClassOverview(){
-  const c=document.getElementById('classViewContent');
+  const content=document.getElementById('classViewContent');
   const chev=document.getElementById('classOverviewChevron');
-  const open=c.style.display==='block';
-  if(open){c.style.display='none';if(chev)chev.style.transform='rotate(0deg)';}
-  else{c.style.display='block';if(chev)chev.style.transform='rotate(180deg)';renderClassView();}
+  const isOpen=content.style.display!=='none';
+  if(isOpen){
+    content.style.display='none';
+    chev.style.transform='rotate(0deg)';
+  } else {
+    renderClassView();
+    content.style.display='block';
+    chev.style.transform='rotate(180deg)';
+  }
 }
 
 function renderClassView(){
-  const el=document.getElementById('classViewContent');
-  const students=state.students.slice().sort((a,b)=>a.name.localeCompare(b.name));
-  if(!students.length){el.innerHTML='<div style="text-align:center;color:var(--ink-4);font-size:13px;padding:14px;">No students yet.</div>';return;}
-  let html='<table class="cv-table"><thead><tr><th>Student</th><th>Sequence</th><th>Correspondence</th><th>Cardinality</th><th>Obs</th></tr></thead><tbody>';
-  students.forEach(s=>{
-    const obs=state.observations[s.id]?.history||[];
-    const cells=['sequence','correspondence','cardinality'].map(k=>{
-      const correct=obs.filter(o=>principleStateOf(o,k)==='correct').length;
-      const error=obs.filter(o=>principleStateOf(o,k)==='error').length;
-      const total=correct+error;
-      if(total===0)return'<td><span class="cv-check cv-check-none">—</span></td>';
-      const pct=correct/total;
-      if(pct>=0.7)return'<td><span class="cv-check cv-check-yes">'+correct+'/'+total+'</span></td>';
-      return'<td><span class="cv-check cv-check-no">'+correct+'/'+total+'</span></td>';
-    }).join('');
-    html+='<tr><td>'+escapeHtml(s.name)+'</td>'+cells+'<td>'+obs.length+'</td></tr>';
+  const wrap=document.getElementById('classViewContent');
+  if(state.students.length===0){wrap.innerHTML=`<div style="font-size:12px;color:var(--ink-4);padding:8px;">No students yet.</div>`;return;}
+  let html=`<table class="cv-table"><thead><tr><th>Student</th><th>Sequence</th><th>1-to-1</th><th>Cardinality</th></tr></thead><tbody>`;
+  state.students.forEach(s=>{
+    const hist=state.observations[s.id]?.history||[];
+    const latest=hist[hist.length-1];
+    const cell=p=>{
+      if(!latest)return`<span class="cv-check cv-check-none">—</span>`;
+      const st=principleStateOf(latest,p);
+      if(st==='correct')return`<span class="cv-check cv-check-yes">✓</span>`;
+      if(st==='error')return`<span class="cv-check cv-check-no">✕</span>`;
+      return`<span class="cv-check cv-check-none">—</span>`;
+    };
+    html+=`<tr><td>${escapeHtml(s.name)}</td><td>${cell('sequence')}</td><td>${cell('correspondence')}</td><td>${cell('cardinality')}</td></tr>`;
   });
-  html+='</tbody></table>';
-  html+='<div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:center;margin-top:12px;padding:8px 4px 0;border-top:1px dashed var(--paper-3);font-family:\'Sora\',sans-serif;font-size:11px;color:var(--ink-4);font-style:italic;">'
-    +'<span style="display:inline-flex;align-items:center;gap:6px;"><span class="cv-check cv-check-yes" style="width:20px;height:20px;font-size:9px;">3/4</span>mostly correct (70%+)</span>'
-    +'<span style="display:inline-flex;align-items:center;gap:6px;"><span class="cv-check cv-check-no" style="width:20px;height:20px;font-size:9px;">1/4</span>needs practice</span>'
-    +'<span style="display:inline-flex;align-items:center;gap:6px;"><span class="cv-check cv-check-none" style="width:20px;height:20px;font-size:9px;">—</span>no data yet</span>'
-    +'</div>';
-  el.innerHTML=html;
+  html+=`</tbody></table>`;
+  wrap.innerHTML=html;
 }
 
 /* ══════════════════════════════════════
    TRAJECTORIES
 ══════════════════════════════════════ */
+function showTrajForStudent(id){
+  showView('trajectoriesView');
+  const s=state.students.find(x=>x.id===id);if(!s)return;
+  const level=inferTrajectoryLevel(s);
+  if(level)setTimeout(()=>showTrajDetail(level),200);
+}
+function showTrajDetail(level){
+  const t=TRAJECTORIES[level-1];if(!t)return;
+  document.getElementById('trajDetailTitle').textContent=`Level ${level}: ${t.name}`;
+  const indicators=t.indicators.map(i=>`<li>${i}</li>`).join('');
+  document.getElementById('trajDetailContent').innerHTML=`
+    <div class="traj-section"><div class="traj-section-label">Description</div><p>${t.description}</p></div>
+    <div class="traj-section"><div class="traj-section-label">Indicators</div><ul class="traj-indicators">${indicators}</ul></div>
+    <div class="traj-section"><div class="traj-section-label">Try this</div><div class="traj-teaching-box">${t.teachingFocus}</div></div>
+    ${t.context?`<div class="traj-section"><div class="traj-section-label">Context</div><div class="traj-context-box">${t.context}</div></div>`:''}
+  `;
+  document.getElementById('trajDetailsPanel').classList.add('visible');
+  setTimeout(()=>{document.getElementById('trajDetailsPanel').scrollIntoView({behavior:'smooth',block:'start'});},80);
+}
+function closeTrajDetail(){document.getElementById('trajDetailsPanel').classList.remove('visible');}
+
 function renderTrajectories(){
   const tl=document.getElementById('trajectoriesTimeline');
   tl.innerHTML=TRAJECTORIES.map((t,i)=>{
     const c=TRAJ_COLORS[i];
-    return`<div class="traj-node" onclick="showTrajDetail(${i})"><div class="traj-node-inner"><div class="traj-number" style="background:${c.bg};color:${c.num};">${t.level}</div><div class="traj-name">${escapeHtml(t.name)}</div><div class="traj-hint">tap to learn</div></div></div>`;
+    return `<div class="traj-node" onclick="showTrajDetail(${t.level})">
+      <div class="traj-node-inner" style="border-color:${c.bg};">
+        <div class="traj-number" style="background:${c.bg};color:${c.num};">${t.level}</div>
+        <div class="traj-name">${t.name}</div>
+        <div class="traj-hint">Tap →</div>
+      </div>
+    </div>`;
   }).join('');
 }
-
-function showTrajDetail(i){
-  const t=TRAJECTORIES[i];if(!t)return;
-  document.getElementById('trajDetailTitle').textContent='Level '+t.level+': '+t.name;
-  const indicators=t.indicators.map(x=>'<li>'+escapeHtml(x)+'</li>').join('');
-  document.getElementById('trajDetailContent').innerHTML=
-    '<div class="traj-section"><div class="traj-section-label">Description</div><p>'+t.description+'</p></div>'+
-    '<div class="traj-section"><div class="traj-section-label">What you might see</div><ul class="traj-indicators">'+indicators+'</ul></div>'+
-    '<div class="traj-section"><div class="traj-section-label">Teaching focus</div><div class="traj-teaching-box">'+escapeHtml(t.teachingFocus)+'</div></div>'+
-    (t.context?'<div class="traj-section"><div class="traj-section-label">Context</div><div class="traj-context-box">'+t.context+'</div></div>':'');
-  document.getElementById('trajDetailsPanel').classList.add('visible');
-  document.getElementById('trajDetailsPanel').scrollIntoView({behavior:'smooth',block:'center'});
-}
-
-function closeTrajDetail(){document.getElementById('trajDetailsPanel').classList.remove('visible');}
-
-function openTrajFromGroup(level){showView('trajectoriesView');setTimeout(()=>showTrajDetail(level),100);}
 
 /* ══════════════════════════════════════
    STT
 ══════════════════════════════════════ */
-let sttRecognition=null;
-let sttListening=false;
-let sttCurrentTextareaId=null;
-let sttCurrentBtnId=null;
-let sttConsentGranted=false;
-let _sttPendingResolver=null;
-
-function toggleStt(textareaId,btnId){
-  if(sttListening){try{sttRecognition.stop();}catch(e){}return;}
-  sttCurrentTextareaId=textareaId;sttCurrentBtnId=btnId;
-  if(!sttConsentGranted){
-    document.getElementById('sttConsentBackdrop').classList.add('open');
-    return;
-  }
-  startStt();
-}
-
-function confirmSttConsent(){
-  document.getElementById('sttConsentBackdrop').classList.remove('open');
-  sttConsentGranted=true;
-  startStt();
-}
-function declineSttConsent(){
-  document.getElementById('sttConsentBackdrop').classList.remove('open');
-  sttCurrentTextareaId=null;sttCurrentBtnId=null;
-}
-
-function startStt(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){dlgAlert('Speech recognition is not available in this browser. Try Chrome on desktop or Android.');return;}
-  if(!sttRecognition){
-    sttRecognition=new SR();
-    sttRecognition.continuous=true;
-    sttRecognition.interimResults=true;
-    sttRecognition.lang='en-US';
-    sttRecognition.onstart=()=>{
-      sttListening=true;
-      const btn=document.getElementById(sttCurrentBtnId);
-      if(btn){btn.classList.add('listening');btn.textContent='stop';}
-    };
-    sttRecognition.onend=()=>{
-      sttListening=false;
-      const btn=document.getElementById(sttCurrentBtnId);
-      if(btn){btn.classList.remove('listening');btn.textContent='mic';}
-    };
-    sttRecognition.onerror=(e)=>{
-      sttListening=false;
-      const btn=document.getElementById(sttCurrentBtnId);
-      if(btn){btn.classList.remove('listening');btn.textContent='mic';}
-      if(e.error==='not-allowed'){
-        dlgAlert('Microphone permission denied. To dictate, allow microphone access in your browser settings.');
-      } else if(e.error==='no-speech'){
-      } else {
-        dlgAlert('Speech recognition error: '+e.error);
-      }
-    };
-    sttRecognition.onresult=(e)=>{
-      let finalText='';
-      for(let i=e.resultIndex;i<e.results.length;i++){
-        const r=e.results[i];
-        if(r.isFinal)finalText+=r[0].transcript;
-      }
-      if(finalText){
-        const ta=document.getElementById(sttCurrentTextareaId);
-        if(ta){ta.value=(ta.value+' '+finalText).trim();}
-      }
-    };
-  }
-  try{sttRecognition.start();}catch(e){}
+let _sttRecognizer=null;let _sttActiveBtnId=null;let _sttTargetId=null;let sttConsentGranted=false;
+let _pendingSttResolve=null;
+function _showSttConsent(){return new Promise(res=>{_pendingSttResolve=res;document.getElementById('sttConsentBackdrop').classList.add('open');});}
+function confirmSttConsent(){sttConsentGranted=true;document.getElementById('sttConsentBackdrop').classList.remove('open');if(_pendingSttResolve){_pendingSttResolve(true);_pendingSttResolve=null;}}
+function declineSttConsent(){document.getElementById('sttConsentBackdrop').classList.remove('open');if(_pendingSttResolve){_pendingSttResolve(false);_pendingSttResolve=null;}}
+async function toggleStt(targetId,btnId){
+  if(_sttRecognizer&&_sttActiveBtnId===btnId){_sttRecognizer.stop();return;}
+  const Rec=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!Rec){await dlgAlert('Speech-to-text is not supported in this browser.','Not supported');return;}
+  if(!sttConsentGranted){const ok=await _showSttConsent();if(!ok)return;}
+  const r=new Rec();r.lang=navigator.language||'en-US';r.interimResults=true;r.continuous=true;
+  const targetEl=document.getElementById(targetId);const btnEl=document.getElementById(btnId);
+  let final='';
+  r.onresult=(e)=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){const tr=e.results[i][0].transcript;if(e.results[i].isFinal)final+=tr+' ';else interim+=tr;}
+    targetEl.value=(final+interim).trim();};
+  r.onerror=()=>{btnEl.classList.remove('listening');btnEl.textContent='mic';_sttRecognizer=null;_sttActiveBtnId=null;};
+  r.onend=()=>{btnEl.classList.remove('listening');btnEl.textContent='mic';_sttRecognizer=null;_sttActiveBtnId=null;};
+  r.start();_sttRecognizer=r;_sttActiveBtnId=btnId;_sttTargetId=targetId;
+  btnEl.classList.add('listening');btnEl.textContent='■';
 }
 
 /* ══════════════════════════════════════
-   SWIPE
-══════════════════════════════════════ */
-function initSwipeGestures(){
-  const obs=document.getElementById('observeView');if(!obs||obs.dataset.swipeBound==='1')return;
-  obs.dataset.swipeBound='1';
-  let startX=0,startY=0,active=false;
-  obs.addEventListener('touchstart',e=>{
-    const t=e.touches[0];
-    if(t.clientX<20){active=false;return;}
-    startX=t.clientX;startY=t.clientY;active=true;
-  },{passive:true});
-  obs.addEventListener('touchend',e=>{
-    if(!active)return;
-    const t=e.changedTouches[0];
-    const dx=t.clientX-startX;
-    const dy=t.clientY-startY;
-    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5){
-      if(dx<0){
-        const btn=document.getElementById('obsNextBtn');
-        if(btn&&!btn.disabled)navigateObs(1);
-      } else {
-        const btn=document.getElementById('obsPrevBtn');
-        if(btn&&!btn.disabled)navigateObs(-1);
-      }
-    }
-    active=false;
-  },{passive:true});
-}
-
-/* ══════════════════════════════════════
-   VIEW SWITCH
+   VIEW SWITCH + SWIPE
 ══════════════════════════════════════ */
 function showView(id){
-  document.querySelectorAll('#mainApp .view').forEach(v=>v.classList.remove('active'));
-  const el=document.getElementById(id);
-  if(el)el.classList.add('active');
+  ['rosterView','observeView','groupsView','trajectoriesView'].forEach(v=>{
+    document.getElementById(v).classList.toggle('active',v===id);
+  });
   if(id==='groupsView')renderGroups();
-  if(id==='trajectoriesView')renderTrajectories();
-  if(id==='rosterView'){renderRoster();}
+  if(id==='trajectoriesView'){renderTrajectories();closeTrajDetail();}
+  if(id==='rosterView'){renderRoster();updateBackupBanner();}
+  if(id==='observeView'){renderHistory();}
   window.scrollTo(0,0);
 }
 
-function openPiiModal(){document.getElementById('piiModalBackdrop').classList.add('open');}
-function closePiiModal(e){if(e&&e.target!==document.getElementById('piiModalBackdrop'))return;document.getElementById('piiModalBackdrop').classList.remove('open');}
+let touchStartX=null,touchStartY=null;
+function initSwipeGestures(){
+  const sa=document.getElementById('obsScrollArea');
+  if(!sa)return;
+  sa.addEventListener('touchstart',e=>{const t=e.touches[0];touchStartX=t.clientX;touchStartY=t.clientY;},{passive:true});
+  sa.addEventListener('touchend',e=>{
+    if(touchStartX===null)return;
+    const t=e.changedTouches[0];const dx=t.clientX-touchStartX;const dy=t.clientY-touchStartY;
+    touchStartX=null;touchStartY=null;
+    if(Math.abs(dx)<60||Math.abs(dy)>50)return;
+    if(!document.getElementById('observeView').classList.contains('active'))return;
+    if(dx<0&&!document.getElementById('obsNextBtn').disabled)navigateObs(1);
+    else if(dx>0&&!document.getElementById('obsPrevBtn').disabled)navigateObs(-1);
+  },{passive:true});
+}
 
+/* ══════════════════════════════════════
+   WELCOME / HOWTO / PII
+══════════════════════════════════════ */
 function maybeShowWelcome(){
-  if(state.hasSeenWelcome)return;
-  document.getElementById('welcomeModalBackdrop').classList.add('open');
+  if(currentTeacher?.demo)return;
+  if(!state.hasSeenWelcome){
+    document.getElementById('welcomeModalBackdrop').classList.add('open');
+  }
 }
 function dismissWelcome(){
-  state.hasSeenWelcome=true;scheduleSave();
+  state.hasSeenWelcome=true;
+  scheduleSave();
   document.getElementById('welcomeModalBackdrop').classList.remove('open');
 }
-function dismissWelcomeFromBackdrop(e){
-  if(e.target!==document.getElementById('welcomeModalBackdrop'))return;
-  dismissWelcome();
-}
+function dismissWelcomeFromBackdrop(e){if(e.target!==e.currentTarget)return;dismissWelcome();}
 function openHowto(){document.getElementById('howtoModalBackdrop').classList.add('open');}
-function closeHowto(e){if(e&&e.target!==document.getElementById('howtoModalBackdrop'))return;document.getElementById('howtoModalBackdrop').classList.remove('open');}
-
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){
-    document.getElementById('settingsModalBackdrop').classList.remove('open');
-    document.getElementById('welcomeModalBackdrop').classList.remove('open');
-    document.getElementById('howtoModalBackdrop').classList.remove('open');
-    document.getElementById('piiModalBackdrop').classList.remove('open');
-    document.getElementById('studentModalBackdrop').classList.remove('open');
-    document.getElementById('sttConsentBackdrop').classList.remove('open');
-    document.getElementById('dialogBackdrop').classList.remove('open');
-  }
-});
+function closeHowto(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('howtoModalBackdrop').classList.remove('open');}
+function openPiiModal(){document.getElementById('piiModalBackdrop').classList.add('open');}
+function closePiiModal(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('piiModalBackdrop').classList.remove('open');}
 
 /* ══════════════════════════════════════
    EXPORT
 ══════════════════════════════════════ */
 function exportData(){
-  if(currentTeacher?.demo){dlgAlert('Demo data isn\u2019t saved or exportable. Create a real classroom to use Export.');return;}
-  if(!state.students.length){dlgAlert('No data to export yet. Add students and record some observations first.');return;}
-  let csv='Student,Date,Time,Size,Sequence,Correspondence,Cardinality,Errors,Note\n';
+  if(state.students.length===0&&!currentTeacher?.demo){dlgAlert('No data to export yet.','Export');return;}
+  const rows=[['student','timestamp','collection_size','sequence','correspondence','cardinality','errors','strategies','other_text','note']];
   state.students.forEach(s=>{
-    const obs=state.observations[s.id]?.history||[];
-    obs.forEach(o=>{
-      const dt=new Date(o.timestamp);
-      const date=dt.toLocaleDateString('en-CA');
-      const time=dt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false});
-      const seq=principleStateOf(o,'sequence')||'';
-      const corr=principleStateOf(o,'correspondence')||'';
-      const card=principleStateOf(o,'cardinality')||'';
-      const errors=Object.entries(o.errors||{}).filter(([_,v])=>v).map(([k])=>k).join(';');
-      const note=(o.note||'').replace(/"/g,'""').replace(/\r?\n/g,' ');
-      const row=[s.name,date,time,o.collectionSize||'',seq,corr,card,errors,note]
-        .map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',');
-      csv+=row+'\n';
+    const hist=state.observations[s.id]?.history||[];
+    hist.forEach(obs=>{
+      const errList=Object.keys(obs.errors||{}).filter(k=>obs.errors[k]).join(';');
+      const stratList=Object.keys(obs.strategies||{}).filter(k=>obs.strategies[k]).join(';');
+      const otherTextStr=Object.entries(obs.otherText||{}).filter(([_,v])=>v).map(([k,v])=>k+':'+v).join(';');
+      rows.push([
+        s.name,obs.timestamp,obs.collectionSize||'',
+        principleStateOf(obs,'sequence')||'',
+        principleStateOf(obs,'correspondence')||'',
+        principleStateOf(obs,'cardinality')||'',
+        errList,stratList,otherTextStr,obs.note||''
+      ]);
     });
   });
-  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const csv=rows.map(r=>r.map(c=>{const s=String(c).replace(/"/g,'""');return /[,"\n]/.test(s)?'"'+s+'"':s;}).join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
-  a.href=url;
-  a.download='observations-'+(currentTeacher.code||'classroom')+'-'+new Date().toISOString().slice(0,10)+'.csv';
+  const code=currentTeacher?.code||'demo';
+  const dateStr=new Date().toISOString().slice(0,10);
+  a.href=url;a.download=`${code}-observations-${dateStr}.csv`;
   document.body.appendChild(a);a.click();document.body.removeChild(a);
   URL.revokeObjectURL(url);
-  state.lastExportTs=new Date().toISOString();
-  state.backupBannerSnoozeUntil=null;
-  scheduleSave();
-  updateBackupBanner();
-  showToast('Backup downloaded — keep it somewhere safe.');
+  if(!currentTeacher?.demo){
+    state.lastExportTs=new Date().toISOString();
+    delete state.backupBannerSnoozeUntil;
+    scheduleSave();
+    updateBackupBanner();
+    showToast('Backup saved');
+  }
 }
-
 </script>
 </body>
 </html>
