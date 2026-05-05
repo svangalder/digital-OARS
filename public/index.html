@@ -227,9 +227,51 @@
       padding:10px 14px;
     }
 
-    .board-toolbar{padding:6px 12px 2px;display:flex;align-items:center;justify-content:flex-end;gap:8px;}
+    .board-toolbar{padding:6px 12px 2px;display:flex;align-items:center;justify-content:flex-end;gap:8px;position:relative;}
     .settings-btn{background:transparent;border:1px solid var(--paper-3);color:var(--ink-3);border-radius:8px;padding:5px 10px;font-family:'Sora',sans-serif;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0;min-height:44px;}
     .settings-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+    .view-toggle{
+      display:inline-flex;background:var(--paper-2);border:1px solid var(--paper-3);
+      border-radius:8px;padding:2px;gap:0;
+    }
+    .view-toggle-btn{
+      background:transparent;border:none;
+      padding:6px 12px;font-family:'Sora',sans-serif;font-size:11px;font-weight:600;
+      color:var(--ink-3);cursor:pointer;border-radius:6px;
+      min-height:36px;line-height:1;
+      transition:background .12s,color .12s;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .view-toggle-btn:hover{color:var(--ink);}
+    .view-toggle-btn.active{
+      background:white;color:var(--ink);
+      box-shadow:0 1px 2px rgba(0,0,0,.06);
+    }
+    .view-info-wrap{position:relative;flex-shrink:0;}
+    .view-info-btn{
+      background:transparent;border:none;
+      width:28px;height:28px;border-radius:50%;
+      color:var(--ink-4);cursor:pointer;
+      font-family:'Sora',sans-serif;font-size:12px;font-weight:600;
+      display:flex;align-items:center;justify-content:center;
+      transition:color .12s,background .12s;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .view-info-btn:hover{color:var(--ink-2);background:var(--paper-2);}
+    .view-info-popover{
+      position:absolute;top:calc(100% + 4px);right:0;
+      background:white;border:1.5px solid var(--paper-3);
+      border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.12);
+      z-index:25;min-width:230px;max-width:280px;
+      padding:12px 14px;
+      font-size:12px;color:var(--ink-2);line-height:1.6;
+      display:none;
+    }
+    .view-info-popover.open{display:block;}
+    .view-info-popover strong{color:var(--ink);font-weight:600;}
+    .view-info-popover p{margin:0 0 6px;}
+    .view-info-popover p:last-child{margin-bottom:0;}
 
     .board-list{padding:6px 12px 14px;}
     .board-section{margin-bottom:0;}
@@ -999,7 +1041,17 @@
       </div>
 
       <div class="board-toolbar">
-        <button class="settings-btn" onclick="openSettingsModal()" title="Switch between card view and class heat-map view">⚙ View</button>
+        <div class="view-toggle" id="viewToggleInline">
+          <button class="view-toggle-btn" id="viewToggleRoster" onclick="setViewMode('cards')">Roster</button>
+          <button class="view-toggle-btn" id="viewToggleHeatmap" onclick="setViewMode('heatmap')">Class View</button>
+        </div>
+        <div class="view-info-wrap">
+          <button class="view-info-btn" id="viewInfoBtn" onclick="toggleViewInfo(event)" title="What do these views show?" aria-label="View info">ⓘ</button>
+          <div class="view-info-popover" id="viewInfoPopover">
+            <p><strong>Roster</strong> — each student gets a card showing their recent results and learning trajectory.</p>
+            <p><strong>Class View</strong> — the whole class at a glance, color-coded by how often each principle is correct.</p>
+          </div>
+        </div>
       </div>
       <div class="board-list" id="rosterList"></div>
       <div class="author-credit">
@@ -1358,7 +1410,7 @@
           <div class="welcome-step-num">6</div>
           <div class="welcome-step-body">
             <div class="welcome-step-title">Switch the home view</div>
-            <p>Tap <strong>⚙ View</strong> on the home screen to switch between detailed cards and a compact class heat map.</p>
+            <p>Tap the <strong>Roster / Class View</strong> toggle on the home screen to switch between per-student cards and a compact whole-class summary.</p>
           </div>
         </div>
       </div>
@@ -2037,23 +2089,42 @@ function closeCardMenu(){
    SETTINGS
 ══════════════════════════════════════ */
 function getSettings(){state.settings=state.settings||{};if(!state.settings.viewMode)state.settings.viewMode='cards';return state.settings;}
-function setViewMode(mode){const s=getSettings();s.viewMode=mode;scheduleSave();renderRoster();renderSettingsModal();}
-function openSettingsModal(){renderSettingsModal();document.getElementById('settingsModalBackdrop').classList.add('open');}
-function closeSettingsModal(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('settingsModalBackdrop').classList.remove('open');}
-function renderSettingsModal(){
+function setViewMode(mode){
   const s=getSettings();
-  const html=`
-    <button class="view-mode-option ${s.viewMode==='cards'?'active':''}" onclick="setViewMode('cards')">
-      <div class="view-mode-label">Roster</div>
-      <div class="view-mode-hint">Trajectory + recent results per student</div>
-    </button>
-    <button class="view-mode-option ${s.viewMode==='heatmap'?'active':''}" onclick="setViewMode('heatmap')">
-      <div class="view-mode-label">Class Heat Map</div>
-      <div class="view-mode-hint">Compact view of every student at a glance</div>
-    </button>
-  `;
-  document.getElementById('viewModeToggle').innerHTML=html;
+  s.viewMode=mode;
+  scheduleSave();
+  applyViewToggleActive();
+  renderRoster();
 }
+function applyViewToggleActive(){
+  const mode=getSettings().viewMode;
+  const r=document.getElementById('viewToggleRoster');
+  const h=document.getElementById('viewToggleHeatmap');
+  if(r)r.classList.toggle('active',mode==='cards');
+  if(h)h.classList.toggle('active',mode==='heatmap');
+}
+function toggleViewInfo(ev){
+  if(ev){ev.stopPropagation();}
+  const pop=document.getElementById('viewInfoPopover');
+  if(!pop)return;
+  pop.classList.toggle('open');
+}
+function closeViewInfo(){
+  const pop=document.getElementById('viewInfoPopover');
+  if(pop)pop.classList.remove('open');
+}
+/* close info popover on outside click */
+document.addEventListener('click',(e)=>{
+  const pop=document.getElementById('viewInfoPopover');
+  const btn=document.getElementById('viewInfoBtn');
+  if(!pop||!pop.classList.contains('open'))return;
+  if(pop.contains(e.target)||(btn&&btn.contains(e.target)))return;
+  closeViewInfo();
+},true);
+/* legacy stubs (modal no longer used, but harmless if anything references them) */
+function openSettingsModal(){applyViewToggleActive();}
+function closeSettingsModal(){}
+function renderSettingsModal(){}
 
 /* ══════════════════════════════════════
    TRAJECTORY INFERENCE
@@ -2154,6 +2225,7 @@ function updateGroupsBadge(){
 
 function renderRoster(){
   closeCardMenu();
+  applyViewToggleActive();
   const list=document.getElementById('rosterList');
   const settings=getSettings();
   const sorted=getSortedStudents();
@@ -2362,7 +2434,7 @@ function renderHeatMapHtml(students){
     const corrObs=lastNObservationsForPrinciple(s,'correspondence',5);
     const cardObs=lastNObservationsForPrinciple(s,'cardinality',5);
     const cellHtml=(obsList,principle)=>{
-      if(obsList.length===0)return`<div class="heatmap-cell heatmap-cell-empty"><div class="heatmap-cell-frac">—</div><div class="heatmap-cell-rate">no data</div></div>`;
+      if(obsList.length===0)return`<div class="heatmap-cell heatmap-cell-empty"><div class="heatmap-cell-frac">—</div></div>`;
       const correct=obsList.filter(o=>principleStateOf(o,principle)==='correct').length;
       const total=obsList.length;
       const rate=correct/total;
@@ -2370,7 +2442,7 @@ function renderHeatMapHtml(students){
       if(rate>=0.8){bg='#cae8d3';color='#1d5c36';}
       else if(rate>=0.5){bg='#fef3e2';color='#a06020';}
       else{bg='#fdecea';color='#a83225';}
-      return`<div class="heatmap-cell" style="background:${bg};color:${color};"><div class="heatmap-cell-frac">${correct}/${total}</div><div class="heatmap-cell-rate">${Math.round(rate*100)}%</div></div>`;
+      return`<div class="heatmap-cell" style="background:${bg};color:${color};"><div class="heatmap-cell-frac">${correct}/${total}</div></div>`;
     };
     const isCheckIn = p.section===1;
     const isNever = !!p.never;
@@ -2393,7 +2465,7 @@ function renderHeatMapHtml(students){
       <span class="heatmap-legend-sw" style="background:#fef3e2;"></span>
       <span class="heatmap-legend-sw" style="background:#cae8d3;"></span>
     </span>
-    <span>0% → 100%</span>
+    <span>low → high</span>
   </div>`;
   html+=`</div>`;
   return html;
