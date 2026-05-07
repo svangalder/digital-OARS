@@ -592,6 +592,40 @@
     .pc-unset-hint.hidden{display:none;}
     .pc-clarifying-note{padding:6px 14px 9px;font-size:11px;color:var(--ink-3);line-height:1.5;border-top:1px solid var(--paper-3);background:var(--paper);}
 
+    .pc-note-section{border-top:1px solid var(--paper-3);background:var(--paper);}
+    .pc-note-toggle{
+      width:100%;background:transparent;border:none;
+      padding:8px 14px;text-align:left;cursor:pointer;
+      font-family:'Sora',sans-serif;font-size:11px;font-weight:600;
+      color:var(--ink-3);display:flex;align-items:center;justify-content:space-between;
+      min-height:40px;-webkit-tap-highlight-color:transparent;
+      transition:color .12s,background .12s;
+    }
+    .pc-note-toggle:hover{color:var(--accent);background:var(--accent-light);}
+    .pc-note-toggle.has-content{color:var(--accent);}
+    .pc-note-chev{font-size:9px;transition:transform .2s;}
+    .pc-note-toggle.open .pc-note-chev{transform:rotate(180deg);}
+    .pc-note-body{display:none;padding:0 14px 11px;position:relative;}
+    .pc-note-body.open{display:block;}
+    .pc-note-input{
+      width:100%;font-family:'Sora',sans-serif;font-size:14px;
+      border:1.5px solid var(--paper-3);border-radius:8px;
+      padding:9px 40px 9px 11px;background:white;color:var(--ink);
+      min-height:44px;resize:vertical;line-height:1.5;
+      transition:border-color .15s;
+    }
+    .pc-note-input:focus{outline:none;border-color:var(--accent);}
+    .pc-note-stt-btn{
+      position:absolute;bottom:18px;right:21px;
+      width:30px;height:30px;border-radius:50%;
+      border:1px solid var(--paper-3);background:white;color:var(--ink-4);
+      cursor:pointer;display:flex;align-items:center;justify-content:center;
+      font-size:9px;font-weight:700;font-family:'Sora',sans-serif;
+      transition:all .2s;
+    }
+    .pc-note-stt-btn:hover{border-color:var(--accent);color:var(--accent);}
+    .pc-note-stt-btn.listening{border-color:var(--accent);background:var(--accent);color:white;animation:pulse 1.2s infinite;}
+
     .other-input{display:none;width:100%;margin-top:8px;font-family:'Sora',sans-serif;font-size:16px;border:1.5px solid var(--paper-3);border-radius:8px;padding:7px 10px;background:var(--paper);color:var(--ink);transition:border-color .15s;box-sizing:border-box;}
     .other-input:focus{outline:none;border-color:var(--accent);background:white;}
     .other-input::placeholder{color:var(--ink-4);}
@@ -1129,6 +1163,16 @@
             </div>
           </div>
           <div class="pc-unset-hint" id="pc-hint-sequence">Nothing tapped yet — skip if you didn't focus on this today.</div>
+          <div class="pc-note-section">
+            <button class="pc-note-toggle" id="pc-note-toggle-sequence" onclick="togglePrincipleNote('sequence')">
+              <span id="pc-note-label-sequence">+ note</span>
+              <span class="pc-note-chev">▼</span>
+            </button>
+            <div class="pc-note-body" id="pc-note-body-sequence">
+              <textarea class="pc-note-input" id="pc-note-input-sequence" placeholder="Add a note about sequence…" oninput="updatePrincipleNote('sequence',this.value)"></textarea>
+              <button class="pc-note-stt-btn" id="pc-note-stt-sequence" onclick="toggleStt('pc-note-input-sequence','pc-note-stt-sequence')" title="Dictate">mic</button>
+            </div>
+          </div>
           <div style="display:none;"><button id="bh-correct-sequence"></button></div>
         </div>
 
@@ -1154,6 +1198,16 @@
             </div>
           </div>
           <div class="pc-unset-hint" id="pc-hint-correspondence">Nothing tapped yet — skip if you didn't focus on this today.</div>
+          <div class="pc-note-section">
+            <button class="pc-note-toggle" id="pc-note-toggle-correspondence" onclick="togglePrincipleNote('correspondence')">
+              <span id="pc-note-label-correspondence">+ note</span>
+              <span class="pc-note-chev">▼</span>
+            </button>
+            <div class="pc-note-body" id="pc-note-body-correspondence">
+              <textarea class="pc-note-input" id="pc-note-input-correspondence" placeholder="Add a note about correspondence…" oninput="updatePrincipleNote('correspondence',this.value)"></textarea>
+              <button class="pc-note-stt-btn" id="pc-note-stt-correspondence" onclick="toggleStt('pc-note-input-correspondence','pc-note-stt-correspondence')" title="Dictate">mic</button>
+            </div>
+          </div>
           <div style="display:none;"><button id="bh-correct-correspondence"></button></div>
         </div>
 
@@ -1177,6 +1231,16 @@
           </div>
           <div class="pc-unset-hint" id="pc-hint-cardinality">Nothing tapped yet — skip if you didn't focus on this today.</div>
           <div class="pc-clarifying-note">Note: cardinality can still be correct even if the total is wrong due to sequence errors — what matters is whether the student knew the last number said was the answer.</div>
+          <div class="pc-note-section">
+            <button class="pc-note-toggle" id="pc-note-toggle-cardinality" onclick="togglePrincipleNote('cardinality')">
+              <span id="pc-note-label-cardinality">+ note</span>
+              <span class="pc-note-chev">▼</span>
+            </button>
+            <div class="pc-note-body" id="pc-note-body-cardinality">
+              <textarea class="pc-note-input" id="pc-note-input-cardinality" placeholder="Add a note about cardinality…" oninput="updatePrincipleNote('cardinality',this.value)"></textarea>
+              <button class="pc-note-stt-btn" id="pc-note-stt-cardinality" onclick="toggleStt('pc-note-input-cardinality','pc-note-stt-cardinality')" title="Dictate">mic</button>
+            </div>
+          </div>
           <div style="display:none;"><button id="bh-correct-cardinality"></button></div>
         </div>
 
@@ -1211,12 +1275,12 @@
         </div>
 
         <div class="note-toggle" onclick="toggleNote()" id="noteToggle">
-          <span id="noteToggleLabel">+ Add note (optional)</span>
+          <span id="noteToggleLabel">+ General note (optional)</span>
           <span class="note-toggle-icon" id="noteToggleIcon">▼</span>
         </div>
         <div class="note-expand" id="noteExpand">
           <div class="note-wrap-inner">
-            <textarea class="note-textarea" id="obsNote" placeholder="What did you notice? (Avoid last names or identifying details.)"></textarea>
+            <textarea class="note-textarea" id="obsNote" placeholder="General observation about the whole counting moment. (Avoid last names or identifying details.)"></textarea>
             <button class="stt-btn" id="sttBtn" onclick="toggleStt('obsNote','sttBtn')" title="Dictate">mic</button>
           </div>
         </div>
@@ -1326,6 +1390,9 @@
     </div>
     <div class="modal-body">
       <p class="welcome-lead">Glad you're here. Here's how this tool works in three steps.</p>
+      <div style="background:var(--paper);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:10px 12px;font-size:12.5px;color:var(--ink-2);line-height:1.6;margin-bottom:18px;">
+        <strong>This is an assessment tool.</strong> Each save records one counting attempt you observed.
+      </div>
       <div class="welcome-steps">
         <div class="welcome-step">
           <div class="welcome-step-num">1</div>
@@ -1368,6 +1435,9 @@
     </div>
     <div class="modal-body">
       <p class="welcome-lead">A short guide to the workflow and the screens.</p>
+      <div style="background:var(--paper);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:10px 12px;font-size:12.5px;color:var(--ink-2);line-height:1.6;margin-bottom:18px;">
+        <strong>This is an assessment tool.</strong> Each save records one counting attempt you observed.
+      </div>
       <div class="welcome-steps">
         <div class="welcome-step">
           <div class="welcome-step-num">1</div>
@@ -1847,7 +1917,8 @@ function freshObsForm(){
     principleState:{sequence:null,correspondence:null,cardinality:null},
     errors:{skips_numbers:false,repeats_numbers:false,wrong_number_word:false,loses_track:false,double_counts:false,counts_again:false,other_sequence:false,other_correspondence:false,other_cardinality:false},
     strategies:{line:false,groups:false,scattered:false,other:false,setupStudent:false,setupTeacher:false},
-    otherText:{err_sequence:'',err_correspondence:'',err_cardinality:'',strat:''}
+    otherText:{err_sequence:'',err_correspondence:'',err_cardinality:'',strat:''},
+    principleNotes:{sequence:'',correspondence:'',cardinality:''}
   };
 }
 let obsForm=freshObsForm();
@@ -2557,7 +2628,18 @@ function resetObsForm(){
   const ne=document.getElementById('noteExpand');
   ne.classList.remove('open');
   document.getElementById('noteToggleIcon').classList.remove('open');
-  document.getElementById('noteToggleLabel').textContent='+ Add note (optional)';
+  document.getElementById('noteToggleLabel').textContent='+ General note (optional)';
+  // Reset per-principle notes
+  ['sequence','correspondence','cardinality'].forEach(p=>{
+    const inp=document.getElementById('pc-note-input-'+p);
+    const toggle=document.getElementById('pc-note-toggle-'+p);
+    const body=document.getElementById('pc-note-body-'+p);
+    const label=document.getElementById('pc-note-label-'+p);
+    if(inp)inp.value='';
+    if(toggle){toggle.classList.remove('open');toggle.classList.remove('has-content');}
+    if(body)body.classList.remove('open');
+    if(label)label.textContent='+ note';
+  });
   const md=document.getElementById('moreDetailsToggle');
   const mp=document.getElementById('moreDetailsPanel');
   md.classList.remove('open');mp.classList.remove('open');
@@ -2603,6 +2685,25 @@ function applyFormToUI(){
     md.classList.remove('open');mp.classList.remove('open');
     document.getElementById('moreDetailsLabel').textContent='+ More details';
   }
+  // Per-principle notes
+  if(!obsForm.principleNotes)obsForm.principleNotes={sequence:'',correspondence:'',cardinality:''};
+  ['sequence','correspondence','cardinality'].forEach(p=>{
+    const inp=document.getElementById('pc-note-input-'+p);
+    const toggle=document.getElementById('pc-note-toggle-'+p);
+    const body=document.getElementById('pc-note-body-'+p);
+    const label=document.getElementById('pc-note-label-'+p);
+    const val=obsForm.principleNotes[p]||'';
+    if(inp)inp.value=val;
+    if(val.trim().length>0){
+      if(toggle){toggle.classList.add('open');toggle.classList.add('has-content');}
+      if(body)body.classList.add('open');
+      if(label)label.textContent='✎ note';
+    } else {
+      if(toggle){toggle.classList.remove('open');toggle.classList.remove('has-content');}
+      if(body)body.classList.remove('open');
+      if(label)label.textContent='+ note';
+    }
+  });
 }
 
 function setOtherText(key,val){obsForm.otherText[key]=val;}
@@ -2645,8 +2746,31 @@ function toggleNote(){
   const ne=document.getElementById('noteExpand');
   const isOpen=ne.classList.toggle('open');
   document.getElementById('noteToggleIcon').classList.toggle('open',isOpen);
-  document.getElementById('noteToggleLabel').textContent=isOpen?'– Hide note':'+ Add note (optional)';
+  document.getElementById('noteToggleLabel').textContent=isOpen?'– Hide general note':'+ General note (optional)';
   if(isOpen)setTimeout(()=>document.getElementById('obsNote').focus(),60);
+}
+function togglePrincipleNote(principle){
+  const toggle=document.getElementById('pc-note-toggle-'+principle);
+  const body=document.getElementById('pc-note-body-'+principle);
+  const isOpen=body.classList.toggle('open');
+  toggle.classList.toggle('open',isOpen);
+  if(isOpen)setTimeout(()=>document.getElementById('pc-note-input-'+principle).focus(),60);
+}
+function updatePrincipleNote(principle,val){
+  if(!obsForm.principleNotes)obsForm.principleNotes={sequence:'',correspondence:'',cardinality:''};
+  obsForm.principleNotes[principle]=val;
+  // Update the toggle label so a populated note is signaled when collapsed
+  const toggle=document.getElementById('pc-note-toggle-'+principle);
+  const label=document.getElementById('pc-note-label-'+principle);
+  if(toggle&&label){
+    if(val&&val.trim().length>0){
+      toggle.classList.add('has-content');
+      label.textContent='✎ note';
+    } else {
+      toggle.classList.remove('has-content');
+      label.textContent='+ note';
+    }
+  }
 }
 function toggleMoreDetails(){
   const md=document.getElementById('moreDetailsToggle');
@@ -2682,6 +2806,11 @@ async function saveObs(returnToRoster){
     errors:{...obsForm.errors},
     strategies:{...obsForm.strategies},
     otherText:{...obsForm.otherText},
+    principleNotes:{
+      sequence:(obsForm.principleNotes?.sequence||'').trim(),
+      correspondence:(obsForm.principleNotes?.correspondence||'').trim(),
+      cardinality:(obsForm.principleNotes?.cardinality||'').trim()
+    },
     note
   };
   if(!state.observations[selectedStudentId])state.observations[selectedStudentId]={history:[]};
@@ -2727,6 +2856,11 @@ function editObs(idx){
   if(obs.otherText){
     Object.keys(obsForm.otherText).forEach(k=>{obsForm.otherText[k]=obs.otherText[k]||'';});
   }
+  if(obs.principleNotes){
+    ['sequence','correspondence','cardinality'].forEach(k=>{
+      obsForm.principleNotes[k]=obs.principleNotes[k]||'';
+    });
+  }
 
   // Apply everything to UI
   applyFormToUI();
@@ -2737,11 +2871,11 @@ function editObs(idx){
   if(noteVal){
     document.getElementById('noteExpand').classList.add('open');
     document.getElementById('noteToggleIcon').classList.add('open');
-    document.getElementById('noteToggleLabel').textContent='– Hide note';
+    document.getElementById('noteToggleLabel').textContent='– Hide general note';
   } else {
     document.getElementById('noteExpand').classList.remove('open');
     document.getElementById('noteToggleIcon').classList.remove('open');
-    document.getElementById('noteToggleLabel').textContent='+ Add note (optional)';
+    document.getElementById('noteToggleLabel').textContent='+ General note (optional)';
   }
 
   document.getElementById('obsScrollArea').scrollTop=0;
@@ -2790,7 +2924,14 @@ function renderHistory(){
     });
     Object.keys(obs.errors||{}).forEach(k=>{if(obs.errors[k]&&ERROR_LABELS[k])tags+=`<span class="obs-tag-amber">${escapeHtml(ERROR_LABELS[k])}</span>`;});
     const sizeTag=obs.collectionSize?`<span class="obs-size-tag">${obs.collectionSize} obj</span>`:'';
-    const noteHtml=obs.note?`<div class="obs-note-text">"${escapeHtml(obs.note)}"</div>`:'';
+    let principleNotesHtml='';
+    const pn=obs.principleNotes||{};
+    [['sequence','Sequence'],['correspondence','1-to-1'],['cardinality','Cardinality']].forEach(([k,lbl])=>{
+      if(pn[k]&&pn[k].trim()){
+        principleNotesHtml+=`<div class="obs-note-text"><strong style="font-style:normal;color:var(--ink-3);">${lbl}:</strong> "${escapeHtml(pn[k])}"</div>`;
+      }
+    });
+    const noteHtml=obs.note?`<div class="obs-note-text"><strong style="font-style:normal;color:var(--ink-3);">General note:</strong> "${escapeHtml(obs.note)}"</div>`:'';
     return`<div class="obs-item">
       <div class="obs-item-header">
         <div>
@@ -2803,6 +2944,7 @@ function renderHistory(){
         </div>
       </div>
       <div class="obs-tags">${tags}</div>
+      ${principleNotesHtml}
       ${noteHtml}
     </div>`;
   }).join('');
@@ -2892,7 +3034,11 @@ function renderGroups(){
         const tagsHtml=ctxTags.length>0?`<div class="gs-context-tags">${ctxTags.map(t=>`<span class="gs-tag gs-tag-${t.type}">${escapeHtml(t.label)}</span>`).join('')}</div>`:'';
         const hist=state.observations[s.id]?.history||[];
         const latest=hist[hist.length-1];
-        const noteHtml=latest&&latest.note?`<div class="gs-note">"${escapeHtml(latest.note)}"</div>`:'';
+        const pn=latest&&latest.principleNotes?latest.principleNotes:{};
+        const principleNote=pn[cfg.key]&&pn[cfg.key].trim()?pn[cfg.key]:null;
+        const generalNote=latest&&latest.note?latest.note:null;
+        const displayNote=principleNote||generalNote;
+        const noteHtml=displayNote?`<div class="gs-note">"${escapeHtml(displayNote)}"</div>`:'';
         bodyHtml+=`<div class="group-student" onclick="openStudentModal('${s.id}')">
           <div class="gs-avatar ${cfg.avatarClass}">${initials}</div>
           <div class="gs-info">
@@ -2950,10 +3096,18 @@ function openStudentModal(id){
         if(st==='correct')tags+=`<span class="obs-tag-green">✓ ${label}</span>`;
         else if(st==='error')tags+=`<span class="obs-tag-red">✕ ${label}</span>`;
       });
-      const noteHtml=obs.note?`<div class="smo-note">"${escapeHtml(obs.note)}"</div>`:'';
+      const noteHtml=obs.note?`<div class="smo-note"><strong style="font-style:normal;">General note:</strong> "${escapeHtml(obs.note)}"</div>`:'';
+      let principleNotesHtml='';
+      const pn=obs.principleNotes||{};
+      [['sequence','Sequence'],['correspondence','1-to-1'],['cardinality','Cardinality']].forEach(([k,lbl])=>{
+        if(pn[k]&&pn[k].trim()){
+          principleNotesHtml+=`<div class="smo-note"><strong style="font-style:normal;">${lbl}:</strong> "${escapeHtml(pn[k])}"</div>`;
+        }
+      });
       histHtml+=`<div class="smo-item">
         <div class="smo-date">${dateStr}</div>
         <div class="smo-tags">${tags}</div>
+        ${principleNotesHtml}
         ${noteHtml}
       </div>`;
     });
@@ -3165,19 +3319,22 @@ function closePiiModal(e){if(e&&e.target!==e.currentTarget)return;document.getEl
 ══════════════════════════════════════ */
 function exportData(){
   if(state.students.length===0&&!currentTeacher?.demo){dlgAlert('No data to export yet.','Export');return;}
-  const rows=[['student','timestamp','collection_size','sequence','correspondence','cardinality','errors','strategies','other_text','note']];
+  const rows=[['student','timestamp','collection_size','sequence','correspondence','cardinality','errors','strategies','other_text','sequence_note','correspondence_note','cardinality_note','general_note']];
   state.students.forEach(s=>{
     const hist=state.observations[s.id]?.history||[];
     hist.forEach(obs=>{
       const errList=Object.keys(obs.errors||{}).filter(k=>obs.errors[k]).join(';');
       const stratList=Object.keys(obs.strategies||{}).filter(k=>obs.strategies[k]).join(';');
       const otherTextStr=Object.entries(obs.otherText||{}).filter(([_,v])=>v).map(([k,v])=>k+':'+v).join(';');
+      const pn=obs.principleNotes||{};
       rows.push([
         s.name,obs.timestamp,obs.collectionSize||'',
         principleStateOf(obs,'sequence')||'',
         principleStateOf(obs,'correspondence')||'',
         principleStateOf(obs,'cardinality')||'',
-        errList,stratList,otherTextStr,obs.note||''
+        errList,stratList,otherTextStr,
+        pn.sequence||'',pn.correspondence||'',pn.cardinality||'',
+        obs.note||''
       ]);
     });
   });
